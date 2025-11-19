@@ -13,10 +13,8 @@ import 'package:uuid/uuid.dart';
 
 class TavernMap extends StatefulWidget {
   final LocalGameController controller;
-  final Function exitFunction;
   const TavernMap(
       {super.key,
-      required this.exitFunction,
       required this.controller});
 
   @override
@@ -83,7 +81,7 @@ class _TavernMapState extends State<TavernMap> {
       ],
       map: WorldMapByTiled(
         WorldMapReader.fromAsset(
-            'map/house_interior/yellow_house/yellow_house_map.json'),
+            'map/house_interior/yellow_house/tavern_map.json'),
         forceTileSize: Vector2(tileSize, tileSize),
       ),
       lightingColorGame: Colors.orange[400]!.withAlpha(48),

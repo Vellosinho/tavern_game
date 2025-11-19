@@ -47,6 +47,7 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     LocalGameController gameController = context.read<LocalGameController>();
 
-    return TownMap(controller: gameController);
+    // return TownMap(controller: gameController);
+    return TavernMap(controller: gameController);
   }
 }
