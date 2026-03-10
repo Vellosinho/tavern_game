@@ -16,6 +16,7 @@ dependencies:
   bonfire: 
     path: ./bonfire-3.10.0-hijacking/
   window_manager: ^0.4.3
+  image: ^4.3.0
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +49,13 @@ flutter:
     - assets/images/communist/blacksmith/armed/armored/
     - assets/images/communist/blacksmith/unarmed/
     - assets/images/capitalist/
+    - assets/images/equipment/black_pearl/
+    - assets/images/equipment/griffin/
+    - assets/images/equipment/iron/
+    - assets/images/equipment/gem/
+    - assets/images/equipment/yeti/
+    - assets/images/base_player/
+    - assets/images/statues/
     - assets/images/loyalist/
     - assets/images/map/
     - assets/images/map/house_interior/yellow_house/

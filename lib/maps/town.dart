@@ -5,12 +5,15 @@ import 'package:flutter/services.dart';
 import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/enum/character_faction.dart';
+import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
 import 'package:projeto_gbb_demo/game/game_sprite_sheet.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
 import 'package:projeto_gbb_demo/game/npcs/npcs.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/game/objects/objects.dart';
 import 'package:projeto_gbb_demo/game/objects/plants/wheat_field.dart';
+import 'package:projeto_gbb_demo/maps/tavern/components/exit_mat.dart';
+import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/parallax/parallax_clouds.dart';
 import 'package:projeto_gbb_demo/players/player_consts.dart';
 import 'package:projeto_gbb_demo/forge_minigame/minigame.dart';
@@ -32,14 +35,37 @@ class _TownMapState extends State<TownMap> {
   late final CharacterFaction playerFaction;
   late final SimpleDirectionAnimation playerOneAnimations;
   late final String id;
+  late Color initialLighting;
 
   @override
   void initState() {
+    getLighting();
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
+    widget.controller.enableVisibility();
     super.initState();
   }
+
+  void getLighting() {
+      switch (widget.controller.daytime) {
+        case DayTime.sunrise:
+          initialLighting = Colors.orange[400]!.withAlpha(48);
+          return;
+        case DayTime.noon:
+          initialLighting = Colors.orange[400]!.withAlpha(0);
+          return;
+        case DayTime.sunset:
+          initialLighting = Colors.orange[400]!.withAlpha(48);
+          return;
+        case DayTime.night:
+          initialLighting = Colors.indigo[900]!.withAlpha(148);
+          return;
+        default:
+          initialLighting = Colors.orange[400]!.withAlpha(48);
+          return;
+      }
+    }
   
   @override
   Widget build(BuildContext context) {
@@ -54,8 +80,27 @@ class _TownMapState extends State<TownMap> {
         gameController.hit(2);
       },
       faction: playerFaction,
-      position: Vector2(tileSize * 8, tileSize * 7),
+      position: Vector2(tileSize * 19, tileSize * 13),
     );
+    
+    void enterTavern() {
+      widget.controller.disableVisibility();
+      Future.delayed(Duration(milliseconds: 1000), () {
+
+      player.position = Vector2(tileSize * 20, tileSize * 15);
+      widget.controller.toggleResetCollision();
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) => TavernMap(
+            controller: widget.controller,
+          ),
+          transitionDuration: Duration(milliseconds: 1),
+          reverseTransitionDuration: Duration(milliseconds: 1),
+        ),
+      );
+      });
+    }
 
     return BonfireWidget(
       backgroundColor: Color(0xff2c6ec7),
@@ -74,7 +119,7 @@ class _TownMapState extends State<TownMap> {
         ]))
       ],
       // widget.controller: widget.controller,
-      lightingColorGame: Colors.orange[400]!.withAlpha(48),
+      lightingColorGame: initialLighting,
       components: [
         // BlackSmithMaster(
         //     position: Vector2(tileSize * 19.25, tileSize * 15.5),
@@ -97,8 +142,10 @@ class _TownMapState extends State<TownMap> {
         // SmithingTable(
         //     position: Vector2(tileSize * 22.75, tileSize * 16.85),
         //     localGameController: widget.controller),
-        DayTimeClock(
-            position: Vector2(0, 0), localGameController: widget.controller),
+        DayTimeClock(position: Vector2(0,0), localGameController: widget.controller),
+        ExitMat(position: Vector2(tileSize * 19, tileSize * 13), exitFunction: () {
+          enterTavern();
+        })
       ],
       // ],
       cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: true),

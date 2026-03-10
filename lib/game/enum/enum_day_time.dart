@@ -1,1 +1,1 @@
-enum DayTime {sunrise, noon, sunset, night, same}
+enum DayTime {sunrise, noon, sunset, night}

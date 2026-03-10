@@ -28,41 +28,57 @@ class _TavernMapState extends State<TavernMap> {
 
   @override
   void initState() {
+    // widget.controller.disableVisibility();
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
+    widget.controller.enableVisibility();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-  double tileSize = 192;
-    LocalGameController gameController = context.read<LocalGameController>();
+    double tileSize = 192;
+
     LitPlayer player = BlacksmithClass(
-      localGameController: gameController,
+      localGameController: widget.controller,
       id: id,
       playerLife: context.watch<LocalGameController>().playerLife.toDouble(),
+      initDirection: Direction.up,
       onHit: () {
-        gameController.hit(2);
+        widget.controller.hit(2);
       },
       faction: playerFaction,
-      position: Vector2(tileSize * 3, tileSize * 8.75),
+      position: Vector2(tileSize * 6.5, tileSize * 13),
     );
-    
+
     void exitToTown() {
-      player.position = Vector2(tileSize * 8, tileSize * 7);
+      widget.controller.disableVisibility(isBrightEnvironment: true);
+      Future.delayed(Duration(milliseconds: 1000), () {
+      player.position = Vector2(tileSize * 20, tileSize * 15);
       widget.controller.toggleResetCollision();
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => TownMap(
-            controller: widget.controller,
+      Future.delayed(Duration(milliseconds: 150), () {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation1, animation2) => TownMap(
+              controller: widget.controller,
+            ),
+            transitionDuration: Duration(milliseconds: 1),
+            reverseTransitionDuration: Duration(milliseconds: 1),
           ),
-          transitionDuration: Duration(milliseconds: 1),
-          reverseTransitionDuration: Duration(milliseconds: 1),
-        ),
-      );
+        );
+      });});
     }
+
+    widget.controller.setImportantCoords(
+      newCoords: [
+        Vector2(1268,2739)
+      ], 
+      newFunctions: [
+        () => exitToTown(),
+      ]
+    );
 
     return BonfireWidget(
       backgroundColor: Color(0xff000000),
@@ -84,7 +100,7 @@ class _TavernMapState extends State<TavernMap> {
             'map/house_interior/yellow_house/tavern_map.json'),
         forceTileSize: Vector2(tileSize, tileSize),
       ),
-      lightingColorGame: Colors.orange[400]!.withAlpha(48),
+      // lightingColorGame: Colors.orange[400]!.withAlpha(48),
       components: [
         ExitMat(
             exitFunction: exitToTown,

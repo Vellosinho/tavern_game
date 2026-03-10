@@ -5,7 +5,7 @@ class ExitMat extends GameDecoration with Attackable {
   Function exitFunction;
   ExitMat({required super.position, required this.exitFunction})
       : super.withSprite(
-            sprite: GameObjectsSprites.yellowMat, size: Vector2(192, 192))
+            sprite: GameObjectsSprites.empty, size: Vector2(192, 192))
   // : super.withSprite(sprite: GameObjectsSprites.ExitMat, position: position, size: Vector2(96, 96))
   ;
   @override

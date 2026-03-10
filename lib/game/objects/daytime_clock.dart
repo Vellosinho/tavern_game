@@ -19,7 +19,6 @@ class DayTimeClock extends GameDecoration {
     // localGameController.startDaynightCycle();
     // updateNpcRoutine();
     updateGameLighting();
-    print('initialized Daynight Cycle');
     return super.onLoad();
   }
 
@@ -38,31 +37,25 @@ class DayTimeClock extends GameDecoration {
     Future.delayed(Duration(seconds: 10), () {
       updateGameLighting();
     });
-    if (localGameController.daytime != DayTime.same) {
-      switch (localGameController.daytime) {
-        case DayTime.sunrise:
-          gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(48),
-              duration: Duration(seconds: 10));
-          localGameController.turnOffTimechange();
-          return;
-        case DayTime.noon:
-          gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(0),
-              duration: Duration(seconds: 10));
-          localGameController.turnOffTimechange();
-          return;
-        case DayTime.sunset:
-          gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(48),
-              duration: Duration(seconds: 10));
-          localGameController.turnOffTimechange();
-          return;
-        case DayTime.night:
-          gameRef.lighting!.animateToColor(Colors.indigo[900]!.withAlpha(148),
-              duration: Duration(seconds: 10));
-          localGameController.turnOffTimechange();
-          return;
-        default:
-          return;
-      }
+    switch (localGameController.daytime) {
+      case DayTime.sunrise:
+        gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(48),
+            duration: Duration(seconds: 10));
+        return;
+      case DayTime.noon:
+        gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(0),
+            duration: Duration(seconds: 10));
+        return;
+      case DayTime.sunset:
+        gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(48),
+            duration: Duration(seconds: 10));
+        return;
+      case DayTime.night:
+        gameRef.lighting!.animateToColor(Colors.indigo[900]!.withAlpha(148),
+            duration: Duration(seconds: 10));
+        return;
+      default:
+        return;
     }
   }
 

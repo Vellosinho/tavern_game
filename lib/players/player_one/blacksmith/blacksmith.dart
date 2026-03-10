@@ -1,7 +1,12 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
+import 'package:image/image.dart' as image;
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/services.dart';
+import 'package:projeto_gbb_demo/game/enum/animationList.dart';
 import 'package:projeto_gbb_demo/game/enum/one_time_animations.dart';
 import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/players/player_one/blacksmith/hammer.dart';
@@ -34,6 +39,7 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
   final String id;
   BlacksmithClass({
     required super.position,
+    initDirection,
     required this.onHit,
     required this.playerLife,
     required CharacterFaction faction,
@@ -41,9 +47,9 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
     required this.id,
   }) : super(
           life: playerLife,
-          initDirection: Direction.down,
+          initDirection: initDirection ?? Direction.down,
           size: PlayerConsts.characterSize,
-          animation: communistUnarmedBlacksmith,
+          animation: localGameController.currentPlayerEquipment ?? communistUnarmedBlacksmith,
           // speed: PlayerConsts.characterSpeed,
           speed: PlayerConsts.characterSpeed,
         );
@@ -69,7 +75,8 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
 
   @override
   void update(double dt) {
-    localGameController.checkMinigameDistance(position);
+    // localGameController.checkMinigameDistance(position);
+    localGameController.checkImportantCoordsDistance(position);
     playOneTimeAnimations();
     _isPlayingOneTimeAnimation =
         localGameController.playAnimation != OneTimeAnimations.none;
@@ -78,6 +85,7 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
 
   void swordsmanHitSet(JoystickActionEvent event) {
     if (event.id.keyId == LogicalKeyboardKey.keyZ.keyId) {
+      changeEquipment("yeti");
       hammerAttack(event);
     }
     if (event.id.keyId == LogicalKeyboardKey.keyX.keyId &&
@@ -97,6 +105,81 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
         escPressed = false;
       });
     }
+  }
+  
+  Future<void> changeEquipment(String armor) async {
+  SimpleDirectionAnimation newAnimations = await generateDirectionAnimation(armor);
+  replaceAnimation(newAnimations).then((_) =>
+    Future.delayed(Duration.zero, () {
+      animation?.play(SimpleAnimationEnum.idleDown);
+    }),
+  );
+  localGameController.setCurrentPlayerAnimation(newAnimations);
+  
+  }
+
+  Future<SimpleDirectionAnimation> generateDirectionAnimation(String armor) async {
+    List<SpriteAnimation> animations = [];
+    
+    for (int i = 0; i < animationList.length; i++) {
+      bool isRun = animationList[i].contains("walk");
+      final weapon = image.decodeImage(File('assets/images/weapons/red_crow/${animationList[i]}.png').readAsBytesSync());
+      final image1 = image.decodeImage(File('assets/images/base_player/${animationList[i]}.png').readAsBytesSync());
+      final image2 = image.decodeImage(File('assets/images/equipment/$armor/${animationList[i]}.png').readAsBytesSync());
+      
+      late Uint8List imageValue;
+      if (animationList[i].contains("front") || animationList[i].contains("left")) {
+        image.compositeImage(weapon!, image1!,  dstX: 0);
+        image.compositeImage(weapon!, image2!,  dstX: 0);
+        // image.compositeImage(image1!, image2!,  dstX: 0);
+        imageValue = image.encodePng(weapon);
+      } else {
+        image.compositeImage(image1!, image2!,  dstX: 0);
+        image.compositeImage(image1!, weapon!,  dstX: 0);
+        // image.compositeImage(image1!, image2!,  dstX: 0);
+        imageValue = image.encodePng(image1);
+      }
+      var spriteImage = await bytesToImage(imageValue);
+        SpriteAnimation newAnimation = SpriteAnimation.fromFrameData(
+          spriteImage,
+          //amount: 6, stepTime: 0.075,
+          SpriteAnimationData.sequenced(amount:isRun ? 6 : 4, stepTime: isRun ? 0.075 : 0.2, textureSize: Vector2(32,40))
+        );  
+      animations.add(newAnimation);
+
+      
+      // image.compositeImage(mergedImage, image1!,  dstX: 0);
+    }
+
+    return SimpleDirectionAnimation(
+      idleUp: animations[0],
+      idleUpLeft: animations[0],
+      idleUpRight: animations[0],
+      idleDown: animations[1],
+      idleDownLeft: animations[1],
+      idleDownRight: animations[1],
+      idleLeft: animations[2],
+      idleRight: animations[3],
+      runUp: animations[4],
+      runUpRight: animations[4],
+      runUpLeft: animations[4],
+      runDown: animations[5],
+      runDownRight: animations[5],
+      runDownLeft: animations[5],
+      runLeft: animations[6],
+      runRight: animations[7],
+    );
+  }
+
+  Future<ui.Image> bytesToImage(Uint8List imgBytes) async {
+    ui.Codec codec = await ui.instantiateImageCodec(imgBytes);
+    ui.FrameInfo frame;
+    try {
+      frame = await codec.getNextFrame();
+    } finally {
+      codec.dispose();
+    }
+    return frame.image;
   }
 
   void swordsmanDash() {

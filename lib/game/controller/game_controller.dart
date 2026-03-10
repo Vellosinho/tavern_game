@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as image;
+import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
 import 'package:projeto_gbb_demo/game/enum/one_time_animations.dart';
 import 'package:projeto_gbb_demo/game/items/base_item.dart';
@@ -13,9 +17,11 @@ class LocalGameController with ChangeNotifier {
   // int hour = 6
   int minute = 00;
 
-  DayTime daytime = DayTime.same;
+  DayTime daytime = DayTime.sunrise;
 
   Color mapTintColor = Colors.orange[400]!.withAlpha(48);
+  Color _visibilityScreen = Colors.black;
+  Color get visibilityScreen => _visibilityScreen;
 
   bool gameIsPaused = false;
   bool minigameIsActive = false;
@@ -34,6 +40,18 @@ class LocalGameController with ChangeNotifier {
   ];
   List<Item> get inventory => _inventory;
 
+  List<Vector2> exitCoords = [];
+  List<Function> exitFunctions = [];
+
+  bool isCooldown = false;
+
+  SimpleDirectionAnimation? _currentPlayerEquipment;
+  SimpleDirectionAnimation? get currentPlayerEquipment => _currentPlayerEquipment;
+
+  void setCurrentPlayerAnimation(SimpleDirectionAnimation newAnimations) {
+    _currentPlayerEquipment = newAnimations;
+  }
+
   //remove later
 
   double get playerLife => _playerLife;
@@ -50,6 +68,24 @@ class LocalGameController with ChangeNotifier {
   OneTimeAnimations get playAnimation => _playAnimation;
 
   int stashedIron = 0;
+
+  void setImportantCoords({required List<Vector2> newCoords, required List<Function> newFunctions}) {
+    exitCoords = newCoords;
+    exitFunctions = newFunctions;
+  }
+
+  void enableVisibility() {
+    Future.delayed(Duration(milliseconds: 250), () {
+      _visibilityScreen = _visibilityScreen.withAlpha(0);
+      notifyListeners();
+    });
+  }
+
+  void disableVisibility({bool? isBrightEnvironment}) {
+    // _visibilityScreen = (isBrightEnvironment ?? false) ? (getOutsideColor() ?? Colors.white.withAlpha(255)) : Colors.black.withAlpha(255);
+    _visibilityScreen = Colors.black.withAlpha(255);
+    notifyListeners();
+  }
 
   void heal(int value) {
     ((_playerLife + value) > 20) ? _playerLife = 20 : _playerLife += value;
@@ -164,6 +200,22 @@ class LocalGameController with ChangeNotifier {
               (currentPosition.y - minigamePos.y < -320))) {
         cancelMinigame();
         notifyListeners();
+      }
+    }
+  }
+
+  void checkImportantCoordsDistance(Vector2 currentPosition) {
+    if (!isCooldown) {
+      for (int i = 0; i < exitCoords.length; i++) {
+        if (((currentPosition.x - exitCoords[i].x).abs() < 300) &&
+              ((currentPosition.y - exitCoords[i].y).abs() < 100)) {
+            // print("Teste");
+            exitFunctions[i]();
+            isCooldown = true;
+            Future.delayed(Duration(milliseconds: 500), () {
+              isCooldown = false;
+            });
+        }
       }
     }
   }
@@ -288,8 +340,6 @@ class LocalGameController with ChangeNotifier {
       minute += 10;
     }
 
-    updateShading();
-
     // Future.delayed(Duration(seconds: 10), () {
     Future.delayed(Duration(seconds: 10), () {
       passMinute();
@@ -331,12 +381,30 @@ class LocalGameController with ChangeNotifier {
     notifyListeners();
   }
 
-  void turnOffTimechange() {
-    daytime = DayTime.same;
-    notifyListeners();
+  Color? getOutsideColor() {
+    switch (daytime) {
+      case DayTime.sunrise:
+        return Colors.orange[400];
+      case DayTime.noon:
+        return Colors.yellow[100];
+      case DayTime.sunset:
+        return Colors.orange[400];
+      case DayTime.night:
+        return Colors.indigo[900];
+    }
   }
 
   void shrugPlayer() {
     _playAnimation = OneTimeAnimations.shrug;
+  }
+
+  void createPlayerSprite() {
+    final image1 = image.decodeImage(File('assets/images/communist/blacksmith/unarmed/blacksmith_idle_front.png').readAsBytesSync());
+    final image2 = image.decodeImage(File('assets/images/equipment/black_pearl/idle_front.png').readAsBytesSync());
+    // image.compositeImage(mergedImage, image1!,  dstX: 0);
+    image.compositeImage(image1!, image2!,  dstX: 0);
+    final file = new File("assets/images/player/merged_image.png");
+    file.writeAsBytesSync(image.encodePng(image1));
+    // imageCache.clear();
   }
 }

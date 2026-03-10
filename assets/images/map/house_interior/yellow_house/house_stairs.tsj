@@ -5,12 +5,12 @@
  "margin":0,
  "name":"house_stairs",
  "spacing":0,
- "tilecount":16,
- "tiledversion":"1.11.1-99-gec89c545",
+ "tilecount":64,
+ "tiledversion":"1.11.1",
  "tileheight":32,
  "tiles":[
         {
-         "id":4,
+         "id":0,
          "objectgroup":
             {
              "draworder":"index",
@@ -24,7 +24,7 @@
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":32,
+                     "width":5,
                      "x":0,
                      "y":0
                     }],
@@ -36,22 +36,22 @@
             }
         }, 
         {
-         "id":5,
+         "id":1,
          "objectgroup":
             {
              "draworder":"index",
-             "id":2,
+             "id":3,
              "name":"",
              "objects":[
                     {
                      "height":32,
-                     "id":1,
+                     "id":2,
                      "name":"",
                      "rotation":0,
                      "type":"",
                      "visible":true,
-                     "width":32,
-                     "x":0,
+                     "width":5,
+                     "x":27,
                      "y":0
                     }],
              "opacity":1,
@@ -75,56 +75,10 @@
         }, 
         {
          "id":12,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "id":2,
-             "name":"",
-             "objects":[
-                    {
-                     "height":32,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":32,
-                     "x":0,
-                     "y":0
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            },
          "type":"above"
         }, 
         {
          "id":13,
-         "objectgroup":
-            {
-             "draworder":"index",
-             "id":2,
-             "name":"",
-             "objects":[
-                    {
-                     "height":32,
-                     "id":1,
-                     "name":"",
-                     "rotation":0,
-                     "type":"",
-                     "visible":true,
-                     "width":32,
-                     "x":0,
-                     "y":0
-                    }],
-             "opacity":1,
-             "type":"objectgroup",
-             "visible":true,
-             "x":0,
-             "y":0
-            },
          "type":"above"
         }, 
         {
@@ -132,7 +86,6 @@
          "objectgroup":
             {
              "draworder":"index",
-             "id":2,
              "name":"",
              "objects":[
                     {

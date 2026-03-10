@@ -30,26 +30,37 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
     // return PlayerLife(game: widget.game, characterClass: widget.characterClass, characterFaction: widget.characterFaction,);
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Stack(
-        children: [
-          PlayerLife(
+      body: Consumer<LocalGameController>(
+        builder: (context, controller, _) => Stack(
+          children: [
+            PlayerLife(
+              controller: controller,
               game: widget.game,
               characterClass: widget.characterClass,
               characterFaction: widget.characterFaction),
-          GameMiniMap(game: widget.game),
-        ],
+            GameMiniMap(game: widget.game),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 600),
+              color: controller.visibilityScreen,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
 class PlayerLife extends StatelessWidget {
+  final LocalGameController controller;
   final BonfireGame game;
   final CharacterClass characterClass;
   final CharacterFaction? characterFaction;
 
-  const PlayerLife(
-      {required this.game,
+  const PlayerLife({
+      required this.controller,
+      required this.game,
       required this.characterClass,
       this.characterFaction,
       super.key});
@@ -70,7 +81,7 @@ class PlayerLife extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Inventory(),
+                  Inventory(controller: controller),
                 ],
               ),
             ],
@@ -82,12 +93,12 @@ class PlayerLife extends StatelessWidget {
 }
 
 class Inventory extends StatelessWidget {
-  const Inventory({super.key});
+  final LocalGameController controller;
+  const Inventory({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocalGameController>(
-      builder: (context, controller, _) => Stack(children: [
+    return Stack(children: [
         SizedBox(
             height: 88,
             width: 304,
@@ -114,7 +125,7 @@ class Inventory extends StatelessWidget {
           ),
         ),
         InterfaceSpriteSheet.inventoryBar
-      ]),
+      ]
     );
   }
 }
