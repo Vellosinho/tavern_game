@@ -7,4 +7,8 @@ List<String> animationList = [
   'walk_front',
   'walk_left',
   'walk_right',
+  'dash_left',
+  'dash_front',
+  'dash_right',
+  'dash_back',
 ];

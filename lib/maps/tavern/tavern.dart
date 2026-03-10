@@ -5,6 +5,7 @@ import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/forge_minigame/minigame.dart';
 import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
+import 'package:projeto_gbb_demo/game/objects/chest.dart';
 import 'package:projeto_gbb_demo/maps/tavern/components/exit_mat.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
 import 'package:projeto_gbb_demo/players/player_one/blacksmith/blacksmith.dart';
@@ -102,9 +103,7 @@ class _TavernMapState extends State<TavernMap> {
       ),
       // lightingColorGame: Colors.orange[400]!.withAlpha(48),
       components: [
-        ExitMat(
-            exitFunction: exitToTown,
-            position: Vector2(tileSize * 2, tileSize * 9))
+        Chest(localGameController: widget.controller, position: Vector2(tileSize * 3, tileSize * 7.5)),
       ],
       cameraConfig: CameraConfig(zoom: 0.8, moveOnlyMapArea: true),
       player: player,

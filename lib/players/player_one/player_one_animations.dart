@@ -1,11 +1,36 @@
 import 'dart:async';
 
 import 'package:bonfire/bonfire.dart';
+import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/game_sprite_sheet.dart';
 
 class PlayerOneAnimations {
 
   PlayerOneAnimations();
+
+  SpriteAnimation? getGeneratedDash(LocalGameController controller, String direction) {
+    
+    switch (direction) {
+        case '3.141592653589793':
+          return controller.dashLeft;
+        case '1.7453292519943295e-9':
+          return controller.dashRight;
+        case '-0.7853981633974483':
+          return controller.dashBack;
+        case '2.356194490192345':
+          return controller.dashFront;
+        case '-2.356194490192345':
+          return controller.dashBack;
+        case '0.7853981633974483':
+          return controller.dashFront;
+        case '-1.5707963267948966':
+          return controller.dashBack;
+        case '1.5707963267948966':
+          return controller.dashFront;
+        default:
+          return controller.dashFront;
+      }
+  }
 
   FutureOr<SpriteAnimation> getArmedAnimation(String direction) {
       switch (direction) {

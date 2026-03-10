@@ -44,6 +44,7 @@ flutter:
     - assets/images/objects/sword_box/
     - assets/images/objects/smithing_table/
     - assets/images/objects/wheat_fields/
+    - assets/images/objects/chest/
     - assets/images/communist/blacksmith/
     - assets/images/communist/blacksmith/armed/
     - assets/images/communist/blacksmith/armed/armored/
