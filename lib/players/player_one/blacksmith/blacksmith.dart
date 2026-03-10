@@ -123,7 +123,7 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
     
     for (int i = 0; i < animationList.length; i++) {
       bool isRun = animationList[i].contains("walk");
-      final weapon = image.decodeImage(File('assets/images/weapons/red_crow/${animationList[i]}.png').readAsBytesSync());
+      final weapon = image.decodeImage(File('assets/images/weapons/unarmed/${animationList[i]}.png').readAsBytesSync());
       final image1 = image.decodeImage(File('assets/images/base_player/${animationList[i]}.png').readAsBytesSync());
       final image2 = image.decodeImage(File('assets/images/equipment/$armor/${animationList[i]}.png').readAsBytesSync());
       
