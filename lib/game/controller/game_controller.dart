@@ -32,6 +32,13 @@ class LocalGameController with ChangeNotifier {
   bool _resetColision = false;
   bool get resetColision => _resetColision;
 
+  String _currentArmor = '';
+  String get currentArmor => _currentArmor;
+
+  void setCurrentArmor(String armor) {
+    _currentArmor = armor;
+  }
+
   double _playerLife = 100;
   int _playerWallet = 0;
   int _playerFollowers = 0;
@@ -370,7 +377,6 @@ class LocalGameController with ChangeNotifier {
       minute += 10;
     }
 
-    // Future.delayed(Duration(seconds: 10), () {
     Future.delayed(Duration(seconds: 10), () {
       passMinute();
     });
@@ -439,10 +445,9 @@ class LocalGameController with ChangeNotifier {
   }
 
   Future<void> changeEquipment(String armor) async {
-  SimpleDirectionAnimation newAnimations = await generateDirectionAnimation(armor);
-
-  setCurrentPlayerAnimation(newAnimations);
-  
+    SimpleDirectionAnimation newAnimations = await generateDirectionAnimation(armor);
+    setCurrentPlayerAnimation(newAnimations);
+    setCurrentArmor(armor);
   }
 
   Future<SimpleDirectionAnimation> generateDirectionAnimation(String armor) async {
