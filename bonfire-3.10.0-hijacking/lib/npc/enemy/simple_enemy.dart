@@ -15,6 +15,7 @@ class SimpleEnemy extends Enemy with DirectionAnimation {
     double life = 100,
     double? speed,
     Direction initDirection = Direction.right,
+    bool? keepRendered,
     AcceptableAttackOriginEnum receivesAttackFrom =
         AcceptableAttackOriginEnum.PLAYER_AND_ALLY,
   }) : super(
@@ -23,6 +24,7 @@ class SimpleEnemy extends Enemy with DirectionAnimation {
           life: life,
           speed: speed,
           receivesAttackFrom: receivesAttackFrom,
+          keepRendered: keepRendered,
         ) {
     this.animation = animation;
     lastDirection = initDirection;

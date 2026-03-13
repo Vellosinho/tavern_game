@@ -47,7 +47,7 @@ class GameMiniMap extends StatelessWidget {
               right: 288,
               top: 176, 
               // child: SizedBox(height: 64, width: 352, child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
-              child: SizedBox(height: 64, width: (controller.playerLife * 3.52), child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
+              child: SizedBox(height: 64, width: (((controller.playerLife < 0) ? 0 : controller.playerLife) * 3.52), child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
             InterfaceSpriteSheet.miniMapDecoration,
             Positioned(top: 18, right: 292, child: Transform.rotate(angle: ((2 * pi) / 24 * controller.hour) - pi, child: SizedBox(height: 60, width: 3, child: Column(
               children: [

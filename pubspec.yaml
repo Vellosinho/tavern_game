@@ -50,6 +50,7 @@ flutter:
     - assets/images/communist/blacksmith/armed/armored/
     - assets/images/communist/blacksmith/unarmed/
     - assets/images/capitalist/
+    - assets/images/boss/griffin/
     - assets/images/equipment/black_pearl/
     - assets/images/equipment/griffin/
     - assets/images/equipment/iron/
@@ -59,6 +60,7 @@ flutter:
     - assets/images/statues/
     - assets/images/loyalist/
     - assets/images/map/
+    - assets/images/map/griffin_base/
     - assets/images/map/house_interior/yellow_house/
     - assets/images/items/
     - assets/images/interface/
