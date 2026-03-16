@@ -109,32 +109,35 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
   
 
   void swordsmanDash() {
-    simpleAttackMelee(
-        sizePush: 0,
-        damage: 0,
-        withPush: false,
-        size: Vector2(96, 96),
-        animationRight: GameSpriteSheet.dashEffect,
-        direction: lastDirection,
-      );
-    Vector2 initPosition = gameRef.player?.position.gg ?? Vector2(0, 0);
+    // simpleAttackMelee(
+    //     sizePush: 0,
+    //     damage: 0,
+    //     withPush: false,
+    //     size: Vector2(96, 96),
+    //     animationRight: GameSpriteSheet.dashEffect,
+    //     direction: lastDirection,
+    //   );
+    // Vector2 initPosition = gameRef.player?.position.gg ?? Vector2(0, 0);
 
-    Vector2 startPosition = initPosition + Vector2.zero();
+    // Vector2 startPosition = initPosition + Vector2.zero();
 
-    Vector2 diffBase = BonfireUtil.diffMovePointByAngle(
-      startPosition,
-      250,
-      lastDirection.toRadians(),
-    );
+    // Vector2 diffBase = BonfireUtil.diffMovePointByAngle(
+    //   startPosition,
+    //   250,
+    //   lastDirection.toRadians(),
+    // );
 
     // animation?.playOnce(isArmed
     //     ? playerOneAnimations
     //         .getArmedAnimation(lastDirection.toRadians().toString())
     //     : playerOneAnimations
     //         .getUnarmedAnimation(lastDirection.toRadians().toString()));
-    animation?.playOnce(playerOneAnimations.getGeneratedDash(localGameController, lastDirection.toRadians().toString()) as FutureOr<SpriteAnimation>);
+    speed = 1000;
+    animation?.playOnce(playerOneAnimations.getGeneratedDash(localGameController, lastDirection.toRadians().toString()) as FutureOr<SpriteAnimation>).then((_) {
+      speed = PlayerConsts.characterSpeed;
+    });
 
-    translate(diffBase);
+    // translate(diffBase);
     dashReady = false;
     Future.delayed(const Duration(seconds: 2), () {
       dashReady = true;

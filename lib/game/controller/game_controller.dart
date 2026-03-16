@@ -524,24 +524,28 @@ class LocalGameController with ChangeNotifier {
     String label,
   ) async {
     late Uint8List imageValue;
-    final wings = image.decodeImage(File('assets/images/base_player/${label}_wings.png').readAsBytesSync());
+    // final wings = image.decodeImage(File('assets/images/base_player/${label}_wings.png').readAsBytesSync());
     if(label.contains("front") || label.contains("left")) {
-      image.compositeImage(wings!, weapon!,  dstX: 0);
-      image.compositeImage(wings!, basePlayer!,  dstX: 0);
-      image.compositeImage(wings!, armor!,  dstX: 0);
-      imageValue = image.encodePng(wings);
-    } else {
+      // image.compositeImage(wings!, weapon!,  dstX: 0);
+      // image.compositeImage(wings!, basePlayer!,  dstX: 0);
       image.compositeImage(basePlayer!, armor!,  dstX: 0);
-      image.compositeImage(basePlayer!, weapon!,  dstX: 0);
-      image.compositeImage(basePlayer!, wings!,  dstX: 0);
-      imageValue = image.encodePng(basePlayer);
+      // image.compositeImage(wings!, armor!,  dstX: 0);
+      // imageValue = image.encodePng(wings);
+      imageValue = image.encodePng(basePlayer!);
+    } else {
+      // image.compositeImage(basePlayer!, armor!,  dstX: 0);
+      // image.compositeImage(basePlayer!, weapon!,  dstX: 0);
+      // image.compositeImage(basePlayer!, wings!,  dstX: 0);
+      // imageValue = image.encodePng(basePlayer);
+      image.compositeImage(basePlayer!, armor!,  dstX: 0);
+      imageValue = image.encodePng(basePlayer!);
     }
 
     var spriteImage = await bytesToImage(imageValue);
     
     return SpriteAnimation.fromFrameData(
       spriteImage,
-      SpriteAnimationData.sequenced(amount:4, stepTime: 0.075, textureSize: Vector2(32,40))
+      SpriteAnimationData.sequenced(amount:7, stepTime: 0.075, textureSize: Vector2(32,40))
     );
   }
 

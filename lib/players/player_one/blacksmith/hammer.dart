@@ -93,7 +93,7 @@ mixin Hammer on LitPlayer {
     if (hasGameRef) {
       simpleAttackMelee(
         sizePush: 0.2,
-        damage: damage ?? 5,
+        damage: 20,
         withPush: ((damage ?? 5) >= 20) ? true : false,
         size: size * 1.15,
         animationRight: ((damage ?? 5) >= 20)

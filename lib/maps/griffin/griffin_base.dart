@@ -6,7 +6,9 @@ import 'package:projeto_gbb_demo/forge_minigame/minigame.dart';
 import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
 import 'package:projeto_gbb_demo/game/objects/chest.dart';
+import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/maps/griffin/griffin.dart';
+import 'package:projeto_gbb_demo/maps/griffin/objects/pillar.dart';
 import 'package:projeto_gbb_demo/players/player_one/blacksmith/blacksmith.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -29,7 +31,7 @@ class _GriffinBaseState extends State<GriffinBase> {
   @override
   void initState() {
     // widget.controller.disableVisibility();
-    widget.controller.changeEquipment("griffin");
+    widget.controller.changeEquipment("yeti");
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
@@ -50,7 +52,7 @@ class _GriffinBaseState extends State<GriffinBase> {
         widget.controller.hit(2);
       },
       faction: playerFaction,
-      position: Vector2(tileSize * 20, tileSize * 16),
+      position: Vector2(tileSize * 15.5, tileSize * 18),
     );
 
     // void exitToTown() {
@@ -103,8 +105,16 @@ class _GriffinBaseState extends State<GriffinBase> {
       ),
       components: [
         Griffin(
-          position: Vector2(tileSize * 18, tileSize * 10), localGameController: widget.controller, id: 'grifo',
-        )
+          position: Vector2(tileSize * 14, tileSize * 10), localGameController: widget.controller, id: 'grifo',
+        ),
+        Pillar(position: Vector2(tileSize * 10, tileSize * 18), pillarNumber: 1),
+        Pillar(position: Vector2(tileSize * 20, tileSize * 18), pillarNumber: 2),
+        Pillar(position: Vector2(tileSize * 7, tileSize * 11), pillarNumber: 3),
+        Pillar(position: Vector2(tileSize * 23, tileSize * 11), pillarNumber: 4),
+        Pillar(position: Vector2(tileSize * 9, tileSize * 5), pillarNumber: 5),
+        Pillar(position: Vector2(tileSize * 21, tileSize * 4), pillarNumber: 6),
+        Pillar(position: Vector2(tileSize * 15, tileSize * 1), pillarNumber: 7),
+        DayTimeClock(position: Vector2(0,0), localGameController: widget.controller),
       ],
       cameraConfig: CameraConfig(zoom: 0.8, moveOnlyMapArea: true),
       player: player,

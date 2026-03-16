@@ -85,7 +85,7 @@ class _TownMapState extends State<TownMap> {
     
     void enterTavern() {
       widget.controller.disableVisibility();
-      Future.delayed(Duration(milliseconds: 1000), () {
+      Future.delayed(Duration(milliseconds: 3000), () {
 
       player.position = Vector2(tileSize * 20, tileSize * 15);
       widget.controller.toggleResetCollision();
