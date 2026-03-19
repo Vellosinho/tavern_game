@@ -27,7 +27,8 @@ class Griffin extends SimpleEnemy with BlockMovementCollision {
     required this.localGameController,
     required this.id,
   }) : super(
-          life: 1000,
+          // life: 1000,
+          life: 50,
           initDirection: Direction.down,
           size: Vector2(796, 796),
           animation: SimpleDirectionAnimation(idleRight: GriffinSprites.griffinBase, runRight: GriffinSprites.griffinBase),
@@ -211,8 +212,15 @@ class Griffin extends SimpleEnemy with BlockMovementCollision {
     }
   }
 
+  void stunAttack() {
+    simpleAttackMeleeByDirection(damage: 0, withPush: false, size: Vector2(1592, 1592), direction: Direction.down, centerOffset: Vector2(0, -260), attackFrom: AttackOriginEnum.ENEMY, damageType: DamageType.STUN);
+  }
+
   void windAttack() {
     isMidAnimation = true;
+    Future.delayed(Duration(milliseconds: 600), () {
+      stunAttack();
+    });
     animation?.playOnce(GriffinSprites.griffinScreechFlight).then((_) {
       removeColisions();
       replaceAnimation(SimpleDirectionAnimation(idleRight: GriffinSprites.flyingGriffin, runRight: GriffinSprites.flyingGriffin));

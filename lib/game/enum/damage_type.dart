@@ -1,1 +1,1 @@
-enum DamageType { none, fire, thunder, water}
+enum DamageType { none, fire, thunder, water, stun}

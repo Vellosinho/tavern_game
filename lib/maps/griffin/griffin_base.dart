@@ -31,7 +31,7 @@ class _GriffinBaseState extends State<GriffinBase> {
   @override
   void initState() {
     // widget.controller.disableVisibility();
-    widget.controller.changeEquipment("yeti");
+    widget.controller.changeEquipment("griffin");
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();

@@ -65,7 +65,6 @@ flutter:
     - assets/images/items/
     - assets/images/interface/
     - assets/images/ruins_village_map/
-    - assets/images/interface/lifebar/
     - assets/images/interface/inventorybar/
     - assets/images/interface/minimap/
     - assets/images/background/

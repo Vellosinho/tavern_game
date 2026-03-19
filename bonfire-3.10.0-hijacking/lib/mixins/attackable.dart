@@ -9,7 +9,7 @@ enum AcceptableAttackOriginEnum { ALL, ENEMY, PLAYER_AND_ALLY, NONE }
 enum AttackOriginEnum { ENEMY, PLAYER_OR_ALLY, WORLD }
 
 
-enum DamageType { NONE, FIRE, THUNDER, WATER }
+enum DamageType { NONE, FIRE, THUNDER, WATER, STUN }
 
 /// Mixin responsible for adding damage-taking behavior to the component.
 mixin Attackable on GameComponent {

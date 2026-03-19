@@ -26,6 +26,7 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
   Function onHit;
   double playerLife;
   PlayerOneAnimations playerOneAnimations = PlayerOneAnimations();
+  bool isStunned = false;
 
   // control booleans:
   bool dashReady = true;
@@ -62,14 +63,27 @@ class BlacksmithClass extends LitPlayer with BlockMovementCollision, Hammer {
   @override
   void onReceiveDamage(attacker, double damage, identify, damageType) {
     print("damage received");
+    if (damageType == DamageType.STUN) {
+      stun();
+    }
     // onHit();
     localGameController.hit(damage);
     super.onReceiveDamage(attacker, damage, identify, damageType);
   }
 
+  void stun() {
+    stopMove();
+    isStunned = true;
+    speed = 0;
+    Future.delayed(Duration(seconds: 3), () {
+      isStunned = false;
+      speed = PlayerConsts.characterSpeed;
+    });
+  }
+
   @override
   void onJoystickAction(JoystickActionEvent event) {
-    swordsmanHitSet(event);
+    !isStunned ? swordsmanHitSet(event) : null;
     return super.onJoystickAction(event);
   }
 
