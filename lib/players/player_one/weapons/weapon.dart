@@ -2,8 +2,9 @@ import 'package:bonfire/bonfire.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:bonfire/player/lit_player.dart';
 import 'package:projeto_gbb_demo/players/consts.dart';
+import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
 
-mixin Hammer on LitPlayer {
+mixin Weapon on LitPlayer {
   double? damage = 5;
   DamageType damageType = DamageType.NONE;
   int holdHits = 0;
@@ -12,7 +13,7 @@ mixin Hammer on LitPlayer {
   bool holdAttackUsed = false;
   bool holdReady = true;
 
-  void hammerAttack(JoystickActionEvent event) {
+  void weaponAttack(JoystickActionEvent event) {
     if ((damage ?? 5) >= 20) {
       // if(event.id.keyId == LogicalKeyboardKey.keyZ.keyId && holdReady && event.event == ActionEvent.DOWN) {
       if (event.id.keyId == LogicalKeyboardKey.keyZ.keyId) {
@@ -25,7 +26,7 @@ mixin Hammer on LitPlayer {
               replaceAnimation(spinningBlacksmithAttack);
               holdAttackUsed = true;
               holdReady = false;
-              spinAttack();
+              advancedWeaponAttack();
             }
           });
         } else if (event.event == ActionEvent.UP) {
@@ -49,7 +50,7 @@ mixin Hammer on LitPlayer {
     }
   }
 
-  void spinAttack() {
+  void advancedWeaponAttack() {
     simpleAttackMelee(
       centerOffset: Vector2(-96, 0),
       withPush: false,
@@ -64,7 +65,7 @@ mixin Hammer on LitPlayer {
     Future.delayed(Duration(milliseconds: 300), () {
       if (attackHold && holdHits < 10) {
         setupElementalLighting(width * 1.2 - holdHits * 16);
-        spinAttack();
+        advancedWeaponAttack();
         holdHits++;
       } else {
         holdReady = false;

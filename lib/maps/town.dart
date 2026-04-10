@@ -8,24 +8,21 @@ import 'package:projeto_gbb_demo/game/enum/character_faction.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
 import 'package:projeto_gbb_demo/game/game_sprite_sheet.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
-import 'package:projeto_gbb_demo/game/npcs/npcs.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
-import 'package:projeto_gbb_demo/game/objects/objects.dart';
-import 'package:projeto_gbb_demo/game/objects/plants/wheat_field.dart';
 import 'package:projeto_gbb_demo/maps/tavern/components/exit_mat.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/parallax/parallax_clouds.dart';
+import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'package:projeto_gbb_demo/players/player_consts.dart';
-import 'package:projeto_gbb_demo/forge_minigame/minigame.dart';
-import 'package:projeto_gbb_demo/players/player_one/blacksmith/blacksmith.dart';
+import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class TownMap extends StatefulWidget {
-  // late final widget.controller widget.controller;
-  final LocalGameController controller;
+  final LocalGameController gameController;
+  final PlayerOneController playerOneController;
 
-  const TownMap({super.key, required this.controller});
+  const TownMap({super.key, required this.gameController, required this.playerOneController});
 
   @override
   State<TownMap> createState() => _TownMapState();
@@ -43,12 +40,12 @@ class _TownMapState extends State<TownMap> {
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
-    widget.controller.enableVisibility();
+    widget.gameController.enableVisibility();
     super.initState();
   }
 
   void getLighting() {
-      switch (widget.controller.daytime) {
+      switch (widget.gameController.daytime) {
         case DayTime.sunrise:
           initialLighting = Colors.orange[400]!.withAlpha(48);
           return;
@@ -70,30 +67,29 @@ class _TownMapState extends State<TownMap> {
   @override
   Widget build(BuildContext context) {
     
-  double tileSize = 192;
-    LocalGameController gameController = context.read<LocalGameController>();
-    LitPlayer player = BlacksmithClass(
-      localGameController: gameController,
+    double tileSize = 192;
+    LitPlayer player = BasePlayer(
+      playerController: widget.playerOneController,
       id: id,
-      playerLife: context.watch<LocalGameController>().playerLife.toDouble(),
+      playerLife: widget.playerOneController.playerLife.toDouble(),
       onHit: () {
-        gameController.hit(2);
+        widget.playerOneController.hit(2);
       },
-      faction: playerFaction,
       position: Vector2(tileSize * 19, tileSize * 13),
     );
     
     void enterTavern() {
-      widget.controller.disableVisibility();
+      widget.gameController.disableVisibility();
       Future.delayed(Duration(milliseconds: 3000), () {
 
       player.position = Vector2(tileSize * 20, tileSize * 15);
-      widget.controller.toggleResetCollision();
+      widget.gameController.toggleResetCollision();
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation1, animation2) => TavernMap(
-            controller: widget.controller,
+            gameController: widget.gameController,
+            playerOneController: widget.playerOneController,
           ),
           transitionDuration: Duration(milliseconds: 1),
           reverseTransitionDuration: Duration(milliseconds: 1),
@@ -118,7 +114,7 @@ class _TownMapState extends State<TownMap> {
           LogicalKeyboardKey.escape,
         ]))
       ],
-      // widget.controller: widget.controller,
+      // widget.gameController: widget.gameController,
       lightingColorGame: initialLighting,
       components: [
         // BlackSmithMaster(
@@ -126,23 +122,23 @@ class _TownMapState extends State<TownMap> {
         //     size: PlayerConsts.tallNPCSize,
         //     hitboxSize: PlayerConsts.characterHitbox,
         //     hitboxPosition: PlayerConsts.hitboxPosition,
-        //     controller: widget.controller),
+        //     controller: widget.gameController),
         // Anvil(
         //     position: Vector2(tileSize * 21.5, tileSize * 19.5),
-        //     localGameController: widget.controller),
+        //     localGameController: widget.gameController),
         // Furnace(
         //     position: Vector2(tileSize * 21, tileSize * 11),
-        //     localGameController: widget.controller),
+        //     localGameController: widget.gameController),
         // SwordShippingBox(
         //     position: Vector2(tileSize * 19, tileSize * 18.5),
-        //     localGameController: widget.controller),
+        //     localGameController: widget.gameController),
         // LaunchStation(
         //     position: Vector2(tileSize * 14, tileSize * 13.5),
-        //     localGameController: widget.controller),
+        //     localGameController: widget.gameController),
         // SmithingTable(
         //     position: Vector2(tileSize * 22.75, tileSize * 16.85),
-        //     localGameController: widget.controller),
-        DayTimeClock(position: Vector2(0,0), localGameController: widget.controller),
+        //     localGameController: widget.gameController),
+        DayTimeClock(position: Vector2(0,0), localGameController: widget.gameController),
         ExitMat(position: Vector2(tileSize * 19, tileSize * 13), exitFunction: () {
           enterTavern();
         })
@@ -156,11 +152,9 @@ class _TownMapState extends State<TownMap> {
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
             PlayerInterface(game: game, characterClass: playerOneClass),
-        MiniGame.overlayKey: (context, game) => MiniGame(),
       },
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,
-        MiniGame.overlayKey,
       ],
       // showCollisionArea: true,
     );

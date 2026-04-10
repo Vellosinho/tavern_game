@@ -2,22 +2,24 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/player/lit_player.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
-import 'package:projeto_gbb_demo/forge_minigame/minigame.dart';
 import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
-import 'package:projeto_gbb_demo/game/objects/chest.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/maps/griffin/griffin.dart';
 import 'package:projeto_gbb_demo/maps/griffin/objects/pillar.dart';
-import 'package:projeto_gbb_demo/players/player_one/blacksmith/blacksmith.dart';
+import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
+import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class GriffinBase extends StatefulWidget {
-  final LocalGameController controller;
+  final LocalGameController gameController;
+  final PlayerOneController playerOneController;
   const GriffinBase(
       {super.key,
-      required this.controller});
+      required this.gameController,
+      required this.playerOneController,
+      });
 
   @override
   State<GriffinBase> createState() => _GriffinBaseState();
@@ -31,11 +33,11 @@ class _GriffinBaseState extends State<GriffinBase> {
   @override
   void initState() {
     // widget.controller.disableVisibility();
-    widget.controller.changeEquipment("griffin");
+    widget.playerOneController.changeEquipment("yeti");
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
-    widget.controller.enableVisibility();
+    widget.gameController.enableVisibility();
     super.initState();
   }
 
@@ -43,15 +45,14 @@ class _GriffinBaseState extends State<GriffinBase> {
   Widget build(BuildContext context) {
     double tileSize = 192;
 
-    LitPlayer player = BlacksmithClass(
-      localGameController: widget.controller,
+    LitPlayer player = BasePlayer(
+      playerController: widget.playerOneController,
       id: id,
-      playerLife: context.watch<LocalGameController>().playerLife.toDouble(),
+      playerLife: widget.playerOneController.playerLife.toDouble(),
       initDirection: Direction.up,
       onHit: () {
-        widget.controller.hit(2);
+        widget.playerOneController.hit(2);
       },
-      faction: playerFaction,
       position: Vector2(tileSize * 15.5, tileSize * 18),
     );
 
@@ -105,7 +106,7 @@ class _GriffinBaseState extends State<GriffinBase> {
       ),
       components: [
         Griffin(
-          position: Vector2(tileSize * 14, tileSize * 10), localGameController: widget.controller, id: 'grifo',
+          position: Vector2(tileSize * 14, tileSize * 10), localGameController: widget.gameController, id: 'grifo',
         ),
         Pillar(position: Vector2(tileSize * 10, tileSize * 18), pillarNumber: 1),
         Pillar(position: Vector2(tileSize * 20, tileSize * 18), pillarNumber: 2),
@@ -114,18 +115,16 @@ class _GriffinBaseState extends State<GriffinBase> {
         Pillar(position: Vector2(tileSize * 9, tileSize * 5), pillarNumber: 5),
         Pillar(position: Vector2(tileSize * 21, tileSize * 4), pillarNumber: 6),
         Pillar(position: Vector2(tileSize * 15, tileSize * 1), pillarNumber: 7),
-        DayTimeClock(position: Vector2(0,0), localGameController: widget.controller),
+        DayTimeClock(position: Vector2(0,0), localGameController: widget.gameController),
       ],
       cameraConfig: CameraConfig(zoom: 0.8, moveOnlyMapArea: true),
       player: player,
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
             PlayerInterface(game: game, characterClass: playerOneClass),
-        MiniGame.overlayKey: (context, game) => MiniGame(),
       },
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,
-        MiniGame.overlayKey,
       ],
       // showCollisionArea: true,
     );

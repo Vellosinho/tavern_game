@@ -4,6 +4,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/game_sprite_sheet.dart';
+import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'package:provider/provider.dart';
 
 class GameMiniMap extends StatelessWidget {
@@ -12,8 +13,8 @@ class GameMiniMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocalGameController>(
-      builder: (BuildContext context, LocalGameController controller, _) => Positioned(
+    return Consumer2<LocalGameController, PlayerOneController>(
+      builder: (BuildContext context, LocalGameController controller, PlayerOneController playerOneController, _) => Positioned(
         bottom: 16,
         right: 16,
         child: Stack(
@@ -47,7 +48,7 @@ class GameMiniMap extends StatelessWidget {
               right: 288,
               top: 176, 
               // child: SizedBox(height: 64, width: 352, child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
-              child: SizedBox(height: 64, width: (((controller.playerLife < 0) ? 0 : controller.playerLife) * 3.52), child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
+              child: SizedBox(height: 64, width: (((playerOneController.playerLife < 0) ? 0 : playerOneController.playerLife) * 3.52), child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
             InterfaceSpriteSheet.miniMapDecoration,
             Positioned(top: 18, right: 292, child: Transform.rotate(angle: ((2 * pi) / 24 * controller.hour) - pi, child: SizedBox(height: 60, width: 3, child: Column(
               children: [
@@ -62,11 +63,11 @@ class GameMiniMap extends StatelessWidget {
             children: [
               InterfaceSpriteSheet.coin,
               const SizedBox(width: 8),
-              Text('${context.watch<LocalGameController>().playerWallet}', style: TextStyle(fontFamily: 'PressStart2P', color: Colors.amber[400], fontSize: 24),),
+              Text('${playerOneController.playerWallet}', style: TextStyle(fontFamily: 'PressStart2P', color: Colors.amber[400], fontSize: 24),),
               const SizedBox(width: 8),
               InterfaceSpriteSheet.people ,
               const SizedBox(width: 8),
-              Text('${context.watch<LocalGameController>().playerFollowers}', style: const TextStyle(fontFamily: 'PressStart2P', color: Colors.white, fontSize: 24),),
+              Text('${playerOneController.playerFollowers}', style: const TextStyle(fontFamily: 'PressStart2P', color: Colors.white, fontSize: 24),),
             ],
           ),)
           ]

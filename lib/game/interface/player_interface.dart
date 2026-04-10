@@ -2,6 +2,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/game/interface/minimap.dart';
 import 'package:projeto_gbb_demo/game/items/base_item.dart';
+import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import '../enum/character_faction.dart';
 import '../controller/game_controller.dart';
 import '../game_sprite_sheet.dart';
@@ -30,11 +31,12 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
     // return PlayerLife(game: widget.game, characterClass: widget.characterClass, characterFaction: widget.characterFaction,);
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Consumer<LocalGameController>(
-        builder: (context, controller, _) => Stack(
+      body: Consumer2<LocalGameController, PlayerOneController>(
+        builder: (context, controller, playerOneController, _) => Stack(
           children: [
             PlayerLife(
               controller: controller,
+              playerOneController: playerOneController,
               game: widget.game,
               characterClass: widget.characterClass,
               characterFaction: widget.characterFaction),
@@ -54,12 +56,14 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
 
 class PlayerLife extends StatelessWidget {
   final LocalGameController controller;
+  final PlayerOneController playerOneController;
   final BonfireGame game;
   final CharacterClass characterClass;
   final CharacterFaction? characterFaction;
 
   const PlayerLife({
       required this.controller,
+      required this.playerOneController,
       required this.game,
       required this.characterClass,
       this.characterFaction,
@@ -81,7 +85,7 @@ class PlayerLife extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Inventory(controller: controller),
+                  Inventory(controller: controller, playerOneController: playerOneController,),
                 ],
               ),
             ],
@@ -94,7 +98,8 @@ class PlayerLife extends StatelessWidget {
 
 class Inventory extends StatelessWidget {
   final LocalGameController controller;
-  const Inventory({required this.controller, super.key});
+  final PlayerOneController playerOneController;
+  const Inventory({required this.controller, required this.playerOneController, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,16 +115,16 @@ class Inventory extends StatelessWidget {
           child: Row(
             children: [
               InventorySlot(
-                item: controller.inventory[0],
+                item: playerOneController.inventory[0],
               ),
               InventorySlot(
-                item: controller.inventory[1],
+                item: playerOneController.inventory[1],
               ),
               InventorySlot(
-                item: controller.inventory[2],
+                item: playerOneController.inventory[2],
               ),
               InventorySlot(
-                item: controller.inventory[3],
+                item: playerOneController.inventory[3],
               ),
             ],
           ),
@@ -167,7 +172,7 @@ class LifebarInterface extends StatelessWidget {
               InterfaceSpriteSheet.coin,
               const SizedBox(width: 8),
               Text(
-                '${context.watch<LocalGameController>().playerWallet}',
+                '${context.watch<PlayerOneController>().playerWallet}',
                 style: TextStyle(
                     fontFamily: 'PressStart2P',
                     color: Colors.amber[400],
@@ -177,7 +182,7 @@ class LifebarInterface extends StatelessWidget {
               InterfaceSpriteSheet.people,
               const SizedBox(width: 8),
               Text(
-                '${context.watch<LocalGameController>().playerFollowers}',
+                '${context.watch<PlayerOneController>().playerFollowers}',
                 style: const TextStyle(
                     fontFamily: 'PressStart2P',
                     color: Colors.white,
@@ -188,7 +193,7 @@ class LifebarInterface extends StatelessWidget {
         ),
         token[1],
         token[0],
-        LifeBar(life: (20 - context.watch<LocalGameController>().playerLife)),
+        LifeBar(life: (20 - context.watch<PlayerOneController>().playerLife)),
       ],
     );
   }

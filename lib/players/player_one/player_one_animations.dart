@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/game_sprite_sheet.dart';
+import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class PlayerOneAnimations {
 
   PlayerOneAnimations();
 
-  SpriteAnimation? getGeneratedDash(LocalGameController controller, String direction) {
+  SpriteAnimation? getGeneratedDash(PlayerOneController controller, String direction) {
     
     switch (direction) {
         case '3.141592653589793':

@@ -1,10 +1,10 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/objects/object_sprites.dart';
+import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class Chest extends GameDecoration with Attackable {
-  LocalGameController localGameController;
-  Chest({required super.position, required this.localGameController})
+  PlayerOneController playerOneController;
+  Chest({required super.position, required this.playerOneController})
       : super.withSprite(
             sprite: GameObjectsSprites.chest, size: Vector2(192, 192))
   // : super.withSprite(sprite: GameObjectsSprites.anvil, position: position, size: Vector2(96, 96))
@@ -26,10 +26,10 @@ class Chest extends GameDecoration with Attackable {
 
   @override
   void onReceiveDamage(attacker, double damage, identify, damageType) {
-    if (localGameController.currentArmor == 'yeti') {
-      localGameController.changeEquipment('griffin');
+    if (playerOneController.currentArmor == 'yeti') {
+      playerOneController.changeEquipment('griffin');
     } else {
-      localGameController.changeEquipment('yeti');
+      playerOneController.changeEquipment('yeti');
     }
     
     // localGameController.minigameIsActive

@@ -27,8 +27,7 @@ class Griffin extends SimpleEnemy with BlockMovementCollision {
     required this.localGameController,
     required this.id,
   }) : super(
-          // life: 1000,
-          life: 50,
+          life: 1000,
           initDirection: Direction.down,
           size: Vector2(796, 796),
           animation: SimpleDirectionAnimation(idleRight: GriffinSprites.griffinBase, runRight: GriffinSprites.griffinBase),

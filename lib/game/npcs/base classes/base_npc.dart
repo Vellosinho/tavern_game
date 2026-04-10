@@ -81,7 +81,7 @@ class BaseNPC extends SimpleAlly with PathFinding {
   }
 
   void convert() {
-    controller.playerFollowersAdd();
+    // controller.playerFollowersAdd();
     // gameRef.add(FarmerAlly(position: position, size: size, hitboxPosition: PlayerConsts.hitboxPosition, hitboxSize: PlayerConsts.characterHitbox, controller: controller));
     toggleKeepRendered();
     removeFromParent();
