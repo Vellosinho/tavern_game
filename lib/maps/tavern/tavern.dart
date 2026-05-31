@@ -31,8 +31,6 @@ class _TavernMapState extends State<TavernMap> {
   @override
   void initState() {
     // widget.gameController.disableVisibility();
-    playerFaction = context.read<PlayerConsts>().faccao;
-    playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
     widget.gameController.enableVisibility();
     super.initState();

@@ -28,7 +28,7 @@ class Chest extends GameDecoration with Attackable {
   void onReceiveDamage(attacker, double damage, identify, damageType) {
     if (playerOneController.currentArmor == 'yeti') {
       playerOneController.changeEquipment('griffin');
-    } else {
+    } else { 
       playerOneController.changeEquipment('yeti');
     }
     

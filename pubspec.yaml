@@ -47,7 +47,7 @@ flutter:
     - assets/images/objects/chest/
     - assets/images/communist/blacksmith/
     - assets/images/communist/blacksmith/armed/
-    - assets/images/communist/blacksmith/armed/armored/
+    - assets/images/communist/blacksmith/armed/armored/ 
     - assets/images/communist/blacksmith/unarmed/
     - assets/images/capitalist/
     - assets/images/boss/griffin/

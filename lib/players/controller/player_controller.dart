@@ -7,6 +7,7 @@ import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game/enum/animationList.dart';
 import 'package:projeto_gbb_demo/game/enum/one_time_animations.dart';
 import 'package:projeto_gbb_demo/game/items/base_item.dart';
+import 'package:projeto_gbb_demo/game/items/sword_item.dart';
 import 'package:projeto_gbb_demo/players/player_one/weapons/weapon_type.dart';
 
 class PlayerOneController with ChangeNotifier {
@@ -246,16 +247,6 @@ class PlayerOneController with ChangeNotifier {
     _playAnimation = OneTimeAnimations.shrug;
   }
 
-  void createPlayerSprite() {
-    final image1 = image.decodeImage(File('assets/images/communist/blacksmith/unarmed/blacksmith_idle_front.png').readAsBytesSync());
-    final image2 = image.decodeImage(File('assets/images/equipment/black_pearl/idle_front.png').readAsBytesSync());
-    // image.compositeImage(mergedImage, image1!,  dstX: 0);
-    image.compositeImage(image1!, image2!,  dstX: 0);
-    final file = new File("assets/images/player/merged_image.png");
-    file.writeAsBytesSync(image.encodePng(image1));
-    // imageCache.clear();
-  }
-
   Future<void> changeEquipment(String armor) async {
     SimpleDirectionAnimation newAnimations = await generateDirectionAnimation(armor);
     setCurrentPlayerAnimation(newAnimations);
@@ -264,11 +255,19 @@ class PlayerOneController with ChangeNotifier {
 
   Future<SimpleDirectionAnimation> generateDirectionAnimation(String armor) async {
     List<SpriteAnimation> animations = [];
+
+    image.Image? weapon;
+    image.Image? base_player;
+    image.Image? gear;
+    image.Image? weapon_background = null;
     
     for (int i = 0; i < animationList.length; i++) {
-      final weapon = image.decodeImage(File('assets/images/weapons/red_death/${animationList[i]}.png').readAsBytesSync());
-      final base_player = image.decodeImage(File('assets/images/base_player/${animationList[i]}.png').readAsBytesSync());
-      final gear = image.decodeImage(File('assets/images/equipment/$armor/${animationList[i]}.png').readAsBytesSync());
+      weapon = image.decodeImage(File('assets/images/weapons/griffin/${animationList[i]}.png').readAsBytesSync());
+      base_player = image.decodeImage(File('assets/images/base_player/${animationList[i]}.png').readAsBytesSync());
+      gear = image.decodeImage(File('assets/images/equipment/$armor/${animationList[i]}.png').readAsBytesSync());
+      if (animationList[i].contains("dash") && (animationList[i].contains("front") || animationList[i].contains("back"))) {
+        weapon_background = image.decodeImage(File('assets/images/weapons/griffin/${animationList[i]}_background.png').readAsBytesSync());
+      }
       
       bool isRun = animationList[i].contains("walk");
       if (animationList[i].contains("dash")) {
@@ -276,6 +275,7 @@ class PlayerOneController with ChangeNotifier {
           base_player,
           weapon,
           gear,
+          weapon_background,
           animationList[i]
         );
         animations.add(animation);
@@ -333,15 +333,23 @@ class PlayerOneController with ChangeNotifier {
     image.Image? basePlayer,
     image.Image? weapon,
     image.Image? armor,
+    image.Image? weapon_background,
     String label,
   ) async {
     late Uint8List imageValue;
-    if(label.contains("front") || label.contains("left")) {
+    if(label.contains("left")) {
+      image.compositeImage(weapon!, basePlayer!,  dstX: 0);
+      image.compositeImage(weapon, armor!,  dstX: 0);
+      imageValue = image.encodePng(weapon);
+    } else if (label.contains("right")){
+      image.compositeImage(basePlayer!, weapon!,  dstX: 0);
       image.compositeImage(basePlayer!, armor!,  dstX: 0);
       imageValue = image.encodePng(basePlayer);
     } else {
-      image.compositeImage(basePlayer!, armor!,  dstX: 0);
-      imageValue = image.encodePng(basePlayer);
+      image.compositeImage(weapon_background!, basePlayer!,  dstX: 0);
+      image.compositeImage(weapon_background!, armor!,  dstX: 0);
+      image.compositeImage(weapon_background, weapon!,  dstX: 0);
+      imageValue = image.encodePng(weapon_background);
     }
 
     var spriteImage = await bytesToImage(imageValue);

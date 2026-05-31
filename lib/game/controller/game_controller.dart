@@ -41,11 +41,6 @@ class LocalGameController with ChangeNotifier {
   List<Function> exitFunctions = [];
 
   bool isCooldown = false;
-
-  void setImportantCoords({required List<Vector2> newCoords, required List<Function> newFunctions}) {
-    exitCoords = newCoords;
-    exitFunctions = newFunctions;
-  }
   
   void checkImportantCoordsDistance(Vector2 currentPosition) {
     if (!isCooldown) {

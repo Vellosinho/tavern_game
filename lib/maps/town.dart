@@ -63,7 +63,7 @@ class _TownMapState extends State<TownMap> {
           return;
       }
     }
-  
+    
   @override
   Widget build(BuildContext context) {
     
@@ -97,6 +97,12 @@ class _TownMapState extends State<TownMap> {
       );
       });
     }
+    
+    widget.playerOneController.setImportantCoords(
+      newCoords: [], 
+      newFunctions: []
+    );
+
 
     return BonfireWidget(
       backgroundColor: Color(0xff2c6ec7),
