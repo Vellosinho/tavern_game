@@ -11,6 +11,12 @@ class GameObjectsSprites {
   static Future<Sprite> anvilThirdHit = Sprite.load('objects/anvil_minigame/anvil_minigame_3.png');
   static Future<Sprite> anvilFourthHit = Sprite.load('objects/anvil_minigame/anvil_minigame_4.png');
   static Future<Sprite> anvilFifthHit = Sprite.load('objects/anvil_minigame/anvil_minigame_5.png');
+
+  //kitchen sprites:
+  static Future<Sprite> stove = Sprite.load('objects/kitchen/stove.png');
+  static Future<Sprite> pan = Sprite.load('objects/kitchen/pan.png');
+  static Future<Sprite> mixingBowl = Sprite.load('objects/kitchen/mixing_bowl.png');
+  static Future<Sprite> cuttingBoard = Sprite.load('objects/kitchen/cutting_board.png');
   
   //sword shipping box sprites:
   static Future<Sprite> swordShippingBoxEmpty = Sprite.load('objects/sword_box/sword_box_0.png');

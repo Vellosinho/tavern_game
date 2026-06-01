@@ -34,6 +34,7 @@ flutter:
     # - assets/images/abilities/
 
     - assets/images/
+    - assets/images/ingredients/
     - assets/images/tutorialNPCs/
     - assets/images/tutorialNPCs/tutorial_farmer/neutral_farmer/
     - assets/images/tutorialNPCs/tutorial_farmer/communist_farmer/
@@ -45,6 +46,7 @@ flutter:
     - assets/images/objects/smithing_table/
     - assets/images/objects/wheat_fields/
     - assets/images/objects/chest/
+    - assets/images/objects/kitchen/
     - assets/images/communist/blacksmith/
     - assets/images/communist/blacksmith/armed/
     - assets/images/communist/blacksmith/armed/armored/ 

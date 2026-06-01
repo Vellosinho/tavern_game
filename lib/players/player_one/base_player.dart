@@ -93,6 +93,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
 
   void swordsmanHitSet(JoystickActionEvent event) {
     if (event.id.keyId == LogicalKeyboardKey.keyZ.keyId) {
+      // print("position: $position");
       weaponAttack(event);
     }
     if (event.id.keyId == LogicalKeyboardKey.keyX.keyId &&
@@ -116,12 +117,12 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   
 
   void swordsmanDash() {
-    speed = 1000;
+    dashReady = false;
+    speed = 1200;
     animation?.playOnce(playerOneAnimations.getGeneratedDash(playerController, lastDirection.toRadians().toString()) as FutureOr<SpriteAnimation>).then((_) {
       speed = PlayerConsts.characterSpeed;
     });
 
-    dashReady = false;
     Future.delayed(const Duration(seconds: 1), () {
       dashReady = true;
     });

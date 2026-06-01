@@ -36,11 +36,11 @@ class _TownMapState extends State<TownMap> {
 
   @override
   void initState() {
+    widget.gameController.disableVisibility();
     getLighting();
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
-    widget.gameController.enableVisibility();
     super.initState();
   }
 
@@ -63,9 +63,12 @@ class _TownMapState extends State<TownMap> {
           return;
       }
     }
+  
+  
     
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) => widget.gameController.enableVisibility(),);
     
     double tileSize = 192;
     LitPlayer player = BasePlayer(
@@ -90,6 +93,8 @@ class _TownMapState extends State<TownMap> {
           pageBuilder: (context, animation1, animation2) => TavernMap(
             gameController: widget.gameController,
             playerOneController: widget.playerOneController,
+            initPosition: Vector2(tileSize * 6.5, tileSize * 13),
+            initDirection: Direction.up
           ),
           transitionDuration: Duration(milliseconds: 1),
           reverseTransitionDuration: Duration(milliseconds: 1),

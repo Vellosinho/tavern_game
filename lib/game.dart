@@ -2,6 +2,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/maps/griffin/griffin_base.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
+import 'package:projeto_gbb_demo/maps/town.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'game/game_sprite_sheet.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class _GameState extends State<Game> {
     LocalGameController gameController = context.read<LocalGameController>();
     PlayerOneController playerOneController = context.read<PlayerOneController>();
 
-    // return TownMap(controller: gameController);
+    // return TownMap(gameController: gameController, playerOneController: playerOneController);
     return TavernMap(
       gameController: gameController,
       playerOneController: playerOneController,

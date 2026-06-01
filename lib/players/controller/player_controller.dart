@@ -8,6 +8,7 @@ import 'package:projeto_gbb_demo/game/enum/animationList.dart';
 import 'package:projeto_gbb_demo/game/enum/one_time_animations.dart';
 import 'package:projeto_gbb_demo/game/items/base_item.dart';
 import 'package:projeto_gbb_demo/game/items/sword_item.dart';
+import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/players/player_one/weapons/weapon_type.dart';
 
 class PlayerOneController with ChangeNotifier {
@@ -38,7 +39,7 @@ class PlayerOneController with ChangeNotifier {
   ];
   List<Item> get inventory => _inventory;
 
-  List<Vector2> exitCoords = [];
+  List<ChangeMapTransition> exitCoords = [];
   List<Function> exitFunctions = [];
 
   bool isCooldown = false;
@@ -103,7 +104,7 @@ class PlayerOneController with ChangeNotifier {
 
   int stashedIron = 0;
 
-  void setImportantCoords({required List<Vector2> newCoords, required List<Function> newFunctions}) {
+  void setImportantCoords({required List<ChangeMapTransition> newCoords, required List<Function> newFunctions}) {
     exitCoords = newCoords;
     exitFunctions = newFunctions;
   }
@@ -147,8 +148,7 @@ class PlayerOneController with ChangeNotifier {
   void checkImportantCoordsDistance(Vector2 currentPosition) {
     if (!isCooldown) {
       for (int i = 0; i < exitCoords.length; i++) {
-        if (((currentPosition.x - exitCoords[i].x).abs() < 300) &&
-              ((currentPosition.y - exitCoords[i].y).abs() < 100)) {
+        if (exitCoords[i].hitTransition(currentPosition)) {
             // print("Teste");
             exitFunctions[i]();
             isCooldown = true;
