@@ -45,6 +45,7 @@ class _KitchenMapState extends State<KitchenMap> {
     double tileSize = 192;
 
     LitPlayer player = BasePlayer(
+      localGameController: widget.gameController,
       playerController: widget.playerOneController,
       id: id,
       playerLife: widget.playerOneController.playerLife.toDouble(),

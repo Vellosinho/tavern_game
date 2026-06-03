@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"..\/house_interior\/yellow_house\/floor_variations.png",
+ "imageheight":256,
+ "imagewidth":256,
+ "margin":0,
+ "name":"floor_variations",
+ "spacing":0,
+ "tilecount":64,
+ "tiledversion":"1.11.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}

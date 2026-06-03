@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_gbb_demo/game/items/armor.dart';
 import 'package:projeto_gbb_demo/maps/griffin/griffin_base.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
@@ -36,6 +37,7 @@ class _GameState extends State<Game> {
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
     context.read<LocalGameController>().startDaynightCycle();
+    context.read<PlayerOneController>().changeEquipment(yetiArmor);
     // gameController = GameController();
     super.initState();
   }

@@ -45,16 +45,29 @@ class GameMiniMap extends StatelessWidget {
               ),
               ),
             Positioned(
-              right: 288,
+              right: 294,
               top: 176, 
               // child: SizedBox(height: 64, width: 352, child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
-              child: SizedBox(height: 64, width: (((playerOneController.playerLife < 0) ? 0 : playerOneController.playerLife) * 3.52), child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
+              child: SizedBox(height: 48, width: (((playerOneController.playerLife < 0) ? 0 : playerOneController.playerLife) * 3.52), child: DecoratedBox(decoration: BoxDecoration(color: Color(0xffff0000))))),
             InterfaceSpriteSheet.miniMapDecoration,
             Positioned(top: 18, right: 292, child: Transform.rotate(angle: ((2 * pi) / 24 * controller.hour) - pi, child: SizedBox(height: 60, width: 3, child: Column(
               children: [
                  SizedBox(height: 40, width: 3,child: DecoratedBox( decoration: BoxDecoration(color: Colors.red[900]),)),
                ],
-             )))),Positioned(top: 97, right: 341, child: Transform.rotate(angle: ((2 * pi) / 24 * controller.hour) - pi, child: SizedBox(height: 60, width: 3, child: Column(
+            //  )))),Positioned(top: 97, right: 341, child: Transform.rotate(angle: ((2 * pi) * ((playerOneController.playerTemperature + 10) / 60)) - pi, child: SizedBox(height: 60, width: 3, child: Column(
+            //   children: [
+            //      SizedBox(height: 16, width: 3,child: DecoratedBox( decoration: BoxDecoration(color: Colors.black),)),
+            //    ],
+             )))),
+             Positioned(
+              top: 97,
+              right: 341,
+              child: AnimatedRotation(
+                curve: Curves.easeInOut,
+                duration: Duration(milliseconds: 200),
+                turns: ((playerOneController.playerTemperature + 10) / 60) - 0.5,
+                child: SizedBox(height: 60, width: 3,
+                 child: Column(
               children: [
                  SizedBox(height: 16, width: 3,child: DecoratedBox( decoration: BoxDecoration(color: Colors.black),)),
                ],

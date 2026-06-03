@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
+import 'package:projeto_gbb_demo/game/items/armor.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/maps/griffin/griffin.dart';
 import 'package:projeto_gbb_demo/maps/griffin/objects/pillar.dart';
@@ -33,7 +34,7 @@ class _GriffinBaseState extends State<GriffinBase> {
   @override
   void initState() {
     // widget.controller.disableVisibility();
-    widget.playerOneController.changeEquipment("yeti");
+    widget.playerOneController.changeEquipment(yetiArmor);
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
@@ -47,6 +48,7 @@ class _GriffinBaseState extends State<GriffinBase> {
 
     LitPlayer player = BasePlayer(
       playerController: widget.playerOneController,
+      localGameController: widget.gameController,
       id: id,
       playerLife: widget.playerOneController.playerLife.toDouble(),
       initDirection: Direction.up,

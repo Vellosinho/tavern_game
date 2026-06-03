@@ -32,16 +32,18 @@ class _TownMapState extends State<TownMap> {
   late final CharacterFaction playerFaction;
   late final SimpleDirectionAnimation playerOneAnimations;
   late final String id;
-  late Color initialLighting;
+  late Color initialLighting;  
 
   @override
   void initState() {
-    widget.gameController.disableVisibility();
-    getLighting();
-    playerFaction = context.read<PlayerConsts>().faccao;
-    playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     id = const Uuid().v1();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    getLighting();
+    super.didChangeDependencies();
   }
 
   void getLighting() {
@@ -68,10 +70,15 @@ class _TownMapState extends State<TownMap> {
     
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => widget.gameController.enableVisibility(),);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.gameController.setEnvironmentTemperature(environmentTemperature: 24, modifier: 2.0);
+      widget.gameController.enableVisibility();
+      getLighting();
+    });
     
     double tileSize = 192;
     LitPlayer player = BasePlayer(
+      localGameController: widget.gameController,
       playerController: widget.playerOneController,
       id: id,
       playerLife: widget.playerOneController.playerLife.toDouble(),

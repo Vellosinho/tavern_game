@@ -6,8 +6,8 @@ import 'package:image/image.dart' as image;
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game/enum/animationList.dart';
 import 'package:projeto_gbb_demo/game/enum/one_time_animations.dart';
+import 'package:projeto_gbb_demo/game/items/armor.dart';
 import 'package:projeto_gbb_demo/game/items/base_item.dart';
-import 'package:projeto_gbb_demo/game/items/sword_item.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/players/player_one/weapons/weapon_type.dart';
 
@@ -19,11 +19,14 @@ class PlayerOneController with ChangeNotifier {
   bool minigameIsActive = false;
   bool _resetColision = false;
   bool get resetColision => _resetColision;
+  Armor _currentArmor = griffinArmor;
+  Armor get currentArmor => _currentArmor;
+  double _environmentTemperature = 20;
+  double _playerTemperature = 20;
+  double get playerTemperature => _playerTemperature;
+  double get temperatureModifier => currentArmor.temperatureModifier;
 
-  String _currentArmor = '';
-  String get currentArmor => _currentArmor;
-
-  void setCurrentArmor(String armor) {
+  void setCurrentArmor(Armor armor) {
     _currentArmor = armor;
   }
 
@@ -62,6 +65,17 @@ class PlayerOneController with ChangeNotifier {
 
   void setCurrentPlayerAnimation(SimpleDirectionAnimation newAnimations) {
     _currentPlayerEquipment = newAnimations;
+  }
+
+  void setEnvironmentTemperature(double perceivedTemperature) {
+    _environmentTemperature = perceivedTemperature;
+    _playerTemperature = _environmentTemperature + temperatureModifier;
+    notifyListeners();
+  }
+
+  void updateTemperature() {
+    _playerTemperature = _environmentTemperature + temperatureModifier;
+    notifyListeners();
   }
 
   void setPlayerDashAnimations(
@@ -247,10 +261,11 @@ class PlayerOneController with ChangeNotifier {
     _playAnimation = OneTimeAnimations.shrug;
   }
 
-  Future<void> changeEquipment(String armor) async {
-    SimpleDirectionAnimation newAnimations = await generateDirectionAnimation(armor);
+  Future<void> changeEquipment(Armor armor) async {
+    SimpleDirectionAnimation newAnimations = await generateDirectionAnimation(armor.armorName);
     setCurrentPlayerAnimation(newAnimations);
     setCurrentArmor(armor);
+    updateTemperature();
   }
 
   Future<SimpleDirectionAnimation> generateDirectionAnimation(String armor) async {

@@ -1,4 +1,5 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:projeto_gbb_demo/game/items/armor.dart';
 import 'package:projeto_gbb_demo/game/objects/object_sprites.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
@@ -26,10 +27,10 @@ class Chest extends GameDecoration with Attackable {
 
   @override
   void onReceiveDamage(attacker, double damage, identify, damageType) {
-    if (playerOneController.currentArmor == 'yeti') {
-      playerOneController.changeEquipment('griffin');
+    if (playerOneController.currentArmor.armorName == 'yeti') {
+      playerOneController.changeEquipment(griffinArmor);
     } else { 
-      playerOneController.changeEquipment('yeti');
+      playerOneController.changeEquipment(yetiArmor);
     }
     
     // localGameController.minigameIsActive

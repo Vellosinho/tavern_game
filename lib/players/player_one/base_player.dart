@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/services.dart';
+import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/enum/one_time_animations.dart';
 import 'package:projeto_gbb_demo/game/game_sprite_sheet.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
@@ -28,6 +29,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   bool escPressed = false;
   bool isArmed = false;
   PlayerOneController playerController;
+  LocalGameController localGameController;
 
   bool _isPlayingOneTimeAnimation = false;
 
@@ -38,6 +40,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
     required this.onHit,
     required this.playerLife,
     required this.playerController,
+    required this.localGameController,
     required this.id,
   }) : super(
           life: playerLife,
@@ -84,6 +87,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   void update(double dt) {
     // playerController.checkMinigameDistance(position);
     playerController.checkImportantCoordsDistance(position);
+    playerController.setEnvironmentTemperature(localGameController.temperature);
     playOneTimeAnimations();
     checkChangeGear();
     _isPlayingOneTimeAnimation =

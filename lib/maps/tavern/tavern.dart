@@ -10,7 +10,6 @@ import 'package:projeto_gbb_demo/maps/tavern/kitchen.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class TavernMap extends StatefulWidget {
@@ -38,17 +37,20 @@ class _TavernMapState extends State<TavernMap> {
 
   @override
   void initState() {
-    // widget.gameController.disableVisibility();
     id = const Uuid().v1();
-    widget.gameController.enableVisibility();
     super.initState();
   }
-
+  
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      widget.gameController.setEnvironmentTemperature(environmentTemperature: 24, modifier: 1.0);
+      widget.gameController.enableVisibility();
+    });
     double tileSize = 192;
 
     LitPlayer player = BasePlayer(
+      localGameController: widget.gameController,
       playerController: widget.playerOneController,
       id: id,
       playerLife: widget.playerOneController.playerLife.toDouble(),

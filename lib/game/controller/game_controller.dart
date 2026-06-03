@@ -1,25 +1,30 @@
-import 'dart:io';
-import 'dart:ui' as ui;
-
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as image;
 import 'package:projeto_gbb_demo/common/common.dart';
-import 'package:projeto_gbb_demo/game/enum/animationList.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
-import 'package:projeto_gbb_demo/game/enum/one_time_animations.dart';
-import 'package:projeto_gbb_demo/game/items/base_item.dart';
-import 'package:projeto_gbb_demo/game/items/iron_item.dart';
-import 'package:projeto_gbb_demo/game/items/sword_item.dart';
-import 'dart:math';
 
 class LocalGameController with ChangeNotifier {
   int hour = 06;
-  // int hour = 6
   int minute = 00;
 
   DayTime daytime = DayTime.sunrise;
+  double _baseTemperature = 24; // -10 to 50C
+  double _temperature = 24;
+  double get temperature => _temperature;
+
+  void setBaseTemperature(double value) {
+    _baseTemperature = value;
+  }
+
+  double _temperatureModifier = 1.0;
+
+  void setEnvironmentTemperature({required double environmentTemperature, required double modifier}) {
+    _baseTemperature = environmentTemperature;
+    _temperatureModifier = modifier;
+    updateTemperature();
+    notifyListeners();
+  }
 
   Color mapTintColor = Colors.orange[400]!.withAlpha(48);
   Color _visibilityScreen = Colors.black;
@@ -77,6 +82,7 @@ class LocalGameController with ChangeNotifier {
   }
 
   void startDaynightCycle() {
+    updateTemperature();
     Future.delayed(Duration(seconds: 10), () {
       passMinute();
     });
@@ -91,6 +97,7 @@ class LocalGameController with ChangeNotifier {
       minute += 10;
     }
 
+    updateTemperature();
     Future.delayed(Duration(seconds: 10), () {
       passMinute();
     });
@@ -128,6 +135,7 @@ class LocalGameController with ChangeNotifier {
         daytime = DayTime.night;
         break;
     }
+    updateTemperature();
     notifyListeners();
   }
 
@@ -142,5 +150,50 @@ class LocalGameController with ChangeNotifier {
       case DayTime.night:
         return Colors.indigo[900];
     }
+  }
+
+  void updateTemperature() {
+    switch(hour) {
+      case 0:
+        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        break;
+      case 2:
+        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        break;
+      case 4:
+        _temperature = _baseTemperature - (8 * _temperatureModifier);
+        break;
+      case 6:
+        _temperature = _baseTemperature - (6 * _temperatureModifier);
+        break;
+      case 8:
+        _temperature = _baseTemperature - (4 * _temperatureModifier);
+        break;
+      case 10:
+        _temperature = _baseTemperature - (2 * _temperatureModifier);
+        break;
+      case 12:
+        _temperature = _baseTemperature;
+        break;
+      case 14:
+        _temperature = _baseTemperature - (2 * _temperatureModifier);
+        break;
+      case 16:
+        _temperature = _baseTemperature - (3 * _temperatureModifier);
+        break;
+      case 18:
+        _temperature = _baseTemperature - (5 * _temperatureModifier);
+        break;
+      case 20:
+        _temperature = _baseTemperature - (6 * _temperatureModifier);
+        break;
+      case 22:
+        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        break;
+      case 23:
+        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        break;
+    }
+    print("Update temperature: $_temperature C");
   }
 }
