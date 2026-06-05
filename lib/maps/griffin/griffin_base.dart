@@ -11,7 +11,6 @@ import 'package:projeto_gbb_demo/maps/griffin/objects/pillar.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 class GriffinBase extends StatefulWidget {
   final LocalGameController gameController;
@@ -37,7 +36,6 @@ class _GriffinBaseState extends State<GriffinBase> {
     widget.playerOneController.changeEquipment(yetiArmor);
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
-    id = const Uuid().v1();
     widget.gameController.enableVisibility();
     super.initState();
   }
@@ -49,7 +47,6 @@ class _GriffinBaseState extends State<GriffinBase> {
     LitPlayer player = BasePlayer(
       playerController: widget.playerOneController,
       localGameController: widget.gameController,
-      id: id,
       playerLife: widget.playerOneController.playerLife.toDouble(),
       initDirection: Direction.up,
       onHit: () {

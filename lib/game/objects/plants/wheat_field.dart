@@ -54,7 +54,7 @@ class Wheat extends GameDecoration with Attackable, Flamable {
   }
 }
 
-List<GameComponent>? wheatField = [
+List<GameComponent> wheatField = [
   Wheat(position: Vector2(tileSize * 19, tileSize * 9.5)),
   Wheat(position: Vector2(tileSize * 19, tileSize * 10)),
   Wheat(position: Vector2(tileSize * 19, tileSize * 10.5)),

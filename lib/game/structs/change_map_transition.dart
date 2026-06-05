@@ -1,10 +1,13 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flutter/material.dart';
 
-class ChangeMapTransition {
+class LocationAction {
   TransitionOrientation orientation;
   Vector2 coords;
+  StatefulWidget? destination;
+  Function? action;
 
-  ChangeMapTransition({required this.coords, required this.orientation});
+  LocationAction({required this.coords, required this.orientation, this.destination, this.action});
 
 
   bool hitTransition(Vector2 value) {

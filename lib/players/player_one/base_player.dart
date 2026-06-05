@@ -32,8 +32,8 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   LocalGameController localGameController;
 
   bool _isPlayingOneTimeAnimation = false;
+  int _periodicEventTic = 0;
 
-  final String id;
   BasePlayer({
     required super.position,
     initDirection,
@@ -41,7 +41,6 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
     required this.playerLife,
     required this.playerController,
     required this.localGameController,
-    required this.id,
   }) : super(
           life: playerLife,
           initDirection: initDirection ?? Direction.down,
@@ -90,6 +89,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
     playerController.setEnvironmentTemperature(localGameController.temperature);
     playOneTimeAnimations();
     checkChangeGear();
+    periodicEvent();
     _isPlayingOneTimeAnimation =
         playerController.playAnimation != OneTimeAnimations.none;
     super.update(dt);
@@ -97,7 +97,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
 
   void swordsmanHitSet(JoystickActionEvent event) {
     if (event.id.keyId == LogicalKeyboardKey.keyZ.keyId) {
-      // print("position: $position");
+      print("position: $position");
       weaponAttack(event);
     }
     if (event.id.keyId == LogicalKeyboardKey.keyX.keyId &&
@@ -121,15 +121,18 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   
 
   void swordsmanDash() {
-    dashReady = false;
-    speed = 1200;
-    animation?.playOnce(playerOneAnimations.getGeneratedDash(playerController, lastDirection.toRadians().toString()) as FutureOr<SpriteAnimation>).then((_) {
-      speed = PlayerConsts.characterSpeed;
-    });
+    if(playerController.playerStamina >= 40) {
+      playerController.spendStamina(40);
+      dashReady = false;
+      speed = 1200;
+      animation?.playOnce(playerOneAnimations.getGeneratedDash(playerController, lastDirection.toRadians().toString()) as FutureOr<SpriteAnimation>).then((_) {
+        speed = PlayerConsts.characterSpeed;
+      });
 
-    Future.delayed(const Duration(seconds: 1), () {
-      dashReady = true;
-    });
+      Future.delayed(const Duration(milliseconds: 500), () {
+        dashReady = true;
+      });
+    }
   }
 
   void checkChangeGear() {
@@ -196,5 +199,14 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
         size: PlayerConsts.characterHitbox,
         position: PlayerConsts.characterHitboxPosition));
     super.setupColisions();
+  }
+
+  void periodicEvent() {
+    if (_periodicEventTic < 1) {
+      _periodicEventTic++;
+    } else {
+      _periodicEventTic = 0;
+      playerController.recoverStamina();
+    }
   }
 }

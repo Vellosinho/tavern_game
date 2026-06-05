@@ -4,6 +4,8 @@ class GameObjectsSprites {
   //anvil sprites:
   static Future<Sprite> anvil = Sprite.load('objects/anvil.png');
   static Future<Sprite> chest = Sprite.load('objects/chest/chest.png');
+  static Future<Sprite> bedBackground = Sprite.load('objects/chest/bed_background.png');
+  static Future<Sprite> bedForeground = Sprite.load('objects/chest/bed_foreground.png');
   static Future<Sprite> yellowMat = Sprite.load('objects/yellow_mat.png');
   static Future<Sprite> empty = Sprite.load('empty.png');
   static Future<Sprite> anvilFirstHit = Sprite.load('objects/anvil_minigame/anvil_minigame_1.png');

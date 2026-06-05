@@ -110,6 +110,10 @@
          "type":"above"
         }, 
         {
+         "id":39,
+         "type":"above"
+        }, 
+        {
          "id":41,
          "type":"above"
         }, 
@@ -127,6 +131,10 @@
         }, 
         {
          "id":46,
+         "type":"above"
+        }, 
+        {
+         "id":47,
          "type":"above"
         }, 
         {
@@ -150,7 +158,6 @@
          "objectgroup":
             {
              "draworder":"index",
-             "id":2,
              "name":"",
              "objects":[
                     {

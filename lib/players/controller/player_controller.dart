@@ -31,6 +31,7 @@ class PlayerOneController with ChangeNotifier {
   }
 
   double _playerLife = 100;
+  double _playerStamina = 100;
   int _playerWallet = 0;
   int _playerFollowers = 0;
   int _hitCount = 0;
@@ -42,7 +43,7 @@ class PlayerOneController with ChangeNotifier {
   ];
   List<Item> get inventory => _inventory;
 
-  List<ChangeMapTransition> exitCoords = [];
+  List<LocationAction> exitCoords = [];
   List<Function> exitFunctions = [];
 
   bool isCooldown = false;
@@ -94,6 +95,7 @@ class PlayerOneController with ChangeNotifier {
   //remove later
 
   double get playerLife => _playerLife;
+  double get playerStamina => _playerStamina;
   int get playerWallet => _playerWallet;
   int get playerFollowers => _playerFollowers;
   int get hitcount => _hitCount;
@@ -118,13 +120,29 @@ class PlayerOneController with ChangeNotifier {
 
   int stashedIron = 0;
 
-  void setImportantCoords({required List<ChangeMapTransition> newCoords, required List<Function> newFunctions}) {
+  void setImportantCoords({required List<LocationAction> newCoords, required List<Function> newFunctions}) {
     exitCoords = newCoords;
     exitFunctions = newFunctions;
   }
 
   void heal(int value) {
     ((_playerLife + value) > 20) ? _playerLife = 20 : _playerLife += value;
+    notifyListeners();
+  }
+
+  void spendStamina(int value) {
+    if (_playerStamina > value) {
+      _playerStamina -= value;
+    } else {
+      _playerStamina = 0;
+    }
+    notifyListeners();
+  }
+
+  void recoverStamina() {
+    if (_playerStamina <= 99) {
+      _playerStamina++;
+    }
     notifyListeners();
   }
 

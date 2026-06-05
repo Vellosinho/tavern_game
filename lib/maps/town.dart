@@ -80,7 +80,6 @@ class _TownMapState extends State<TownMap> {
     LitPlayer player = BasePlayer(
       localGameController: widget.gameController,
       playerController: widget.playerOneController,
-      id: id,
       playerLife: widget.playerOneController.playerLife.toDouble(),
       onHit: () {
         widget.playerOneController.hit(2);

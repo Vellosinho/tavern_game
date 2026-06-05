@@ -33,12 +33,8 @@ class _GameState extends State<Game> {
 
   @override
   void initState() {
-    playerFaction = context.read<PlayerConsts>().faccao;
-    playerOneAnimations = getAnimations(playerOneClass, playerFaction);
-    id = const Uuid().v1();
     context.read<LocalGameController>().startDaynightCycle();
     context.read<PlayerOneController>().changeEquipment(yetiArmor);
-    // gameController = GameController();
     super.initState();
   }
 
@@ -56,6 +52,8 @@ class _GameState extends State<Game> {
     return TavernMap(
       gameController: gameController,
       playerOneController: playerOneController,
+      initPosition: Vector2(tileSize * 6.5, tileSize * 12),
+      initDirection: Direction.up,
     );
     // return GriffinBase(
     //   gameController: gameController,
