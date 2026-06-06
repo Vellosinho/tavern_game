@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_gbb_demo/game/enum/weather.dart';
 import 'package:projeto_gbb_demo/game/interface/minimap.dart';
 import 'package:projeto_gbb_demo/game/items/base_item.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
@@ -11,15 +12,13 @@ import '../enum/character_class.dart';
 
 class PlayerInterface extends StatefulWidget {
   final BonfireGame game;
-  final CharacterClass characterClass;
-  CharacterFaction? characterFaction = CharacterFaction.Monarchist;
+  final bool? isOutside;
   static const overlayKey = 'playerInterface';
 
-  PlayerInterface(
-      {required this.game,
-      required this.characterClass,
-      this.characterFaction,
-      super.key});
+  PlayerInterface({
+    required this.game,
+    this.isOutside,
+    super.key});
 
   @override
   State<PlayerInterface> createState() => _PlayerInterfaceState();
@@ -34,12 +33,12 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
       body: Consumer2<LocalGameController, PlayerOneController>(
         builder: (context, controller, playerOneController, _) => Stack(
           children: [
+            if (widget.isOutside ?? false)
+              ViewWeather(controller),
             PlayerLife(
               controller: controller,
               playerOneController: playerOneController,
-              game: widget.game,
-              characterClass: widget.characterClass,
-              characterFaction: widget.characterFaction),
+              game: widget.game,),
             GameMiniMap(game: widget.game),
             AnimatedContainer(
               duration: Duration(milliseconds: 600),
@@ -54,19 +53,61 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
   }
 }
 
+class ViewWeather extends StatelessWidget {
+  final LocalGameController controller;
+  const ViewWeather(this.controller, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ViewRain(weather: controller.currentWeather),
+      ],
+    );
+  }
+}
+
+class ViewRain extends StatelessWidget {
+  final Weather weather;
+  const ViewRain({required this.weather, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: (weather == Weather.rain) ? 1 : 0,
+      duration: Duration(seconds: 2),
+      child: Stack(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: Image.asset(
+                "assets/images/effects/rain_large.gif",
+              ),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: DecoratedBox(decoration: BoxDecoration(color: Color(0xff000061).withAlpha(120))),
+          ),
+        ]
+      ),
+    );
+  }
+}
+
 class PlayerLife extends StatelessWidget {
   final LocalGameController controller;
   final PlayerOneController playerOneController;
   final BonfireGame game;
-  final CharacterClass characterClass;
-  final CharacterFaction? characterFaction;
 
   const PlayerLife({
       required this.controller,
       required this.playerOneController,
       required this.game,
-      required this.characterClass,
-      this.characterFaction,
       super.key});
 
   @override

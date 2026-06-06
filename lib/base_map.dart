@@ -2,7 +2,6 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/player/lit_player.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
-import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
@@ -172,11 +171,12 @@ class _BaseMapState extends State<BaseMap> {
       player: player,
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
-            PlayerInterface(game: game, characterClass: playerOneClass),
+            PlayerInterface(game: game),
       },
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,
       ],
+      // showCollisionArea: true,
     );
   }
 }

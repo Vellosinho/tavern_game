@@ -168,7 +168,10 @@ class _TownMapState extends State<TownMap> {
       player: player,
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
-            PlayerInterface(game: game, characterClass: playerOneClass),
+            PlayerInterface(
+              game: game,
+              isOutside: true,
+            ),
       },
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,

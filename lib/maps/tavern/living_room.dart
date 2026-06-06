@@ -23,6 +23,16 @@ class LivingRoomMap extends StatefulWidget {
 
 class _LivingRoomMapState extends State<LivingRoomMap> {
 
+  void sleep() {
+    if (widget.gameController.playerCanSleep) {
+      widget.gameController.disableVisibility(isBrightEnvironment: true);
+      widget.gameController.skipDayOrNight();
+      Future.delayed(Duration(seconds: 2), () {
+        widget.gameController.enableVisibility();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<GameDecoration> bed = [
@@ -50,6 +60,13 @@ class _LivingRoomMapState extends State<LivingRoomMap> {
             destination: TavernMap(gameController: widget.gameController, playerOneController: widget.playerOneController,
               initPosition: Vector2(tileSize * 0.5, tileSize * 8), initDirection: Direction.down,
             ),
+          ),
+          LocationAction(
+            coords: Vector2(tileSize * 7, tileSize * 3.25),
+            orientation: TransitionOrientation.square,
+            action: () {
+              sleep();
+            }
           ),
         ],
     );

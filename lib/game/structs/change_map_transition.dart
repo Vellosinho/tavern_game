@@ -11,17 +11,26 @@ class LocationAction {
 
 
   bool hitTransition(Vector2 value) {
-    if (orientation == TransitionOrientation.vertical) {
-      if (((value.x - coords.x).abs() < 100) && ((value.y - coords.y).abs() < 500)) {
-        return true;
-      }
-    } else {
-      if (((value.x - coords.x).abs() < 500) && ((value.y - coords.y).abs() < 100)) {
-        return true;
-      }
+    switch (orientation) {
+      case TransitionOrientation.vertical: 
+        if (((value.x - coords.x).abs() < 100) && ((value.y - coords.y).abs() < 500)) {
+          return true;
+        }
+        break;
+      case TransitionOrientation.horizontal: 
+        if (((value.x - coords.x).abs() < 500) && ((value.y - coords.y).abs() < 100)) {
+          return true;
+        }
+        break;
+      case TransitionOrientation.square:
+        if (((value.x - coords.x).abs() < 128) && ((value.y - coords.y).abs() < 128)) {
+          return true;
+        }
+        break;
+      default:
     }
     return false;
   }
 }
 
-enum TransitionOrientation {horizontal, vertical}
+enum TransitionOrientation {horizontal, vertical, square}

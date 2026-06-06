@@ -48,8 +48,8 @@ class BedForeground extends GameDecoration with Attackable {
   @override
   Future<void> onLoad() async {
     add(RectangleHitbox(
-      size: Vector2(384, 40),
-      position: Vector2(0, 344),
+      size: Vector2(384, 152),
+      position: Vector2(0, 232),
     ));
     // final program = await FragmentProgram.fromAsset('shaders/myshader.frag');
     return super.onLoad();

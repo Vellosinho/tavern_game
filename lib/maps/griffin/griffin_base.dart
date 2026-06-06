@@ -120,7 +120,7 @@ class _GriffinBaseState extends State<GriffinBase> {
       player: player,
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
-            PlayerInterface(game: game, characterClass: playerOneClass),
+            PlayerInterface(game: game),
       },
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,

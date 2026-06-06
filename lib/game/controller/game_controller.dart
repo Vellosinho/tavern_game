@@ -1,20 +1,45 @@
+import 'dart:math';
+
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
+import 'package:projeto_gbb_demo/game/enum/season.dart';
+import 'package:projeto_gbb_demo/game/enum/weather.dart';
 
 class LocalGameController with ChangeNotifier {
-  int hour = 06;
-  int minute = 00;
+  int _hour = 06;
+  int get hour => _hour;
+  int _minute = 00;
+  int get minute => _minute;
+  int _lastSlept = 0;
+  int get lastSlept => _lastSlept;
+  int _day = 1;
+  int get day => _day;
+  int year = 1;
+
+  int _riskOfRain = 5;
+
+  Season _currentSeason = Season.spring;
+  Season get currentSeason => _currentSeason;
+
+  bool _isSkippingDayOrNight = false;
+
 
   DayTime daytime = DayTime.sunrise;
   double _baseTemperature = 24; // -10 to 50C
   double _temperature = 24;
   double get temperature => _temperature;
+  Weather _currentWeather = Weather.rain;
+  Weather get currentWeather => _currentWeather;
 
   void setBaseTemperature(double value) {
     _baseTemperature = value;
+  }
+
+  void _rerollRiskOfRain() {
+    _riskOfRain = Random().nextInt(100);
   }
 
   double _temperatureModifier = 1.0;
@@ -46,6 +71,8 @@ class LocalGameController with ChangeNotifier {
   List<Function> exitFunctions = [];
 
   bool isCooldown = false;
+  bool _playerCanSleep = true;
+  bool get playerCanSleep => _playerCanSleep;
   
   void checkImportantCoordsDistance(Vector2 currentPosition) {
     if (!isCooldown) {
@@ -77,39 +104,89 @@ class LocalGameController with ChangeNotifier {
   }
 
   int getTime() {
-    int time = (hour * 100) + minute;
+    int time = (_hour * 100) + _minute;
     return time;
   }
 
   void startDaynightCycle() {
     updateTemperature();
     Future.delayed(Duration(seconds: 10), () {
-      passMinute();
+      _passMinute();
     });
   }
 
-  void passMinute() {
-    print("$hour:$minute");
-    if (minute > 40) {
-      passHour();
-      minute = 00;
+  void skipDayOrNight() {
+    _playerCanSleep = false;
+    _isSkippingDayOrNight = true;
+    if (_hour >= 6 &&_hour < 18) {
+      _hour = 18;
     } else {
-      minute += 10;
+      _passDay();
+      _hour = 6;
+    }
+    _isSkippingDayOrNight = false;
+    updateShading();
+    notifyListeners();
+
+    Future.delayed(Duration(minutes: 1), () {
+      _playerCanSleep = true;
+    });
+  }
+
+  void _passMinute() {
+    if (!_isSkippingDayOrNight) {
+      print("$_hour:$_minute");
+      if (_minute > 40) {
+        _passHour();
+        _minute = 00;
+      } else {
+        _minute += 10;
+      }
     }
 
     updateTemperature();
     Future.delayed(Duration(seconds: 10), () {
-      passMinute();
+        _passMinute();
     });
   }
 
-  void passHour() {
-    if (hour > 22) {
-      hour = 00;
+  void _passHour() {
+    _rerollWeather();
+    if (_hour > 22) {
+      _hour = 00;
+      _passDay();
     } else {
-      hour++;
+      _hour++;
     }
     updateShading();
+  }
+
+  void _rerollWeather() {
+    int willRain = Random().nextInt(100);
+    print("Rerolling weather, $willRain");
+    if (willRain < _riskOfRain) {
+      _startRain();
+    } else {
+      _stopRain();
+    }
+  }
+
+  void _startRain() {
+      _currentWeather = Weather.rain;
+      _baseTemperature -= 4;
+      _temperatureModifier += 1;
+  }
+
+  void _stopRain() {
+      _currentWeather = Weather.clear;
+      _baseTemperature += 4;
+      _temperatureModifier -= 1;
+  }
+
+  void _passDay() {
+    _day++;
+    print("Dia: $_day");
+    _rerollRiskOfRain();
   }
 
   void updateShading() {
@@ -117,9 +194,10 @@ class LocalGameController with ChangeNotifier {
     Color sunRiseColor = Colors.orange[400]!.withAlpha(48);
     Color noonColor = Colors.orange[400]!.withAlpha(0);
 
-    switch (hour) {
+    switch (_hour) {
       case 6:
         mapTintColor = sunRiseColor;
+        _currentWeather = Weather.clear;
         daytime = DayTime.sunrise;
         break;
       case 7:
@@ -153,7 +231,7 @@ class LocalGameController with ChangeNotifier {
   }
 
   void updateTemperature() {
-    switch(hour) {
+    switch(_hour) {
       case 0:
         _temperature = _baseTemperature - (7 * _temperatureModifier);
         break;
@@ -194,6 +272,5 @@ class LocalGameController with ChangeNotifier {
         _temperature = _baseTemperature - (7 * _temperatureModifier);
         break;
     }
-    print("Update temperature: $_temperature C");
   }
 }
