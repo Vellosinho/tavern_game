@@ -31,7 +31,7 @@ class LocalGameController with ChangeNotifier {
   double _baseTemperature = 24; // -10 to 50C
   double _temperature = 24;
   double get temperature => _temperature;
-  Weather _currentWeather = Weather.rain;
+  Weather _currentWeather = Weather.clear;
   Weather get currentWeather => _currentWeather;
 
   void setBaseTemperature(double value) {
@@ -124,6 +124,7 @@ class LocalGameController with ChangeNotifier {
       _passDay();
       _hour = 6;
     }
+    _minute = 0;
     _isSkippingDayOrNight = false;
     updateShading();
     notifyListeners();
@@ -151,7 +152,6 @@ class LocalGameController with ChangeNotifier {
   }
 
   void _passHour() {
-    _rerollWeather();
     if (_hour > 22) {
       _hour = 00;
       _passDay();
@@ -193,6 +193,8 @@ class LocalGameController with ChangeNotifier {
     Color nightColor = Colors.indigo[900]!.withAlpha(148);
     Color sunRiseColor = Colors.orange[400]!.withAlpha(48);
     Color noonColor = Colors.orange[400]!.withAlpha(0);
+
+    _rerollWeather();
 
     switch (_hour) {
       case 6:

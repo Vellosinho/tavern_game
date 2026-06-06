@@ -290,38 +290,46 @@ class PlayerOneController with ChangeNotifier {
     List<SpriteAnimation> animations = [];
 
     image.Image? weapon;
-    image.Image? base_player;
+    image.Image? basePlayer;
     image.Image? gear;
-    image.Image? weapon_background = null;
+    image.Image? weaponBackground = null;
     
     for (int i = 0; i < animationList.length; i++) {
-      weapon = image.decodeImage(File('assets/images/weapons/griffin/${animationList[i]}.png').readAsBytesSync());
-      base_player = image.decodeImage(File('assets/images/base_player/${animationList[i]}.png').readAsBytesSync());
-      gear = image.decodeImage(File('assets/images/equipment/$armor/${animationList[i]}.png').readAsBytesSync());
+      var weaponData = await rootBundle.load('assets/images/weapons/griffin/${animationList[i]}.png');
+      weapon = image.decodeImage(weaponData.buffer.asUint8List());
+      var basePlayerData = await rootBundle.load('assets/images/base_player/${animationList[i]}.png');
+      basePlayer = image.decodeImage(basePlayerData.buffer.asUint8List());
+      var gearData = await rootBundle.load('assets/images/equipment/$armor/${animationList[i]}.png');
+      gear = image.decodeImage(gearData.buffer.asUint8List());
+      // weapon = image.decodeImage(File('assets/images/weapons/griffin/${animationList[i]}.png').readAsBytesSync());
+      // base_player = image.decodeImage(File('assets/images/base_player/${animationList[i]}.png').readAsBytesSync());
+      // gear = image.decodeImage(File('assets/images/equipment/$armor/${animationList[i]}.png').readAsBytesSync());
       if (animationList[i].contains("dash") && (animationList[i].contains("front") || animationList[i].contains("back"))) {
-        weapon_background = image.decodeImage(File('assets/images/weapons/griffin/${animationList[i]}_background.png').readAsBytesSync());
+        var weaponBackgroundData = await rootBundle.load('assets/images/equipment/$armor/${animationList[i]}.png');
+        weaponBackground = image.decodeImage(weaponBackgroundData.buffer.asUint8List());
+        // weapon_background = image.decodeImage(File('assets/images/weapons/griffin/${animationList[i]}_background.png').readAsBytesSync());
       }
       
       bool isRun = animationList[i].contains("walk");
       if (animationList[i].contains("dash")) {
         SpriteAnimation animation = await generateDashAnimation(
-          base_player,
+          basePlayer,
           weapon,
           gear,
-          weapon_background,
+          weaponBackground,
           animationList[i]
         );
         animations.add(animation);
       } else {
         late Uint8List imageValue;
         if (animationList[i].contains("front") || animationList[i].contains("left")) {
-          image.compositeImage(weapon!, base_player!,  dstX: 0);
+          image.compositeImage(weapon!, basePlayer!,  dstX: 0);
           image.compositeImage(weapon, gear!,  dstX: 0);
           imageValue = image.encodePng(weapon);
         } else {
-          image.compositeImage(base_player!, gear!,  dstX: 0);
-          image.compositeImage(base_player, weapon!,  dstX: 0);
-          imageValue = image.encodePng(base_player);
+          image.compositeImage(basePlayer!, gear!,  dstX: 0);
+          image.compositeImage(basePlayer, weapon!,  dstX: 0);
+          imageValue = image.encodePng(basePlayer);
         }
         var spriteImage = await bytesToImage(imageValue);
           SpriteAnimation newAnimation = SpriteAnimation.fromFrameData(

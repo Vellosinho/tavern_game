@@ -33,6 +33,10 @@ flutter:
     # - assets/images/enemies/
     # - assets/images/abilities/
 
+    - assets/images/base_player/
+    - assets/images/equipment/griffin/
+    - assets/images/equipment/yeti/
+    - assets/images/weapons/griffin/
     - assets/images/
     - assets/images/ingredients/
     - assets/images/tutorialNPCs/
@@ -52,12 +56,12 @@ flutter:
     - assets/images/communist/blacksmith/armed/armored/ 
     - assets/images/communist/blacksmith/unarmed/
     - assets/images/boss/griffin/
-    - assets/images/equipment/black_pearl/
-    - assets/images/equipment/griffin/
-    - assets/images/equipment/iron/
-    - assets/images/equipment/gem/
-    - assets/images/equipment/yeti/
-    - assets/images/base_player/
+    # - assets/images/equipment/black_pearl/
+    # - assets/images/equipment/griffin/
+    # - assets/images/equipment/iron/
+    # - assets/images/equipment/gem/
+    # - assets/images/equipment/yeti/
+    # - assets/images/base_player/
     - assets/images/effects/
     - assets/images/statues/
     - assets/images/map/
