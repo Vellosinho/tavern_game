@@ -13,8 +13,6 @@ class LocalGameController with ChangeNotifier {
   int get hour => _hour;
   int _minute = 00;
   int get minute => _minute;
-  int _lastSlept = 0;
-  int get lastSlept => _lastSlept;
   int _day = 1;
   int get day => _day;
   int year = 1;
@@ -29,6 +27,7 @@ class LocalGameController with ChangeNotifier {
 
   DayTime daytime = DayTime.sunrise;
   double _baseTemperature = 24; // -10 to 50C
+  double _temperatureModifier = 0; // -10 to 50C
   double _temperature = 24;
   double get temperature => _temperature;
   Weather _currentWeather = Weather.clear;
@@ -42,11 +41,16 @@ class LocalGameController with ChangeNotifier {
     _riskOfRain = Random().nextInt(100);
   }
 
-  double _temperatureModifier = 1.0;
+  double _temperatureRangeModifier = 1.0;
 
-  void setEnvironmentTemperature({required double environmentTemperature, required double modifier}) {
+  void setEnvironmentTemperature({required double environmentTemperature, required double modifier, required bool isOutside}) {
     _baseTemperature = environmentTemperature;
-    _temperatureModifier = modifier;
+    if (isOutside && (_currentWeather == Weather.rain)) {
+      _temperatureModifier = -4;
+    } else {
+      _temperatureModifier = 0;
+    }
+    _temperatureRangeModifier = modifier;
     updateTemperature();
     notifyListeners();
   }
@@ -165,22 +169,26 @@ class LocalGameController with ChangeNotifier {
     int willRain = Random().nextInt(100);
     print("Rerolling weather, $willRain");
     if (willRain < _riskOfRain) {
-      _startRain();
+      if (_currentWeather != Weather.rain) {
+        _startRain();
+      }
     } else {
-      _stopRain();
+      if (_currentWeather != Weather.clear) {
+        _stopRain();
+      }
     }
   }
 
   void _startRain() {
       _currentWeather = Weather.rain;
-      _baseTemperature -= 4;
-      _temperatureModifier += 1;
+      _temperatureModifier = -4;
+      _temperatureRangeModifier += 1;
   }
 
   void _stopRain() {
       _currentWeather = Weather.clear;
-      _baseTemperature += 4;
-      _temperatureModifier -= 1;
+      _temperatureModifier = 0;
+      _temperatureRangeModifier -= 1;
   }
 
   void _passDay() {
@@ -194,25 +202,32 @@ class LocalGameController with ChangeNotifier {
     Color sunRiseColor = Colors.orange[400]!.withAlpha(48);
     Color noonColor = Colors.orange[400]!.withAlpha(0);
 
-    _rerollWeather();
+    // _rerollWeather();
 
     switch (_hour) {
       case 6:
+        _rerollWeather();
         mapTintColor = sunRiseColor;
-        _currentWeather = Weather.clear;
         daytime = DayTime.sunrise;
         break;
       case 7:
         mapTintColor = noonColor;
         daytime = DayTime.noon;
         break;
+      case 12:
+        _rerollWeather();
+        break;
       case 18:
+        _rerollWeather();
         mapTintColor = sunRiseColor;
         daytime = DayTime.sunset;
         break;
       case 19:
         mapTintColor = nightColor;
         daytime = DayTime.night;
+        break;
+      case 0:
+        _rerollWeather();
         break;
     }
     updateTemperature();
@@ -235,44 +250,46 @@ class LocalGameController with ChangeNotifier {
   void updateTemperature() {
     switch(_hour) {
       case 0:
-        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (7 * _temperatureRangeModifier);
         break;
       case 2:
-        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (7 * _temperatureRangeModifier);
         break;
       case 4:
-        _temperature = _baseTemperature - (8 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (8 * _temperatureRangeModifier);
         break;
       case 6:
-        _temperature = _baseTemperature - (6 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (6 * _temperatureRangeModifier);
         break;
       case 8:
-        _temperature = _baseTemperature - (4 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (4 * _temperatureRangeModifier);
         break;
       case 10:
-        _temperature = _baseTemperature - (2 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (2 * _temperatureRangeModifier);
         break;
       case 12:
-        _temperature = _baseTemperature;
+        _temperature = (_baseTemperature + _temperatureModifier);
         break;
       case 14:
-        _temperature = _baseTemperature - (2 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (2 * _temperatureRangeModifier);
         break;
       case 16:
-        _temperature = _baseTemperature - (3 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (3 * _temperatureRangeModifier);
         break;
       case 18:
-        _temperature = _baseTemperature - (5 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (5 * _temperatureRangeModifier);
         break;
       case 20:
-        _temperature = _baseTemperature - (6 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (6 * _temperatureRangeModifier);
         break;
       case 22:
-        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (7 * _temperatureRangeModifier);
         break;
       case 23:
-        _temperature = _baseTemperature - (7 * _temperatureModifier);
+        _temperature = (_baseTemperature + _temperatureModifier) - (7 * _temperatureRangeModifier);
         break;
     }
+
+    print("Temperatura: $_temperature, modifier: $_temperatureModifier, rangeModifier: $_temperatureRangeModifier, hour: $_hour, weather: ${_currentWeather.name}");
   }
 }

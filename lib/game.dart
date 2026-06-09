@@ -1,17 +1,13 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/game/items/armor.dart';
-import 'package:projeto_gbb_demo/maps/griffin/griffin_base.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
-import 'game/game_sprite_sheet.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 import 'game/enum/character_class.dart';
 import 'game/enum/character_faction.dart';
 import 'game/controller/game_controller.dart';
-import 'players/player_consts.dart';
 
 double tileSize = 192;
 const CharacterClass playerOneClass = CharacterClass.SwordsMan;

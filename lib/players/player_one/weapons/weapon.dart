@@ -2,7 +2,6 @@ import 'package:bonfire/bonfire.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:bonfire/player/lit_player.dart';
 import 'package:projeto_gbb_demo/players/consts.dart';
-import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
 
 mixin Weapon on LitPlayer {
   double? damage = 5;

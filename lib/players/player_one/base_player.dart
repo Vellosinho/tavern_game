@@ -129,7 +129,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
         speed = PlayerConsts.characterSpeed;
       });
 
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 550), () {
         dashReady = true;
       });
     }

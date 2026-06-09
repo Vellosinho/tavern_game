@@ -114,7 +114,9 @@ class _GriffinBaseState extends State<GriffinBase> {
         Pillar(position: Vector2(tileSize * 9, tileSize * 5), pillarNumber: 5),
         Pillar(position: Vector2(tileSize * 21, tileSize * 4), pillarNumber: 6),
         Pillar(position: Vector2(tileSize * 15, tileSize * 1), pillarNumber: 7),
-        DayTimeClock(position: Vector2(0,0), localGameController: widget.gameController),
+        DayTimeClock(
+          onStartRaining: () {},
+          position: Vector2(0,0), localGameController: widget.gameController),
       ],
       cameraConfig: CameraConfig(zoom: 0.8, moveOnlyMapArea: true),
       player: player,

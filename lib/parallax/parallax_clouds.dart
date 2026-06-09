@@ -10,6 +10,15 @@ class BonfireParallaxBackground extends GameBackground {
     super.onMount();
   }
 
+  // void _addBackgroundColor() async {
+  //   final bgColor = await loadCameraParallaxComponent(
+  //     size: Vector2(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+  //     [
+        
+  //     ]
+  //   );
+  // }
+
   void _addParallax() async {
     final p = await loadCameraParallaxComponent(
       size: Vector2(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
@@ -22,4 +31,10 @@ class BonfireParallaxBackground extends GameBackground {
     );
     add(p);
   }
+
+  // void removeBackground() async {
+  //   this.children.forEach((element) => remove(element),);
+  //   // remove();
+  //   // this.children
+  // }
 }

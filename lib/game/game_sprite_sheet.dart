@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bonfire/bonfire.dart';
+import 'package:projeto_gbb_demo/game/enum/weather.dart';
 // import 'package:flutter/material.dart';
 import 'enum/character_class.dart';
 import 'enum/character_faction.dart';
@@ -353,10 +354,22 @@ class InterfaceSpriteSheet {
   static Image get lifeBar => Image.asset('assets/images/interface/lifebar/lifebar.png',height: 152, fit: BoxFit.cover,);
   // static Image get miniMapDecoration => Image.asset('assets/images/interface/minimap/minimap.png',height: 340, fit: BoxFit.cover,);
   static Image get miniMapDecoration => Image.asset('assets/images/interface/minimap/complete_minimap_interface.png',height: 360, fit: BoxFit.cover,);
+  // Minimap tokens
+  static Image get clearToken => Image.asset('assets/images/interface/minimap/clear_token.png',height: 75, fit: BoxFit.cover,);
+  static Image get rainToken => Image.asset('assets/images/interface/minimap/rain_token.png',height: 75, fit: BoxFit.cover,);
   //Interface elements
   static Image get coin => Image.asset('assets/images/interface/coin.png');
   static Image get people => Image.asset('assets/images/interface/people.png');
   
+}
+
+Widget getWeatherToken(Weather weather) {
+  switch (weather) {
+    case Weather.rain:
+      return InterfaceSpriteSheet.rainToken;
+    default:
+      return InterfaceSpriteSheet.clearToken;
+  }
 }
 
 List<Widget> getToken(CharacterClass characterClass, CharacterFaction faction) {

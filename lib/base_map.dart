@@ -5,6 +5,7 @@ import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
+import 'package:projeto_gbb_demo/game/objects/weather_objects/map_climate.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
@@ -20,6 +21,7 @@ class BaseMap extends StatefulWidget {
   final Color? backgroundColor;
   final List<LocationAction>? locationActions;
   final GameBackground? background;
+  final MapClimate? climate;
 
 
   const BaseMap(
@@ -34,6 +36,7 @@ class BaseMap extends StatefulWidget {
       this.backgroundColor,
       this.locationActions,
       this.background,
+      this.climate,
       });
 
   @override
@@ -55,12 +58,12 @@ class _BaseMapState extends State<BaseMap> {
   }
 
   void checkHasDaylight() {
-    if (widget.hasDayLightCycle ?? false) {
-      widget.components.add(DayTimeClock(
-        position: Vector2(0,0),
-        localGameController: widget.gameController,
-      ));
-    }
+    // if (widget.hasDayLightCycle ?? false) {
+    //   widget.components.add(DayTimeClock(
+    //     position: Vector2(0,0),
+    //     localGameController: widget.gameController,
+    //   ));
+    // }
   }
 
   @override
@@ -126,7 +129,7 @@ class _BaseMapState extends State<BaseMap> {
   Widget build(BuildContext context) {
     
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.gameController.setEnvironmentTemperature(environmentTemperature: 24, modifier: 2.0);
+      widget.gameController.setEnvironmentTemperature(environmentTemperature: widget.climate?.baseTemperature ?? 24, modifier: widget.climate?.baseTemperature ?? 1.0, isOutside: false);
       widget.gameController.enableVisibility();
       if (widget.hasDayLightCycle ?? false) {
         getLighting();

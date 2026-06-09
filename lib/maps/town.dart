@@ -2,20 +2,17 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/player/lit_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/enum/character_faction.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
-import 'package:projeto_gbb_demo/game/game_sprite_sheet.dart';
+import 'package:projeto_gbb_demo/game/enum/weather.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/maps/tavern/components/exit_mat.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/parallax/parallax_clouds.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
-import 'package:projeto_gbb_demo/players/player_consts.dart';
 import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class TownMap extends StatefulWidget {
@@ -65,13 +62,12 @@ class _TownMapState extends State<TownMap> {
           return;
       }
     }
+
   
-  
-    
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.gameController.setEnvironmentTemperature(environmentTemperature: 24, modifier: 2.0);
+      widget.gameController.setEnvironmentTemperature(environmentTemperature: 24, modifier: 2.0, isOutside: true);
       widget.gameController.enableVisibility();
       getLighting();
     });
@@ -114,10 +110,11 @@ class _TownMapState extends State<TownMap> {
       newFunctions: []
     );
 
+    BonfireParallaxBackground background = BonfireParallaxBackground();
 
     return BonfireWidget(
       backgroundColor: Color(0xff2c6ec7),
-      background: BonfireParallaxBackground(),
+      background: background,
       playerControllers: [
         Keyboard(
             config: KeyboardConfig(acceptedKeys: [
@@ -155,9 +152,16 @@ class _TownMapState extends State<TownMap> {
         // SmithingTable(
         //     position: Vector2(tileSize * 22.75, tileSize * 16.85),
         //     localGameController: widget.gameController),
-        DayTimeClock(position: Vector2(0,0), localGameController: widget.gameController),
+        DayTimeClock(
+          onStartRaining: () {
+            
+            // this.add(rainList);
+            
+          },
+          position: Vector2(0,0), localGameController: widget.gameController),
         ExitMat(position: Vector2(tileSize * 19, tileSize * 13), exitFunction: () {
           enterTavern();
+          // background.removeBackground();
         })
       ],
       // ],

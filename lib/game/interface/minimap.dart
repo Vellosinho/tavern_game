@@ -19,18 +19,18 @@ class GameMiniMap extends StatelessWidget {
         right: 16,
         child: Stack(
           children: [
-            MiniMap(
-              margin: EdgeInsets.only(right: 30, top: 50),
-              zoom: 0.75,
-              game:game,
-              tileColor: Color(0xff72751b),
-              backgroundColor: Color(0xff2196f3),
-              tileCollisionColor: Color(0xff858275),
-              playerColor: Color(0xffd90000),
-              enemyColor: Colors.deepOrangeAccent,
-              size: Vector2(260, 260),
-              borderRadius: BorderRadius.circular(200),
-            ),
+            // MiniMap(
+            //   margin: EdgeInsets.only(right: 30, top: 50),
+            //   zoom: 0.75,
+            //   game:game,
+            //   tileColor: Color(0xff72751b),
+            //   backgroundColor: Color(0xff2196f3),
+            //   tileCollisionColor: Color(0xff858275),
+            //   playerColor: Color(0xffd90000),
+            //   enemyColor: Colors.deepOrangeAccent,
+            //   size: Vector2(260, 260),
+            //   borderRadius: BorderRadius.circular(200),
+            // ),
             Positioned(right: 30, top: 50,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(200),
@@ -52,10 +52,14 @@ class GameMiniMap extends StatelessWidget {
               right: 290,
               top: 224, 
               child: AnimatedContainer(height: 32, width: (((playerOneController.playerStamina < 0) ? 0 : playerOneController.playerStamina) * 3.15), duration: Duration(milliseconds: 150),decoration: BoxDecoration(color: Color.fromARGB(255, 0, 255, 98)))),
+            Positioned(
+              right: 396,
+              top: 88,
+              child: getWeatherToken(controller.currentWeather)),
             InterfaceSpriteSheet.miniMapDecoration,
-            Positioned(top: 18, right: 292, child: Transform.rotate(angle: ((2 * pi) / 24 * controller.hour) - pi, child: SizedBox(height: 60, width: 3, child: Column(
+            Positioned(top: 92, right: 160, child: Transform.rotate(angle: ((2 * pi) / 24 * controller.hour) - pi, child: SizedBox(height: 176, width: 3, child: Column(
               children: [
-                 SizedBox(height: 40, width: 3,child: DecoratedBox( decoration: BoxDecoration(color: Colors.red[900]),)),
+                 SizedBox(height: 88, width: 3,child: DecoratedBox( decoration: BoxDecoration(color: Colors.red[900]),)),
                ],
             //  )))),Positioned(top: 97, right: 341, child: Transform.rotate(angle: ((2 * pi) * ((playerOneController.playerTemperature + 10) / 60)) - pi, child: SizedBox(height: 60, width: 3, child: Column(
             //   children: [

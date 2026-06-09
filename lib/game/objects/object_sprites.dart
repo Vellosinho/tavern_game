@@ -19,6 +19,20 @@ class GameObjectsSprites {
   static Future<Sprite> pan = Sprite.load('objects/kitchen/pan.png');
   static Future<Sprite> mixingBowl = Sprite.load('objects/kitchen/mixing_bowl.png');
   static Future<Sprite> cuttingBoard = Sprite.load('objects/kitchen/cutting_board.png');
+
+  //Weather sprites:
+  static Future<SpriteAnimation> puddle1 = SpriteAnimation.load('effects/puddle_1.png', SpriteAnimationData.sequenced(amount: 9, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddle2 = SpriteAnimation.load('effects/puddle_2.png', SpriteAnimationData.sequenced(amount: 9, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddle3 = SpriteAnimation.load('effects/puddle_3.png', SpriteAnimationData.sequenced(amount: 9, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddle4 = SpriteAnimation.load('effects/puddle_4.png', SpriteAnimationData.sequenced(amount: 9, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleAppear1 = SpriteAnimation.load('effects/puddle_1_appear.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleAppear2 = SpriteAnimation.load('effects/puddle_2_appear.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleAppear3 = SpriteAnimation.load('effects/puddle_3_appear.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleAppear4 = SpriteAnimation.load('effects/puddle_4_appear.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleDry1 = SpriteAnimation.load('effects/puddle_1_fade.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleDry2 = SpriteAnimation.load('effects/puddle_2_fade.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleDry3 = SpriteAnimation.load('effects/puddle_3_fade.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
+  static Future<SpriteAnimation> puddleDry4 = SpriteAnimation.load('effects/puddle_4_fade.png', SpriteAnimationData.sequenced(amount: 6, stepTime: 0.125, textureSize: Vector2(32, 32)));
   
   //sword shipping box sprites:
   static Future<Sprite> swordShippingBoxEmpty = Sprite.load('objects/sword_box/sword_box_0.png');

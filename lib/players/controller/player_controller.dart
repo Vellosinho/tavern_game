@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/foundation.dart';
@@ -305,7 +304,7 @@ class PlayerOneController with ChangeNotifier {
       // base_player = image.decodeImage(File('assets/images/base_player/${animationList[i]}.png').readAsBytesSync());
       // gear = image.decodeImage(File('assets/images/equipment/$armor/${animationList[i]}.png').readAsBytesSync());
       if (animationList[i].contains("dash") && (animationList[i].contains("front") || animationList[i].contains("back"))) {
-        var weaponBackgroundData = await rootBundle.load('assets/images/equipment/$armor/${animationList[i]}.png');
+        var weaponBackgroundData = await rootBundle.load('assets/images/weapons/griffin/${animationList[i]}_background.png');
         weaponBackground = image.decodeImage(weaponBackgroundData.buffer.asUint8List());
         // weapon_background = image.decodeImage(File('assets/images/weapons/griffin/${animationList[i]}_background.png').readAsBytesSync());
       }
@@ -374,7 +373,7 @@ class PlayerOneController with ChangeNotifier {
     image.Image? basePlayer,
     image.Image? weapon,
     image.Image? armor,
-    image.Image? weapon_background,
+    image.Image? weaponBackground,
     String label,
   ) async {
     late Uint8List imageValue;
@@ -384,13 +383,13 @@ class PlayerOneController with ChangeNotifier {
       imageValue = image.encodePng(weapon);
     } else if (label.contains("right")){
       image.compositeImage(basePlayer!, weapon!,  dstX: 0);
-      image.compositeImage(basePlayer!, armor!,  dstX: 0);
+      image.compositeImage(basePlayer, armor!,  dstX: 0);
       imageValue = image.encodePng(basePlayer);
     } else {
-      image.compositeImage(weapon_background!, basePlayer!,  dstX: 0);
-      image.compositeImage(weapon_background!, armor!,  dstX: 0);
-      image.compositeImage(weapon_background, weapon!,  dstX: 0);
-      imageValue = image.encodePng(weapon_background);
+      image.compositeImage(weaponBackground!, basePlayer!,  dstX: 0);
+      image.compositeImage(weaponBackground, armor!,  dstX: 0);
+      image.compositeImage(weaponBackground, weapon!,  dstX: 0);
+      imageValue = image.encodePng(weaponBackground);
     }
 
     var spriteImage = await bytesToImage(imageValue);
