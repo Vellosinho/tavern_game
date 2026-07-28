@@ -170,7 +170,7 @@ class LocalGameController with ChangeNotifier {
     print("Rerolling weather, $willRain");
     if (willRain < _riskOfRain) {
       if (_currentWeather != Weather.rain) {
-        _startRain();
+        startRain();
       }
     } else {
       if (_currentWeather != Weather.clear) {
@@ -179,7 +179,7 @@ class LocalGameController with ChangeNotifier {
     }
   }
 
-  void _startRain() {
+  void startRain() {
       _currentWeather = Weather.rain;
       _temperatureModifier = -4;
       _temperatureRangeModifier += 1;
