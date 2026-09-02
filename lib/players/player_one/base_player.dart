@@ -100,6 +100,9 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
       print("position: $position");
       weaponAttack(event);
     }
+    if (event.id.keyId == LogicalKeyboardKey.keyT.keyId) {
+      localGameController.toggleChat();
+    }
     if (event.id.keyId == LogicalKeyboardKey.keyX.keyId &&
         dashReady &&
         !_isPlayingOneTimeAnimation) {
@@ -202,7 +205,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   }
 
   void periodicEvent() {
-    if (_periodicEventTic < 1) {
+    if (_periodicEventTic < playerController.playerWeight) {
       _periodicEventTic++;
     } else {
       _periodicEventTic = 0;

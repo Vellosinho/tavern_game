@@ -42,7 +42,6 @@ class _GriffinBaseState extends State<GriffinBase> {
 
   @override
   Widget build(BuildContext context) {
-    double tileSize = 192;
 
     LitPlayer player = BasePlayer(
       playerController: widget.playerOneController,

@@ -8,5 +8,5 @@ class Armor {
 
 // Game armors
 
-Armor yetiArmor = Armor(armorName: "yeti", temperatureModifier: 10, weightModifier: 5);
-Armor griffinArmor = Armor(armorName: "griffin", temperatureModifier: 0, weightModifier: 3);
+Armor yetiArmor = Armor(armorName: "yeti", temperatureModifier: 10, weightModifier: 3);
+Armor griffinArmor = Armor(armorName: "griffin", temperatureModifier: 0, weightModifier: 1);

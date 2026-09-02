@@ -165,6 +165,7 @@ class _BaseMapState extends State<BaseMap> {
           LogicalKeyboardKey.keyZ,
           LogicalKeyboardKey.keyX,
           LogicalKeyboardKey.keyC,
+          LogicalKeyboardKey.keyT,
           LogicalKeyboardKey.escape,
         ]))
       ],

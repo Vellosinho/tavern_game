@@ -1,19 +1,20 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:projeto_gbb_demo/game/items/armor.dart';
 import 'package:projeto_gbb_demo/game/objects/object_sprites.dart';
+import 'package:projeto_gbb_demo/game_consts.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class Chest extends GameDecoration with Attackable {
   PlayerOneController playerOneController;
   Chest({required super.position, required this.playerOneController})
       : super.withSprite(
-            sprite: GameObjectsSprites.chest, size: Vector2(192, 192))
+            sprite: GameObjectsSprites.chest, size: Vector2(tileSize, tileSize))
   // : super.withSprite(sprite: GameObjectsSprites.anvil, position: position, size: Vector2(96, 96))
   ;
   @override
   Future<void> onLoad() async {
     add(RectangleHitbox(
-      size: Vector2(192, 96),
+      size: Vector2(tileSize, tileSize / 2),
       position: Vector2(0, 80),
     ));
     // final program = await FragmentProgram.fromAsset('shaders/myshader.frag');

@@ -8,6 +8,7 @@ import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
 import 'package:projeto_gbb_demo/game/enum/weather.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
+import 'package:projeto_gbb_demo/game_consts.dart';
 import 'package:projeto_gbb_demo/maps/tavern/components/exit_mat.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/parallax/parallax_clouds.dart';
@@ -72,7 +73,6 @@ class _TownMapState extends State<TownMap> {
       getLighting();
     });
     
-    double tileSize = 192;
     LitPlayer player = BasePlayer(
       localGameController: widget.gameController,
       playerController: widget.playerOneController,
@@ -80,7 +80,7 @@ class _TownMapState extends State<TownMap> {
       onHit: () {
         widget.playerOneController.hit(2);
       },
-      position: Vector2(tileSize * 19, tileSize * 13),
+      position: Vector2(tileSize * 18, tileSize * 18),
     );
     
     void enterTavern() {
@@ -124,6 +124,7 @@ class _TownMapState extends State<TownMap> {
           LogicalKeyboardKey.arrowRight,
           LogicalKeyboardKey.keyZ,
           LogicalKeyboardKey.keyX,
+          LogicalKeyboardKey.keyT,
           LogicalKeyboardKey.keyC,
           LogicalKeyboardKey.escape,
         ]))
@@ -159,7 +160,7 @@ class _TownMapState extends State<TownMap> {
             
           },
           position: Vector2(0,0), localGameController: widget.gameController),
-        ExitMat(position: Vector2(tileSize * 19, tileSize * 13), exitFunction: () {
+        ExitMat(position: Vector2(tileSize * 18, tileSize * 18), exitFunction: () {
           enterTavern();
           // background.removeBackground();
         })
