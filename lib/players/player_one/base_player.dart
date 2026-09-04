@@ -23,6 +23,10 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   PlayerOneAnimations playerOneAnimations = PlayerOneAnimations();
   bool isStunned = false;
 
+  //Movement keys
+  bool _isMoving = false;
+  bool _isDashing = false;
+
   // control booleans:
   bool dashReady = true;
 
@@ -77,7 +81,20 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
   }
 
   @override
+  void onJoystickChangeDirectional(JoystickDirectionalEvent event) {
+    if (event.directional == JoystickMoveDirectional.IDLE) {
+      _isMoving = false;
+    } else {
+      _isMoving = true;
+    }
+    if (!_isDashing) {
+      super.onJoystickChangeDirectional(event);
+    }
+  }
+
+  @override
   void onJoystickAction(JoystickActionEvent event) {
+
     !isStunned ? swordsmanHitSet(event) : null;
     return super.onJoystickAction(event);
   }
@@ -105,6 +122,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
         !_isPlayingOneTimeAnimation) {
       swordsmanDash();
     }
+
     if (event.id == LogicalKeyboardKey.escape.keyId && !escPressed) {
       // playerController.togglePaused();
       escPressed = true;
@@ -124,9 +142,18 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
     if(playerController.playerStamina >= 40) {
       playerController.spendStamina(40);
       dashReady = false;
+      
       speed = 1200;
-      animation?.playOnce(playerOneAnimations.getGeneratedDash(playerController, lastDirection.toRadians().toString()) as FutureOr<SpriteAnimation>).then((_) {
-        speed = PlayerConsts.characterSpeed;
+      moveFromDirection(lastDirection);
+      _isDashing = true;
+      Future.delayed(const Duration(milliseconds: 20), () {
+        animation?.playOnce(playerOneAnimations.getGeneratedDash(playerController, lastDirection.toRadians().toString()) as FutureOr<SpriteAnimation>).then((_) {
+          _isDashing = false;
+          if (!_isMoving) {
+            stopMove();
+          }
+          speed = PlayerConsts.characterSpeed;
+        });
       });
 
       Future.delayed(const Duration(milliseconds: 550), () {
