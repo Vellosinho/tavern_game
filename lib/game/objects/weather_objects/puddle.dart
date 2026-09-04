@@ -6,9 +6,11 @@ import 'package:projeto_gbb_demo/game/objects/object_sprites.dart';
 class Puddle extends GameDecoration {
   int variation;
   LocalGameController controller;
+  bool? rainHasStarted = false;
   Puddle({
     required this.controller,
     required this.variation,
+    this.rainHasStarted,
     required super.position})
       : super.withAnimation(
           animation: (variation == 0) ? GameObjectsSprites.puddle1
@@ -38,7 +40,9 @@ class Puddle extends GameDecoration {
   }
 
   void spawn() {
-    playSpriteAnimationOnce(getPuddleSpawnAnimation());
+    if (!(rainHasStarted ?? false)) {
+      playSpriteAnimationOnce(getPuddleSpawnAnimation());
+    }
     checkIsStillRaining();
   }
 

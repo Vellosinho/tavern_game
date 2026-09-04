@@ -19,6 +19,14 @@ class LocalGameController with ChangeNotifier {
 
   int _riskOfRain = 5;
 
+  bool _chatOpen = false;
+  bool get chatOpen => _chatOpen;
+  bool _chatDelay = false;
+  String _currentChatMessage = '';
+  String get currentChatMessage => _currentChatMessage;
+  List<String> _chatMessages = [];
+  List<String> get chatMessages => _chatMessages;
+
   Season _currentSeason = Season.spring;
   Season get currentSeason => _currentSeason;
 
@@ -204,31 +212,24 @@ class LocalGameController with ChangeNotifier {
 
     // _rerollWeather();
 
-    switch (_hour) {
-      case 6:
+    if (_hour < 6 || _hour >= 19) {
+      if (_hour == 6 || _hour == 0) {
         _rerollWeather();
-        mapTintColor = sunRiseColor;
-        daytime = DayTime.sunrise;
-        break;
-      case 7:
-        mapTintColor = noonColor;
-        daytime = DayTime.noon;
-        break;
-      case 12:
+      }
+      mapTintColor = nightColor;
+      daytime = DayTime.night;
+    } else if (_hour >= 6 && _hour < 7) {
+      mapTintColor = sunRiseColor;
+      daytime = DayTime.sunrise;
+    } else if (_hour >= 7 && _hour < 18) {
+      if (_hour == 12) {
         _rerollWeather();
-        break;
-      case 18:
-        _rerollWeather();
-        mapTintColor = sunRiseColor;
-        daytime = DayTime.sunset;
-        break;
-      case 19:
-        mapTintColor = nightColor;
-        daytime = DayTime.night;
-        break;
-      case 0:
-        _rerollWeather();
-        break;
+      }
+      mapTintColor = noonColor;
+      daytime = DayTime.noon;
+    } else if (_hour >= 18 && _hour < 19) {
+      mapTintColor = sunRiseColor;
+      daytime = DayTime.sunset;
     }
     updateTemperature();
     notifyListeners();
@@ -244,6 +245,72 @@ class LocalGameController with ChangeNotifier {
         return Colors.orange[400];
       case DayTime.night:
         return Colors.indigo[900];
+    }
+  }
+
+  void toggleChat() {
+    if (!_chatDelay) {
+      _chatDelay = true;
+      if (_chatOpen) {
+        closeChat();
+      } else {
+        openChat();
+      }
+      Future.delayed(Duration(milliseconds: 250), () {
+        _chatDelay = false;
+      });
+      return;
+    }
+  }
+
+  void openChat() {
+    _chatOpen = true;
+    _currentChatMessage = "";
+    _chatMessages = [];
+    notifyListeners();
+  }
+
+  void closeChat() {
+    _chatOpen = false;
+    notifyListeners();
+  }
+
+  void updateMessage(String message) {
+    _currentChatMessage = message;
+    notifyListeners();
+  }
+
+  void sendCommand() {
+    _chatMessages.add(_currentChatMessage);
+    if (_currentChatMessage[0] == "/") {
+      _currentChatMessage = _currentChatMessage.substring(1);
+      List<String> params = _currentChatMessage.split(' ');
+      for (var element in params) {
+        params[params.indexOf(element)] = element.toLowerCase();
+      }
+      
+      _currentChatMessage = "";
+      notifyListeners();
+
+      switch (params[0]) {
+        case "weather":
+          if (params[1] == "rain") {
+            startRain();
+          } else if (params[1] == "clear") {
+            _stopRain();
+          }
+          break;
+        case "time":
+          int? newHour = int.tryParse(params[1]);
+          if (newHour != null && newHour >= 0 && newHour < 24) {
+            _hour = newHour;
+            updateShading();
+          }
+          break;
+        case "exit":
+          closeChat();
+          break;
+      }
     }
   }
 

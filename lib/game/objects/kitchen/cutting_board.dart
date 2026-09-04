@@ -1,12 +1,13 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:projeto_gbb_demo/game/objects/object_sprites.dart';
+import 'package:projeto_gbb_demo/game_consts.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class CuttingBoard extends GameDecoration with Attackable {
   PlayerOneController playerOneController;
   CuttingBoard({required super.position, required this.playerOneController})
       : super.withSprite(
-            sprite: GameObjectsSprites.cuttingBoard, size: Vector2(192, 192))
+            sprite: GameObjectsSprites.cuttingBoard, size: Vector2(tileSize, tileSize))
   // : super.withSprite(sprite: GameObjectsSprites.anvil, position: position, size: Vector2(96, 96))
   ;
   @override

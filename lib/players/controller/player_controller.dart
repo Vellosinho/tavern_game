@@ -21,9 +21,9 @@ class PlayerOneController with ChangeNotifier {
   Armor _currentArmor = griffinArmor;
   Armor get currentArmor => _currentArmor;
   double _environmentTemperature = 20;
-  double _playerTemperature = 20;
-  double get playerTemperature => _playerTemperature;
-  double get temperatureModifier => currentArmor.temperatureModifier;
+  int get playerWeight => currentArmor.weightModifier;
+  double get playerTemperature => currentArmor.temperatureModifier + _environmentTemperature;
+  double get temperatureModifier => (playerTemperature > 50) ? 50 : (playerTemperature < -10) ? -10 : playerTemperature;
 
   void setCurrentArmor(Armor armor) {
     _currentArmor = armor;
@@ -69,12 +69,6 @@ class PlayerOneController with ChangeNotifier {
 
   void setEnvironmentTemperature(double perceivedTemperature) {
     _environmentTemperature = perceivedTemperature;
-    _playerTemperature = _environmentTemperature + temperatureModifier;
-    notifyListeners();
-  }
-
-  void updateTemperature() {
-    _playerTemperature = _environmentTemperature + temperatureModifier;
     notifyListeners();
   }
 
@@ -282,7 +276,6 @@ class PlayerOneController with ChangeNotifier {
     SimpleDirectionAnimation newAnimations = await generateDirectionAnimation(armor.armorName);
     setCurrentPlayerAnimation(newAnimations);
     setCurrentArmor(armor);
-    updateTemperature();
   }
 
   Future<SimpleDirectionAnimation> generateDirectionAnimation(String armor) async {

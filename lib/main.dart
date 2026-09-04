@@ -10,10 +10,6 @@ import 'game.dart';
 const double tileSize = 32;
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await windowManager.ensureInitialized();
-  // await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-  // await windowManager.setFullScreen(true);
 
   runApp(
     MultiProvider(

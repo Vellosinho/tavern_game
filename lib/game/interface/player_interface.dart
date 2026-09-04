@@ -45,7 +45,9 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
               color: controller.visibilityScreen,
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-            )
+            ),
+            Chat(controller: controller),
+            // TextField(),
           ],
         ),
       ),
@@ -96,6 +98,71 @@ class ViewRain extends StatelessWidget {
         ]
       ),
     );
+  }
+}
+
+class Chat extends StatefulWidget {
+  final LocalGameController controller;
+
+  const Chat({required this.controller, super.key});
+
+  @override
+  State<Chat> createState() => _ChatState();
+}
+
+class _ChatState extends State<Chat> {
+  final TextEditingController textController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.controller.chatOpen ? Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Container(
+        color: Colors.black.withAlpha(160),
+        height: 240,
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: widget.controller.chatMessages.length > 3 ? 3 : widget.controller.chatMessages.length, // Replace with the actual number of messages
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        widget.controller.chatMessages.length > 3 ?
+                          widget.controller.chatMessages[(widget.controller.chatMessages.length - 3) + index] :
+                          widget.controller.chatMessages[index],
+                          style: TextStyle(fontFamily: 'PressStart2P', color: Colors.grey,
+                        ),
+                      ),
+                    ), // Replace with actual message content
+                  );
+                },
+              ),
+            ),
+            TextField(
+              style: TextStyle(fontFamily: 'PressStart2P', color: Colors.white, fontWeight: FontWeight.w200),
+              onEditingComplete: () {
+                widget.controller.sendCommand();
+                textController.clear();
+              },
+              controller: textController,
+              decoration: InputDecoration(
+                hintText: 'Type a message...',
+                filled: true,
+                fillColor: Colors.black.withAlpha(160),
+              ),
+              onChanged: (value) {
+                widget.controller.updateMessage(value);
+              },
+            ),
+          ],
+        ),
+      ),
+    ) : SizedBox();
   }
 }
 

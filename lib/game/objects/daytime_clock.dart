@@ -16,14 +16,15 @@ class DayTimeClock extends GameDecoration {
   LocalGameController localGameController;
   int stashedIron = 0;
   Weather lastWeather = Weather.clear;
+  Weather firstWeather = Weather.clear;
   Function onStartRaining;
   DayTimeClock({required this.onStartRaining, required super.position, required this.localGameController})
       : super.withSprite(sprite: GameObjectsSprites.anvil, size: Vector2(0, 0));
   @override
   Future<void> onLoad() {
-    // localGameController.startDaynightCycle();
-    // updateNpcRoutine();
+    firstWeather = localGameController.currentWeather;
     updateGameLighting();
+    checkStartRaining();
     return super.onLoad();
   }
 
@@ -66,25 +67,24 @@ class DayTimeClock extends GameDecoration {
   }
 
   void checkStartRaining() {
-     
   List<Component> rainList = [
-      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 15, tileSize * 3)),
-      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 18, tileSize * 4)),
-      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 11, tileSize * 9)),
-      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 26, tileSize * 10)),
-      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 6, tileSize * 11)),
-      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 15, tileSize * 11)),
-      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 3, tileSize * 12)),
-      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 5, tileSize * 14)),
-      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 14, tileSize * 14)),
-      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 24, tileSize * 14)),
-      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 25, tileSize * 15)),
-      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 9, tileSize * 16)),
-      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 2, tileSize * 17)),
-      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 12, tileSize * 18)),
-      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 22, tileSize * 19)),
-      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 11, tileSize * 20)),
-      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 25, tileSize * 20)),
+      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 15, tileSize * 3), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 18, tileSize * 4), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 11, tileSize * 9), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 26, tileSize * 10), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 6, tileSize * 11), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 15, tileSize * 11), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 3, tileSize * 12), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 5, tileSize * 14), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 14, tileSize * 14), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 24, tileSize * 14), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 25, tileSize * 15), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 9, tileSize * 16), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 2, tileSize * 17), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 1, position: Vector2(tileSize * 12, tileSize * 18), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 2, position: Vector2(tileSize * 22, tileSize * 19), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 3, position: Vector2(tileSize * 11, tileSize * 20), rainHasStarted: firstWeather == Weather.rain),
+      Puddle(controller: localGameController, variation: 0, position: Vector2(tileSize * 25, tileSize * 20), rainHasStarted: firstWeather == Weather.rain),
   ];
 
     if (localGameController.currentWeather != lastWeather) {
