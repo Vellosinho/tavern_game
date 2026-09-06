@@ -1,0 +1,14 @@
+{ "columns":10,
+ "image":"river_blocks.png",
+ "imageheight":512,
+ "imagewidth":320,
+ "margin":0,
+ "name":"river_blocks",
+ "spacing":0,
+ "tilecount":160,
+ "tiledversion":"1.11.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}

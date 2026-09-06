@@ -1,0 +1,14 @@
+{ "columns":3,
+ "image":"fountain.png",
+ "imageheight":160,
+ "imagewidth":480,
+ "margin":0,
+ "name":"fountain",
+ "spacing":0,
+ "tilecount":3,
+ "tiledversion":"1.11.1",
+ "tileheight":160,
+ "tilewidth":160,
+ "type":"tileset",
+ "version":"1.10"
+}
