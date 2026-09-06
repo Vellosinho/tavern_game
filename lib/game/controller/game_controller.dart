@@ -281,7 +281,6 @@ class LocalGameController with ChangeNotifier {
   }
 
   void sendCommand() {
-    _chatMessages.add(_currentChatMessage);
     if (_currentChatMessage[0] == "/") {
       _currentChatMessage = _currentChatMessage.substring(1);
       List<String> params = _currentChatMessage.split(' ');
@@ -289,15 +288,17 @@ class LocalGameController with ChangeNotifier {
         params[params.indexOf(element)] = element.toLowerCase();
       }
       
-      _currentChatMessage = "";
-      notifyListeners();
 
       switch (params[0]) {
         case "weather":
           if (params[1] == "rain") {
+            _currentChatMessage = "/$_currentChatMessage: changing weather to ${params[1]}...";
             startRain();
           } else if (params[1] == "clear") {
+            _currentChatMessage = "/$_currentChatMessage: changing weather to ${params[1]}...";
             _stopRain();
+          } else {
+            _currentChatMessage = "/$_currentChatMessage: weather ${params[1]} not found";
           }
           break;
         case "time":
@@ -312,6 +313,10 @@ class LocalGameController with ChangeNotifier {
           break;
       }
     }
+    
+    _chatMessages.add(_currentChatMessage);
+    _currentChatMessage = "";
+    notifyListeners();
   }
 
   void updateTemperature() {
