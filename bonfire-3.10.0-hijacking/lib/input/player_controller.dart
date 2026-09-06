@@ -2,6 +2,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:bonfire/base/game_component.dart';
+import 'package:bonfire/util/direction.dart';
 import 'package:bonfire/util/priority_layer.dart';
 
 enum JoystickMoveDirectional {
@@ -19,6 +20,29 @@ enum JoystickMoveDirectional {
       this == MOVE_LEFT || this == MOVE_DOWN_LEFT || this == MOVE_UP_LEFT;
   bool get isRight =>
       this == MOVE_RIGHT || this == MOVE_DOWN_RIGHT || this == MOVE_UP_RIGHT;
+
+  Direction toDirection () {
+    switch (this) {
+      case MOVE_LEFT:
+        return Direction.left;
+      case MOVE_RIGHT:
+        return Direction.right;
+      case MOVE_UP_LEFT:
+        return Direction.left;
+      case MOVE_UP_RIGHT:
+        return Direction.right;
+      case MOVE_DOWN_LEFT:
+        return Direction.left;
+      case MOVE_DOWN_RIGHT:
+        return Direction.right;
+      case MOVE_UP:
+        return Direction.up;
+      case MOVE_DOWN:
+        return Direction.down;
+      default:
+        return Direction.down;
+    }
+  }
 }
 
 class JoystickDirectionalEvent {

@@ -2,6 +2,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/game/items/armor.dart';
 import 'package:projeto_gbb_demo/maps/griffin/griffin_base.dart';
+import 'package:projeto_gbb_demo/maps/main_village/main_village.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
@@ -46,7 +47,13 @@ class _GameState extends State<Game> {
     PlayerOneController playerOneController = context.read<PlayerOneController>();
 
     // return TownMap(gameController: gameController, playerOneController: playerOneController);
-    return TavernMap(
+    // return TavernMap(
+    //   gameController: gameController,
+    //   playerOneController: playerOneController,
+    //   initPosition: Vector2(tileSize * 6.5, tileSize * 12),
+    //   initDirection: Direction.up,
+    // );
+    return MainVillageMap(
       gameController: gameController,
       playerOneController: playerOneController,
       initPosition: Vector2(tileSize * 6.5, tileSize * 12),

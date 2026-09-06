@@ -66,6 +66,7 @@ flutter:
     - assets/images/statues/
     - assets/images/map/
     - assets/images/map/griffin_base/
+    - assets/images/map/main_village_map/
     - assets/images/map/house_interior/yellow_house/
     - assets/images/items/
     - assets/images/interface/
