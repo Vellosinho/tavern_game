@@ -64,4 +64,7 @@ class GameObjectsSprites {
   static Future<Sprite> launchStation = Sprite.load('objects/launch_station/launch_station_idle.png');
   static Future<SpriteAnimation> launchStationActivation = SpriteAnimation.load('objects/launch_station/launch_station_activating.png', SpriteAnimationData.sequenced(amount: 10, stepTime: 0.2, textureSize: Vector2(92, 70)));
   static Future<Sprite> launchStationActivated = Sprite.load('objects/launch_station/launch_station_activated.png');
+
+  //Waterfall sprite:
+  static Future<SpriteAnimation> waterfall = SpriteAnimation.load("map/main_village_map/waterfall.png", SpriteAnimationData.sequenced(amount: 6, stepTime: 0.2, textureSize: Vector2(128, 160)));
 }

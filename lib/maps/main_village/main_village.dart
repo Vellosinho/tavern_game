@@ -4,6 +4,7 @@ import 'package:projeto_gbb_demo/base_map.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
+import 'package:projeto_gbb_demo/maps/main_village/main_village_objects/waterfall.dart';
 import 'package:projeto_gbb_demo/maps/tavern/kitchen.dart';
 import 'package:projeto_gbb_demo/maps/tavern/living_room.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
@@ -38,7 +39,9 @@ class _MainVillageMapState extends State<MainVillageMap> {
             'map/main_village_map/main_village.json'),
           forceTileSize: Vector2(tileSize, tileSize),
         ),
-        components: [],
+        components: [
+          Waterfall(position: Vector2(tileSize * 47, 0))
+        ],
         initLocation: widget.initPosition ?? Vector2(0,0),
         initDirection: widget.initDirection ?? Direction.up,
         locationActions: [
