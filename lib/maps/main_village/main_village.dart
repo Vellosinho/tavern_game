@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/base_map.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game.dart';
+import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village_objects/waterfall.dart';
 import 'package:projeto_gbb_demo/maps/tavern/kitchen.dart';
@@ -32,6 +33,7 @@ class _MainVillageMapState extends State<MainVillageMap> {
   @override
   Widget build(BuildContext context) {
       return BaseMap(
+        isOutside: true,
         gameController: widget.gameController,
         playerOneController: widget.playerOneController, 
         map: WorldMapByTiled(
@@ -40,7 +42,13 @@ class _MainVillageMapState extends State<MainVillageMap> {
           forceTileSize: Vector2(tileSize, tileSize),
         ),
         components: [
-          Waterfall(position: Vector2(tileSize * 47, 0))
+          Waterfall(position: Vector2(tileSize * 47, 0)),
+          DayTimeClock(
+            onStartRaining: () {
+            // this.add(rainList);
+            },
+            position: Vector2(0,0), localGameController: widget.gameController
+          ),
         ],
         initLocation: widget.initPosition ?? Vector2(0,0),
         initDirection: widget.initDirection ?? Direction.up,

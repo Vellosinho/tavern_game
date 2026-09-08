@@ -18,6 +18,7 @@ class BaseMap extends StatefulWidget {
   final Vector2 initLocation;
   final Direction initDirection;
   final bool? hasDayLightCycle;
+  final bool? isOutside;
   final Color? backgroundColor;
   final List<LocationAction>? locationActions;
   final GameBackground? background;
@@ -37,6 +38,7 @@ class BaseMap extends StatefulWidget {
       this.locationActions,
       this.background,
       this.climate,
+      this.isOutside,
       });
 
   @override
@@ -171,11 +173,11 @@ class _BaseMapState extends State<BaseMap> {
       ],
       map: widget.map,
       components: widget.components,
-      cameraConfig: CameraConfig(zoom: 0.8, moveOnlyMapArea: true),
+      cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: true),
       player: player,
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
-            PlayerInterface(game: game),
+            PlayerInterface(game: game, isOutside: widget.isOutside,),
       },
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,

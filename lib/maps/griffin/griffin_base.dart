@@ -117,7 +117,7 @@ class _GriffinBaseState extends State<GriffinBase> {
           onStartRaining: () {},
           position: Vector2(0,0), localGameController: widget.gameController),
       ],
-      cameraConfig: CameraConfig(zoom: 0.8, moveOnlyMapArea: true),
+      cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: true),
       player: player,
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
