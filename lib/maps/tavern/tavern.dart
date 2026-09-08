@@ -39,7 +39,7 @@ class _TavernMapState extends State<TavernMap> {
           forceTileSize: Vector2(tileSize, tileSize),
         ),
         components: [],
-        initLocation: widget.initPosition ?? Vector2(0,0),
+        initPosition: widget.initPosition ?? Vector2(0,0),
         initDirection: widget.initDirection ?? Direction.up,
         locationActions: [
           LocationAction(

@@ -6,8 +6,6 @@ import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village_objects/waterfall.dart';
-import 'package:projeto_gbb_demo/maps/tavern/kitchen.dart';
-import 'package:projeto_gbb_demo/maps/tavern/living_room.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
@@ -50,19 +48,19 @@ class _MainVillageMapState extends State<MainVillageMap> {
             position: Vector2(0,0), localGameController: widget.gameController
           ),
         ],
-        initLocation: widget.initPosition ?? Vector2(0,0),
+        initPosition: widget.initPosition ?? Vector2(0,0),
         initDirection: widget.initDirection ?? Direction.up,
         locationActions: [
-          // LocationAction(
-          //   coords: Vector2(1268, 2739),
-          //   orientation: TransitionOrientation.horizontal,
-          //   destination: TownMap(
-          //     gameController: widget.gameController,
-          //     playerOneController: widget.playerOneController,
-          //     // initPosition: Vector2(tileSize * 19, tileSize * 13),
-          //     // initDirection: Direction.down,
-          //   ),
-          // ),
+          LocationAction(
+            coords: Vector2(1812, -100),
+            orientation: TransitionOrientation.horizontal,
+            destination: TownMap(
+              gameController: widget.gameController,
+              playerOneController: widget.playerOneController,
+              initPosition: Vector2(tileSize * 15, tileSize * 28),
+              initDirection: Direction.up,
+            ),
+          ),
           // LocationAction(
           //   coords: Vector2(3013, 1900),
           //   orientation: TransitionOrientation.vertical,

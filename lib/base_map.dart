@@ -15,7 +15,7 @@ class BaseMap extends StatefulWidget {
   final PlayerOneController playerOneController;
   final GameMap map;
   final List<GameComponent> components;
-  final Vector2 initLocation;
+  final Vector2 initPosition;
   final Direction initDirection;
   final bool? hasDayLightCycle;
   final bool? isOutside;
@@ -31,7 +31,7 @@ class BaseMap extends StatefulWidget {
       required this.playerOneController,
       required this.map,
       required this.components,
-      required this.initLocation,
+      required this.initPosition,
       required this.initDirection,
       this.hasDayLightCycle,
       this.backgroundColor,
@@ -54,18 +54,24 @@ class _BaseMapState extends State<BaseMap> {
   @override
   void initState() {
     checkHasDaylight();
+    if (widget.isOutside ?? false) {
+      getLighting();
+    }
     widget.gameController.enableVisibility();
     populateFunctionList();
     super.initState();
   }
 
   void checkHasDaylight() {
-    // if (widget.hasDayLightCycle ?? false) {
-    //   widget.components.add(DayTimeClock(
-    //     position: Vector2(0,0),
-    //     localGameController: widget.gameController,
-    //   ));
-    // }
+    if (widget.hasDayLightCycle ?? false) {
+      widget.components.add(DayTimeClock(
+        position: Vector2(0,0),
+        localGameController: widget.gameController,
+        onStartRaining: () {
+          // this.add(rainList);
+        },
+      ));
+    }
   }
 
   @override
@@ -146,7 +152,7 @@ class _BaseMapState extends State<BaseMap> {
       onHit: () {
         widget.playerOneController.hit(2);
       },
-      position: widget.initLocation,
+      position: widget.initPosition,
     );
 
     widget.playerOneController.setImportantCoords(
@@ -179,6 +185,7 @@ class _BaseMapState extends State<BaseMap> {
         PlayerInterface.overlayKey: (context, game) =>
             PlayerInterface(game: game, isOutside: widget.isOutside,),
       },
+      lightingColorGame:(widget.isOutside ?? false ) ? initialLighting : null,
       initialActiveOverlays: const [
         PlayerInterface.overlayKey,
       ],

@@ -62,7 +62,7 @@ class _KitchenMapState extends State<KitchenMap> {
           CuttingBoard(playerOneController: widget.playerOneController, position: Vector2(tileSize * 8.5, tileSize * 1.1)),
           MainDish(playerOneController: widget.playerOneController, position: Vector2(tileSize * 5.25, tileSize * 5.5)),
         ],
-        initLocation: Vector2(tileSize * 1, tileSize * 5),
+        initPosition: Vector2(tileSize * 1, tileSize * 5),
         initDirection: Direction.right,
         locationActions: [
           LocationAction(

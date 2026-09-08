@@ -52,7 +52,7 @@ class _LivingRoomMapState extends State<LivingRoomMap> {
           Chest(playerOneController: widget.playerOneController, position: Vector2(tileSize * 3, tileSize * 3.5)),
           ...bed,
         ],
-        initLocation: Vector2(tileSize * 2.5, tileSize * 10),
+        initPosition: Vector2(tileSize * 2.5, tileSize * 10),
         locationActions: [
           LocationAction(
             coords: Vector2(tileSize * 2.5, tileSize * 11),

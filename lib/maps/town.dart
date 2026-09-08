@@ -2,13 +2,16 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/player/lit_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:projeto_gbb_demo/base_map.dart';
 import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/enum/character_faction.dart';
 import 'package:projeto_gbb_demo/game/enum/enum_day_time.dart';
 import 'package:projeto_gbb_demo/game/enum/weather.dart';
 import 'package:projeto_gbb_demo/game/interface/player_interface.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
+import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/game_consts.dart';
+import 'package:projeto_gbb_demo/maps/main_village/main_village.dart';
 import 'package:projeto_gbb_demo/maps/tavern/components/exit_mat.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
 import 'package:projeto_gbb_demo/parallax/parallax_clouds.dart';
@@ -19,8 +22,10 @@ import 'package:uuid/uuid.dart';
 class TownMap extends StatefulWidget {
   final LocalGameController gameController;
   final PlayerOneController playerOneController;
+  final Vector2? initPosition;
+  final Direction? initDirection;
 
-  const TownMap({super.key, required this.gameController, required this.playerOneController});
+  const TownMap({super.key, required this.gameController, required this.playerOneController, this.initPosition, this.initDirection});
 
   @override
   State<TownMap> createState() => _TownMapState();
@@ -80,7 +85,8 @@ class _TownMapState extends State<TownMap> {
       onHit: () {
         widget.playerOneController.hit(2);
       },
-      position: Vector2(tileSize * 18, tileSize * 18),
+      position: widget.initPosition ?? Vector2(tileSize * 18, tileSize * 18),
+      initDirection: widget.initDirection ?? Direction.down,
     );
     
     void enterTavern() {
@@ -112,52 +118,18 @@ class _TownMapState extends State<TownMap> {
 
     BonfireParallaxBackground background = BonfireParallaxBackground();
 
-    return BonfireWidget(
-      backgroundColor: Color(0xff2c6ec7),
-      background: background,
-      playerControllers: [
-        Keyboard(
-            config: KeyboardConfig(acceptedKeys: [
-          LogicalKeyboardKey.arrowDown,
-          LogicalKeyboardKey.arrowLeft,
-          LogicalKeyboardKey.arrowUp,
-          LogicalKeyboardKey.arrowRight,
-          LogicalKeyboardKey.keyZ,
-          LogicalKeyboardKey.keyX,
-          LogicalKeyboardKey.keyT,
-          LogicalKeyboardKey.keyC,
-          LogicalKeyboardKey.escape,
-        ]))
-      ],
-      // widget.gameController: widget.gameController,
-      lightingColorGame: initialLighting,
+    return BaseMap(
+      isOutside: true,
+      gameController: widget.gameController,
+      playerOneController: widget.playerOneController,
+      map: WorldMapByTiled(
+        WorldMapReader.fromAsset('ruins_village_map/ruins_map_pvp.json'),
+        forceTileSize: Vector2(tileSize, tileSize),
+      ),
       components: [
-        // BlackSmithMaster(
-        //     position: Vector2(tileSize * 19.25, tileSize * 15.5),
-        //     size: PlayerConsts.tallNPCSize,
-        //     hitboxSize: PlayerConsts.characterHitbox,
-        //     hitboxPosition: PlayerConsts.hitboxPosition,
-        //     controller: widget.gameController),
-        // Anvil(
-        //     position: Vector2(tileSize * 21.5, tileSize * 19.5),
-        //     localGameController: widget.gameController),
-        // Furnace(
-        //     position: Vector2(tileSize * 21, tileSize * 11),
-        //     localGameController: widget.gameController),
-        // SwordShippingBox(
-        //     position: Vector2(tileSize * 19, tileSize * 18.5),
-        //     localGameController: widget.gameController),
-        // LaunchStation(
-        //     position: Vector2(tileSize * 14, tileSize * 13.5),
-        //     localGameController: widget.gameController),
-        // SmithingTable(
-        //     position: Vector2(tileSize * 22.75, tileSize * 16.85),
-        //     localGameController: widget.gameController),
         DayTimeClock(
           onStartRaining: () {
-            
             // this.add(rainList);
-            
           },
           position: Vector2(0,0), localGameController: widget.gameController),
         ExitMat(position: Vector2(tileSize * 18, tileSize * 18), exitFunction: () {
@@ -165,24 +137,93 @@ class _TownMapState extends State<TownMap> {
           // background.removeBackground();
         })
       ],
-      // ],
-      cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: true),
-      map: WorldMapByTiled(
-          WorldMapReader.fromAsset('ruins_village_map/ruins_map_pvp.json'),
-          forceTileSize: Vector2(tileSize, tileSize)),
-      player: player,
-      overlayBuilderMap: {
-        PlayerInterface.overlayKey: (context, game) =>
-            PlayerInterface(
-              game: game,
-              isOutside: true,
-            ),
-      },
-      initialActiveOverlays: const [
-        PlayerInterface.overlayKey,
+      initPosition: widget.initPosition ?? Vector2(tileSize * 18, tileSize * 18),
+      initDirection: widget.initDirection ?? Direction.down,
+      locationActions: [
+        LocationAction(
+          coords: Vector2(tileSize * 15, tileSize * 30),
+          orientation: TransitionOrientation.horizontal,
+          destination: MainVillageMap(
+            gameController: widget.gameController,
+            playerOneController: widget.playerOneController,
+            initPosition: Vector2(tileSize * 9, tileSize * 0.5),
+            initDirection: Direction.down,
+          ),
+        ),
       ],
-      // showCollisionArea: true,
     );
+
+  //   return BonfireWidget(
+  //     backgroundColor: Color(0xff2c6ec7),
+  //     background: background,
+  //     playerControllers: [
+  //       Keyboard(
+  //           config: KeyboardConfig(acceptedKeys: [
+  //         LogicalKeyboardKey.arrowDown,
+  //         LogicalKeyboardKey.arrowLeft,
+  //         LogicalKeyboardKey.arrowUp,
+  //         LogicalKeyboardKey.arrowRight,
+  //         LogicalKeyboardKey.keyZ,
+  //         LogicalKeyboardKey.keyX,
+  //         LogicalKeyboardKey.keyT,
+  //         LogicalKeyboardKey.keyC,
+  //         LogicalKeyboardKey.escape,
+  //       ]))
+  //     ],
+  //     // widget.gameController: widget.gameController,
+  //     lightingColorGame: initialLighting,
+  //     components: [
+  //       // BlackSmithMaster(
+  //       //     position: Vector2(tileSize * 19.25, tileSize * 15.5),
+  //       //     size: PlayerConsts.tallNPCSize,
+  //       //     hitboxSize: PlayerConsts.characterHitbox,
+  //       //     hitboxPosition: PlayerConsts.hitboxPosition,
+  //       //     controller: widget.gameController),
+  //       // Anvil(
+  //       //     position: Vector2(tileSize * 21.5, tileSize * 19.5),
+  //       //     localGameController: widget.gameController),
+  //       // Furnace(
+  //       //     position: Vector2(tileSize * 21, tileSize * 11),
+  //       //     localGameController: widget.gameController),
+  //       // SwordShippingBox(
+  //       //     position: Vector2(tileSize * 19, tileSize * 18.5),
+  //       //     localGameController: widget.gameController),
+  //       // LaunchStation(
+  //       //     position: Vector2(tileSize * 14, tileSize * 13.5),
+  //       //     localGameController: widget.gameController),
+  //       // SmithingTable(
+  //       //     position: Vector2(tileSize * 22.75, tileSize * 16.85),
+  //       //     localGameController: widget.gameController),
+  //       DayTimeClock(
+  //         onStartRaining: () {
+            
+  //           // this.add(rainList);
+            
+  //         },
+  //         position: Vector2(0,0), localGameController: widget.gameController),
+  //       ExitMat(position: Vector2(tileSize * 18, tileSize * 18), exitFunction: () {
+  //         enterTavern();
+  //         // background.removeBackground();
+  //       })
+  //     ],
+  //     // ],
+  //     cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: true),
+  //     map: WorldMapByTiled(
+  //         WorldMapReader.fromAsset('ruins_village_map/ruins_map_pvp.json'),
+  //         forceTileSize: Vector2(tileSize, tileSize)),
+  //     player: player,
+  //     overlayBuilderMap: {
+  //       PlayerInterface.overlayKey: (context, game) =>
+  //           PlayerInterface(
+  //             game: game,
+  //             isOutside: true,
+  //           ),
+  //     },
+  //     initialActiveOverlays: const [
+  //       PlayerInterface.overlayKey,
+  //     ],
+  //     // showCollisionArea: true,
+  //   );
+  // }
   }
 }
- 
