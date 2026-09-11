@@ -15,8 +15,8 @@ class Tree extends GameDecoration with Attackable {
   @override
   Future<void> onLoad() async {
     add(RectangleHitbox(
-      size: Vector2(64, 128),
-      position: Vector2(148, 440),
+      size: Vector2(64, 64),
+      position: Vector2(148, 504),
     ));
     return super.onLoad();
   }

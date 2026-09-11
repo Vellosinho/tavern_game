@@ -6,7 +6,7 @@ import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/tavern/kitchen.dart';
 import 'package:projeto_gbb_demo/maps/tavern/living_room.dart';
-import 'package:projeto_gbb_demo/maps/town.dart';
+import 'package:projeto_gbb_demo/maps/garden.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class TavernMap extends StatefulWidget {
@@ -45,7 +45,7 @@ class _TavernMapState extends State<TavernMap> {
           LocationAction(
             coords: Vector2(1268, 2739),
             orientation: TransitionOrientation.horizontal,
-            destination: TownMap(
+            destination: GardenMap(
               gameController: widget.gameController,
               playerOneController: widget.playerOneController,
               // initPosition: Vector2(tileSize * 19, tileSize * 13),

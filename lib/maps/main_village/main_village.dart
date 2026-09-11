@@ -8,7 +8,8 @@ import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
 import 'package:projeto_gbb_demo/game/objects/plants/tree.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village_objects/waterfall.dart';
-import 'package:projeto_gbb_demo/maps/town.dart';
+import 'package:projeto_gbb_demo/maps/garden.dart';
+import 'package:projeto_gbb_demo/parallax/parallax_clouds.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class MainVillageMap extends StatefulWidget {
@@ -34,6 +35,8 @@ class _MainVillageMapState extends State<MainVillageMap> {
   Widget build(BuildContext context) {
       return BaseMap(
         isOutside: true,
+        backgroundColor: Color(0xff6ab0d0),
+        background: BonfireParallaxBackground(),
         gameController: widget.gameController,
         playerOneController: widget.playerOneController, 
         map: WorldMapByTiled(
@@ -67,7 +70,7 @@ class _MainVillageMapState extends State<MainVillageMap> {
           LocationAction(
             coords: Vector2(1812, -100),
             orientation: TransitionOrientation.horizontal,
-            destination: TownMap(
+            destination: GardenMap(
               gameController: widget.gameController,
               playerOneController: widget.playerOneController,
               initPosition: Vector2(tileSize * 15, tileSize * 28),

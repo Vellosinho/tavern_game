@@ -63,7 +63,7 @@ class _GriffinBaseState extends State<GriffinBase> {
     //     Navigator.pushReplacement(
     //       context,
     //       PageRouteBuilder(
-    //         pageBuilder: (context, animation1, animation2) => TownMap(
+    //         pageBuilder: (context, animation1, animation2) => GardenMap(
     //           controller: widget.controller,
     //         ),
     //         transitionDuration: Duration(milliseconds: 1),

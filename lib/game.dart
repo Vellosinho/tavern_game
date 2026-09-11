@@ -4,7 +4,7 @@ import 'package:projeto_gbb_demo/game/items/armor.dart';
 import 'package:projeto_gbb_demo/maps/griffin/griffin_base.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village.dart';
 import 'package:projeto_gbb_demo/maps/tavern/tavern.dart';
-import 'package:projeto_gbb_demo/maps/town.dart';
+import 'package:projeto_gbb_demo/maps/garden.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'package:provider/provider.dart';
 import 'game/enum/character_class.dart';
@@ -46,7 +46,7 @@ class _GameState extends State<Game> {
     LocalGameController gameController = context.read<LocalGameController>();
     PlayerOneController playerOneController = context.read<PlayerOneController>();
 
-    // return TownMap(gameController: gameController, playerOneController: playerOneController);
+    // return GardenMap(gameController: gameController, playerOneController: playerOneController);
     // return TavernMap(
     //   gameController: gameController,
     //   playerOneController: playerOneController,

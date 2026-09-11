@@ -19,19 +19,19 @@ import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 import 'package:projeto_gbb_demo/players/player_one/base_player.dart';
 import 'package:uuid/uuid.dart';
 
-class TownMap extends StatefulWidget {
+class GardenMap extends StatefulWidget {
   final LocalGameController gameController;
   final PlayerOneController playerOneController;
   final Vector2? initPosition;
   final Direction? initDirection;
 
-  const TownMap({super.key, required this.gameController, required this.playerOneController, this.initPosition, this.initDirection});
+  const GardenMap({super.key, required this.gameController, required this.playerOneController, this.initPosition, this.initDirection});
 
   @override
-  State<TownMap> createState() => _TownMapState();
+  State<GardenMap> createState() => _GardenMapState();
 }
 
-class _TownMapState extends State<TownMap> {
+class _GardenMapState extends State<GardenMap> {
   late final CharacterFaction playerFaction;
   late final SimpleDirectionAnimation playerOneAnimations;
   late final String id;
