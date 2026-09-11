@@ -120,6 +120,8 @@ class _TownMapState extends State<TownMap> {
 
     return BaseMap(
       isOutside: true,
+      background: background,
+      backgroundColor: Color(0xff2c6ec7),
       gameController: widget.gameController,
       playerOneController: widget.playerOneController,
       map: WorldMapByTiled(

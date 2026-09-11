@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/base_map.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game.dart';
+import 'package:projeto_gbb_demo/game/enum/tree_type.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
+import 'package:projeto_gbb_demo/game/objects/plants/tree.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village_objects/waterfall.dart';
 import 'package:projeto_gbb_demo/maps/town.dart';
@@ -40,6 +42,17 @@ class _MainVillageMapState extends State<MainVillageMap> {
           forceTileSize: Vector2(tileSize, tileSize),
         ),
         components: [
+          ...tree(position: Vector2(tileSize * 19, tileSize * 2), type: TreeType.birch2),
+          ...tree(position: Vector2(tileSize * 13, tileSize * 3), type: TreeType.birch1),
+          ...tree(position: Vector2(tileSize * 0, tileSize * 1), type: TreeType.birch1),
+          ...tree(position: Vector2(tileSize * 1, tileSize * 3.5), type: TreeType.birch2),
+          ...tree(position: Vector2(tileSize * 3, tileSize * 0.25), type: TreeType.pine2),
+          ...tree(position: Vector2(tileSize * 5, tileSize * 4.5), type: TreeType.pine1),
+          ...tree(position: Vector2(tileSize * 4, tileSize * 3.5), type: TreeType.birch1),
+          ...tree(position: Vector2(tileSize * 3, tileSize * 5.5), type: TreeType.pine2),
+          ...tree(position: Vector2(tileSize * 6, tileSize * 8), type: TreeType.birch1),
+          ...tree(position: Vector2(tileSize * 8, tileSize * 7), type: TreeType.birch2),
+          // Tree(position: Vector2(0, 0)),
           Waterfall(position: Vector2(tileSize * 47, 0)),
           DayTimeClock(
             onStartRaining: () {

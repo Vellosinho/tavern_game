@@ -114,7 +114,7 @@ class BasePlayer extends LitPlayer with BlockMovementCollision, Weapon {
 
   void swordsmanHitSet(JoystickActionEvent event) {
     if (event.id.keyId == LogicalKeyboardKey.keyZ.keyId) {
-      print("position: $position");
+      print("position: ${position.x / 192} ${position.y / 192}");
       weaponAttack(event);
     }
     if (event.id.keyId == LogicalKeyboardKey.keyT.keyId) {

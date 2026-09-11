@@ -70,6 +70,7 @@ flutter:
     - assets/images/map/house_interior/yellow_house/
     - assets/images/items/
     - assets/images/interface/
+    - assets/images/plants/
     - assets/images/ruins_village_map/
     - assets/images/interface/inventorybar/
     - assets/images/interface/minimap/
