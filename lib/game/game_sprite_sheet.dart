@@ -410,6 +410,7 @@ class MinigameInterface {
 
 class BackgroundImages {
   static String get clouds => 'background/clouds_background.png';
+  static String get river_reflex => 'background/clouds_background_river.png';
 }
 
 class ItemSprites {

@@ -10,20 +10,37 @@ class BonfireParallaxBackground extends GameBackground {
     super.onMount();
   }
 
-  // void _addBackgroundColor() async {
-  //   final bgColor = await loadCameraParallaxComponent(
-  //     size: Vector2(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
-  //     [
-        
-  //     ]
-  //   );
-  // }
-
   void _addParallax() async {
     final p = await loadCameraParallaxComponent(
       size: Vector2(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
       [
         ParallaxImageData(BackgroundImages.clouds),
+      ],
+      baseVelocity: Vector2(0.75, 0.75),
+      scale: Vector2(6, 6),
+      velocityMultiplierDelta: Vector2(1.8, 1.0),
+    );
+    add(p);
+  }
+
+  // void removeBackground() async {
+  //   this.children.forEach((element) => remove(element),);
+  //   // remove();
+  //   // this.children
+  // }
+}
+class BonfireParallaxRiverBackground extends GameBackground {
+  @override
+  void onMount() {
+    _addParallax();
+    super.onMount();
+  }
+
+  void _addParallax() async {
+    final p = await loadCameraParallaxComponent(
+      size: Vector2(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
+      [
+        ParallaxImageData(BackgroundImages.river_reflex),
       ],
       baseVelocity: Vector2(0.75, 0.75),
       scale: Vector2(6, 6),

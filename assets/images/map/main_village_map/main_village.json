@@ -223,9 +223,9 @@
                  "height":64,
                  "id":8,
                  "name":"agua",
-                 "opacity":0.85,
+                 "opacity":0.9,
                  "type":"tilelayer",
-                 "visible":true,
+                 "visible":false,
                  "width":64,
                  "x":0,
                  "y":0

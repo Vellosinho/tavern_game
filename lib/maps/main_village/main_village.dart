@@ -36,7 +36,7 @@ class _MainVillageMapState extends State<MainVillageMap> {
       return BaseMap(
         isOutside: true,
         backgroundColor: Color(0xff6ab0d0),
-        background: BonfireParallaxBackground(),
+        background: BonfireParallaxRiverBackground(),
         gameController: widget.gameController,
         playerOneController: widget.playerOneController, 
         map: WorldMapByTiled(
