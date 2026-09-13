@@ -62,6 +62,7 @@ class GameObjectsSprites {
   static Future<Sprite> birch1Tree = Sprite.load("plants/birch1.png");
   static Future<Sprite> birch1Shadow = Sprite.load("plants/birch1_shadow.png");
   static Future<Sprite> birch2Tree = Sprite.load("plants/birch2.png");
+  static Future<Sprite> apple1Tree = Sprite.load("plants/apple_tree.png");
   static Future<Sprite> birch2Shadow = Sprite.load("plants/birch2_shadow.png");
 
   //bushes

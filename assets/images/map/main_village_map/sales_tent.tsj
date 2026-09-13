@@ -1,0 +1,14 @@
+{ "columns":3,
+ "image":"sales_tent.png",
+ "imageheight":64,
+ "imagewidth":96,
+ "margin":0,
+ "name":"sales_tent",
+ "spacing":0,
+ "tilecount":6,
+ "tiledversion":"1.11.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}
