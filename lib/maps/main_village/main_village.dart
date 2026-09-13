@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/base_map.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game.dart';
+import 'package:projeto_gbb_demo/game/enum/bush_type.dart';
 import 'package:projeto_gbb_demo/game/enum/tree_type.dart';
 import 'package:projeto_gbb_demo/game/objects/daytime_clock.dart';
+import 'package:projeto_gbb_demo/game/objects/plants/bush.dart';
 import 'package:projeto_gbb_demo/game/objects/plants/tree.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village_objects/waterfall.dart';
@@ -45,6 +47,7 @@ class _MainVillageMapState extends State<MainVillageMap> {
           forceTileSize: Vector2(tileSize, tileSize),
         ),
         components: [
+          //trees:
           ...tree(position: Vector2(tileSize * 19, tileSize * 2), type: TreeType.birch2),
           ...tree(position: Vector2(tileSize * 13, tileSize * 3), type: TreeType.birch1),
           ...tree(position: Vector2(tileSize * 0, tileSize * 1), type: TreeType.birch1),
@@ -55,7 +58,13 @@ class _MainVillageMapState extends State<MainVillageMap> {
           ...tree(position: Vector2(tileSize * 3, tileSize * 5.5), type: TreeType.pine2),
           ...tree(position: Vector2(tileSize * 6, tileSize * 8), type: TreeType.birch1),
           ...tree(position: Vector2(tileSize * 8, tileSize * 7), type: TreeType.birch2),
-          // Tree(position: Vector2(0, 0)),
+          //bushes:
+          ...bush(position: Vector2(tileSize * 0.5, tileSize * 4.25), type: BushType.bush2),
+          ...bush(position: Vector2(tileSize * 17, tileSize * 1.75), type: BushType.bush2),
+          ...bush(position: Vector2(tileSize * 3.5, tileSize * 4), type: BushType.bush1),
+          ...bush(position: Vector2(tileSize * 13, tileSize * 3.25), type: BushType.bush1),
+          ...bush(position: Vector2(tileSize * 5.5, tileSize * 7.5), type: BushType.bush2),
+          // Tree(position: Vector2(0, 0)),x
           Waterfall(position: Vector2(tileSize * 47, 0)),
           DayTimeClock(
             onStartRaining: () {

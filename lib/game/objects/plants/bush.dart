@@ -1,15 +1,15 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:projeto_gbb_demo/game/enum/tree_type.dart';
+import 'package:projeto_gbb_demo/game/enum/bush_type.dart';
 
-List<GameComponent> tree({required Vector2 position, required TreeType type}) => [
-  Tree(position: position, type: type),
+List<GameComponent> bush({required Vector2 position, required BushType type}) => [
+  Bush(position: position, type: type),
   _shadow(position: position, type: type),
 ];
 
-class Tree extends GameDecoration with Attackable {
-  TreeType type;
-  Tree({required super.position, required this.type})
-      : super.withSprite(sprite: getTreeSprite(type), size: Vector2(384, 576))
+class Bush extends GameDecoration with Attackable {
+  BushType type;
+  Bush({required super.position, required this.type})
+      : super.withSprite(sprite: getBushSprite(type), size: Vector2(384, 576))
   ;
   @override
   Future<void> onLoad() async {
@@ -31,10 +31,10 @@ class Tree extends GameDecoration with Attackable {
   }
 }
 class _shadow extends GameDecoration with Attackable {
-  TreeType type;
+  BushType type;
   _shadow({required super.position, required this.type})
       : super.withSprite(
-            sprite: getTreeShadow(type), size: Vector2(384, 576));
+            sprite: getBushShadow(type), size: Vector2(384, 576));
   @override
   Future<void> onLoad() async {
     add(RectangleHitbox(

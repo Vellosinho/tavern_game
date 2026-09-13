@@ -64,6 +64,13 @@ class GameObjectsSprites {
   static Future<Sprite> birch2Tree = Sprite.load("plants/birch2.png");
   static Future<Sprite> birch2Shadow = Sprite.load("plants/birch2_shadow.png");
 
+  //bushes
+  static Future<Sprite> bush1 = Sprite.load("plants/bush1.png");
+  static Future<Sprite> bush1Shadow = Sprite.load("plants/bush1_shadow.png");
+  static Future<Sprite> bush2 = Sprite.load("plants/bush2.png");
+  static Future<Sprite> bush2Shadow = Sprite.load("plants/bush2_shadow.png");
+
+
   // Wheat
   static Future<SpriteAnimation> wheat = SpriteAnimation.load('objects/wheat_fields/wheat_animation.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.4, textureSize: Vector2(32, 32)));
   static Future<SpriteAnimation> wheatFire = SpriteAnimation.load('objects/wheat_fields/wheat_fire_animation.png', SpriteAnimationData.sequenced(amount: 4, stepTime: 0.4, textureSize: Vector2(32, 32)));
