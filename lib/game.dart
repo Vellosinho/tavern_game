@@ -56,7 +56,8 @@ class _GameState extends State<Game> {
     return MainVillageMap(
       gameController: gameController,
       playerOneController: playerOneController,
-      initPosition: Vector2(tileSize * 9, tileSize * 0.5),
+      // initPosition: Vector2(tileSize * 9, tileSize * 0.5),
+      initPosition: Vector2(tileSize * 34, tileSize * 20),
       initDirection: Direction.down,
     );
     // return GriffinBase(

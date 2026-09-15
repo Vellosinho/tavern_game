@@ -180,6 +180,7 @@ class _BaseMapState extends State<BaseMap> {
       map: widget.map,
       components: widget.components,
       cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: true),
+      // cameraConfig: CameraConfig(zoom: 0.10, moveOnlyMapArea: true),
       player: player,
       overlayBuilderMap: {
         PlayerInterface.overlayKey: (context, game) =>
