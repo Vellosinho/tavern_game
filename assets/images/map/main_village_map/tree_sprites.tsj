@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"tree_sprites.png",
+ "imageheight":96,
+ "imagewidth":256,
+ "margin":0,
+ "name":"tree_sprites",
+ "spacing":0,
+ "tilecount":24,
+ "tiledversion":"1.11.1",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.10"
+}

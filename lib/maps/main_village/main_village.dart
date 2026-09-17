@@ -101,6 +101,16 @@ class _MainVillageMapState extends State<MainVillageMap> {
           ...tree(position: Vector2(tileSize * 44, tileSize * 20.25), type: TreeType.pine1),
           ...tree(position: Vector2(tileSize * 45.5, tileSize * 37.5), type: TreeType.pine2),
           ...tree(position: Vector2(tileSize * 51.5, tileSize * 37.5), type: TreeType.pine1),
+          //
+          ...tree(position: Vector2(tileSize * 4, tileSize * 20), type: TreeType.birch2),
+          ...tree(position: Vector2(tileSize * 2, tileSize * 30), type: TreeType.birch1),
+          ...tree(position: Vector2(tileSize * 9.5, tileSize * 21), type: TreeType.pine2),
+          ...tree(position: Vector2(tileSize * 5, tileSize * 20.5), type: TreeType.pine1),
+          // ...tree(position: Vector2(tileSize * 51.5, tileSize * 37.5), type: TreeType.pine1),
+          // ...tree(position: Vector2(tileSize * 51.5, tileSize * 37.5), type: TreeType.birch2),
+          // ...tree(position: Vector2(tileSize * 51.5, tileSize * 37.5), type: TreeType.pine2),
+          // ...tree(position: Vector2(tileSize * 51.5, tileSize * 37.5), type: TreeType.birch2),
+          // ...tree(position: Vector2(tileSize * 51.5, tileSize * 37.5), type: TreeType.pine1),
           //bushes:
           ...bush(position: Vector2(tileSize * 0.5, tileSize * 4.25), type: BushType.bush2),
           ...bush(position: Vector2(tileSize * 17, tileSize * 1.75), type: BushType.bush2),
@@ -133,6 +143,8 @@ class _MainVillageMapState extends State<MainVillageMap> {
           ...bush(position: Vector2(tileSize * 47, tileSize * 38.5), type: BushType.bush2),
           ...bush(position: Vector2(tileSize * 50, tileSize * 38.5), type: BushType.bush1),
           ...bush(position: Vector2(tileSize * 49.25, tileSize * 38.75), type: BushType.bush1),
+          ...bush(position: Vector2(tileSize * 5.5, tileSize * 24.5), type: BushType.bush2),
+          ...bush(position: Vector2(tileSize * 9, tileSize * 22), type: BushType.bush1),
           // Tree(position: Vector2(0, 0)),x
           Waterfall(position: Vector2(tileSize * 47, 0)),
           DayTimeClock(
