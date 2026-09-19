@@ -9,12 +9,12 @@ import 'package:projeto_gbb_demo/maps/tavern/living_room.dart';
 import 'package:projeto_gbb_demo/maps/garden.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
-class TavernMap extends StatefulWidget {
+class BlacksmithHouse extends StatefulWidget {
   final LocalGameController gameController;
   final PlayerOneController playerOneController;
   final Vector2? initPosition;
   final Direction? initDirection;
-  const TavernMap(
+  const BlacksmithHouse(
     {
       super.key,
       required this.gameController,
@@ -24,10 +24,10 @@ class TavernMap extends StatefulWidget {
     });
 
   @override
-  State<TavernMap> createState() => _TavernMapState();
+  State<BlacksmithHouse> createState() => _BlacksmithHouseState();
 }
 
-class _TavernMapState extends State<TavernMap> {  
+class _BlacksmithHouseState extends State<BlacksmithHouse> {  
   @override
   Widget build(BuildContext context) {
       return BaseMap(
@@ -35,7 +35,7 @@ class _TavernMapState extends State<TavernMap> {
         playerOneController: widget.playerOneController, 
         map: WorldMapByTiled(
           WorldMapReader.fromAsset(
-            'map/house_interior/yellow_house/tavern_map.json'),
+            'map/main_village_map/interior_maps/blacksmith_house.json'),
           forceTileSize: Vector2(tileSize, tileSize),
         ),
         components: [],
@@ -45,7 +45,6 @@ class _TavernMapState extends State<TavernMap> {
           LocationAction(
             coords: Vector2(1268, 2739),
             orientation: TransitionOrientation.horizontal,
-            isBrightEnvironment: true,
             destination: GardenMap(
               gameController: widget.gameController,
               playerOneController: widget.playerOneController,

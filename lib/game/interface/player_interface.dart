@@ -41,7 +41,7 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
               game: widget.game,),
             GameMiniMap(game: widget.game),
             AnimatedContainer(
-              duration: Duration(milliseconds: 600),
+              duration: Duration(milliseconds: controller.isResetingColor ? 0 : 600),
               color: controller.visibilityScreen,
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,

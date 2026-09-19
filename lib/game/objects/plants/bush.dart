@@ -14,8 +14,8 @@ class Bush extends GameDecoration with Attackable {
   @override
   Future<void> onLoad() async {
     add(RectangleHitbox(
-      size: Vector2(64, 64),
-      position: Vector2(148, 504),
+      size: Vector2(96, 64),
+      position: Vector2(164, 504),
     ));
     return super.onLoad();
   }

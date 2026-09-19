@@ -86,13 +86,13 @@ class _BaseMapState extends State<BaseMap> {
   void getLighting() {
       switch (widget.gameController.daytime) {
         case DayTime.sunrise:
-          initialLighting = Colors.orange[400]!.withAlpha(48);
+          initialLighting = Color.fromARGB(255, 206, 120, 193)!.withAlpha(98);
           return;
         case DayTime.noon:
           initialLighting = Colors.orange[400]!.withAlpha(0);
           return;
         case DayTime.sunset:
-          initialLighting = Colors.orange[400]!.withAlpha(48);
+          initialLighting = Color.fromARGB(255, 206, 120, 193)!.withAlpha(98);
           return;
         case DayTime.night:
           initialLighting = Colors.indigo[900]!.withAlpha(148);
@@ -107,7 +107,7 @@ class _BaseMapState extends State<BaseMap> {
     for (int i = 0; i < (widget.locationActions?.length ?? 0); i++) {
       if (widget.locationActions?[i].destination != null) {
         listActions.add(() {
-          goTo(widget.locationActions![i].destination!);
+          goTo(widget.locationActions![i].destination!, widget.locationActions![i].isBrightEnvironment ?? false);
         });
       } else if (widget.locationActions?[i].action != null) {
         listActions.add(widget.locationActions![i].action!);
@@ -117,8 +117,8 @@ class _BaseMapState extends State<BaseMap> {
     }
   }
 
-  void goTo(StatefulWidget destination) {
-      widget.gameController.disableVisibility(isBrightEnvironment: true);
+  void goTo(StatefulWidget destination, bool? isBrightEnvironment) {
+      widget.gameController.disableVisibility(isBrightEnvironment: isBrightEnvironment);
       Future.delayed(Duration(milliseconds: 1000), () {
       widget.playerOneController.toggleResetCollision();
       Future.delayed(Duration(milliseconds: 150), () {

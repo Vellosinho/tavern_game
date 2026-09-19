@@ -6,8 +6,9 @@ class LocationAction {
   Vector2 coords;
   StatefulWidget? destination;
   Function? action;
+  bool? isBrightEnvironment;
 
-  LocationAction({required this.coords, required this.orientation, this.destination, this.action});
+  LocationAction({required this.coords, required this.orientation, this.destination, this.action, this.isBrightEnvironment});
 
 
   bool hitTransition(Vector2 value) {

@@ -27,6 +27,7 @@ class LocalGameController with ChangeNotifier {
   List<String> _chatMessages = [];
   List<String> get chatMessages => _chatMessages;
 
+
   Season _currentSeason = Season.spring;
   Season get currentSeason => _currentSeason;
 
@@ -66,6 +67,25 @@ class LocalGameController with ChangeNotifier {
   Color mapTintColor = Colors.orange[400]!.withAlpha(48);
   Color _visibilityScreen = Colors.black;
   Color get visibilityScreen => _visibilityScreen;
+  bool isResetingColor = false;
+
+  
+  Color nightColorShade = const Color.fromARGB(255, 124, 130, 199)!.withAlpha(255);
+  Color sunRiseColorShade = const Color.fromARGB(255, 206, 120, 193)!.withAlpha(255);
+  Color noonColorShade = const Color.fromARGB(255, 210, 165, 97)!.withAlpha(255);
+
+  Color getCurrentShadeColor() {
+    switch (daytime) {
+      case DayTime.sunrise:
+        return sunRiseColorShade;
+      case DayTime.noon:
+        return noonColorShade;
+      case DayTime.sunset:
+        return sunRiseColorShade;
+      case DayTime.night:
+        return nightColorShade;
+    }
+  }
 
   bool _updateEquipment = false;
   bool get updateEquipment => _updateEquipment;
@@ -110,9 +130,17 @@ class LocalGameController with ChangeNotifier {
   }
 
   void disableVisibility({bool? isBrightEnvironment}) {
-    // _visibilityScreen = (isBrightEnvironment ?? false) ? (getOutsideColor() ?? Colors.white.withAlpha(255)) : Colors.black.withAlpha(255);
-    _visibilityScreen = Colors.black.withAlpha(255);
+    isResetingColor = true;
     notifyListeners();
+    Future.delayed(Duration(milliseconds: 10), () {
+      _visibilityScreen = (isBrightEnvironment ?? false) ? getCurrentShadeColor() : Colors.black.withAlpha(0);
+      notifyListeners();
+    });
+    isResetingColor = false;
+    Future.delayed(Duration(milliseconds: 10), () {
+      _visibilityScreen = (isBrightEnvironment ?? false) ? getCurrentShadeColor() : Colors.black.withAlpha(255);
+      notifyListeners();
+    });
   }
 
   int getTime() {
