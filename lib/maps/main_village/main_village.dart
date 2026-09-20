@@ -10,6 +10,8 @@ import 'package:projeto_gbb_demo/game/objects/plants/bush.dart';
 import 'package:projeto_gbb_demo/game/objects/plants/tree.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village_interior_maps/blacksmith_house/blacksmith_house.dart';
+import 'package:projeto_gbb_demo/maps/main_village/main_village_interior_maps/church/church.dart';
+import 'package:projeto_gbb_demo/maps/main_village/main_village_interior_maps/yellow_house/small_yellow_house.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village_objects/waterfall.dart';
 import 'package:projeto_gbb_demo/maps/garden.dart';
 import 'package:projeto_gbb_demo/maps/tavern/components/exit_mat.dart';
@@ -156,19 +158,19 @@ class _MainVillageMapState extends State<MainVillageMap> {
           //Yellow house
           ExitMat(position: Vector2(tileSize * 49, tileSize * 40), exitFunction: () {
             // Yellow house:
-            goTo(destination: GardenMap(
+            goTo(destination: SmallYellowHouse(
               gameController: widget.gameController,
               playerOneController: widget.playerOneController,
-              initPosition: Vector2(tileSize * 15, tileSize * 28),
+              initPosition: Vector2(tileSize * 6, tileSize * 14.5),
               initDirection: Direction.up,
             ));
           }),
           ExitMat(position: Vector2(tileSize * 33.5, tileSize * 18), exitFunction: () {
             // Church:
-            goTo(destination: GardenMap(
+            goTo(destination: Church(
               gameController: widget.gameController,
               playerOneController: widget.playerOneController,
-              initPosition: Vector2(tileSize * 15, tileSize * 28),
+              initPosition: Vector2(tileSize * 9.5, tileSize * 16),
               initDirection: Direction.up,
             ));
           }),
@@ -205,7 +207,7 @@ class _MainVillageMapState extends State<MainVillageMap> {
               gameController: widget.gameController,
               playerOneController: widget.playerOneController,
               // initPosition: Vector2(tileSize * 15, tileSize * 28),
-              initPosition: Vector2(tileSize * 20, tileSize * 15),
+              initPosition: Vector2(tileSize * 5, tileSize * 15.5),
               initDirection: Direction.up,
             ));
           }),

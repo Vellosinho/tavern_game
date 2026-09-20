@@ -52,19 +52,19 @@ class _GardenMapState extends State<GardenMap> {
   void getLighting() {
       switch (widget.gameController.daytime) {
         case DayTime.sunrise:
-          initialLighting = Colors.orange[400]!.withAlpha(48);
+          initialLighting = Color.fromARGB(255, 206, 120, 193)!.withAlpha(98);
           return;
         case DayTime.noon:
           initialLighting = Colors.orange[400]!.withAlpha(0);
           return;
         case DayTime.sunset:
-          initialLighting = Colors.orange[400]!.withAlpha(48);
+          initialLighting = Color.fromARGB(255, 206, 120, 193)!.withAlpha(98);
           return;
         case DayTime.night:
           initialLighting = Colors.indigo[900]!.withAlpha(148);
           return;
         default:
-          initialLighting = Colors.orange[400]!.withAlpha(48);
+          initialLighting = Color.fromARGB(255, 206, 120, 193)!.withAlpha(98);
           return;
       }
     }

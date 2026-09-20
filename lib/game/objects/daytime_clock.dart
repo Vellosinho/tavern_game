@@ -46,7 +46,7 @@ class DayTimeClock extends GameDecoration {
     });
     switch (localGameController.daytime) {
       case DayTime.sunrise:
-        gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(48),
+        gameRef.lighting!.animateToColor(Color.fromARGB(255, 206, 120, 193)!.withAlpha(98),
             duration: Duration(seconds: 10));
         return;
       case DayTime.noon:
@@ -54,7 +54,7 @@ class DayTimeClock extends GameDecoration {
             duration: Duration(seconds: 10));
         return;
       case DayTime.sunset:
-        gameRef.lighting!.animateToColor(Colors.orange[400]!.withAlpha(48),
+        gameRef.lighting!.animateToColor(Color.fromARGB(255, 206, 120, 193)!.withAlpha(98),
             duration: Duration(seconds: 10));
         return;
       case DayTime.night:

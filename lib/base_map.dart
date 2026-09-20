@@ -57,7 +57,9 @@ class _BaseMapState extends State<BaseMap> {
     if (widget.isOutside ?? false) {
       getLighting();
     }
-    widget.gameController.enableVisibility();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => widget.gameController.enableVisibility(),
+    );
     populateFunctionList();
     super.initState();
   }
@@ -98,7 +100,7 @@ class _BaseMapState extends State<BaseMap> {
           initialLighting = Colors.indigo[900]!.withAlpha(148);
           return;
         default:
-          initialLighting = Colors.orange[400]!.withAlpha(48);
+          initialLighting = Colors.orange[400]!.withAlpha(0);
           return;
       }
     }
@@ -179,7 +181,7 @@ class _BaseMapState extends State<BaseMap> {
       ],
       map: widget.map,
       components: widget.components,
-      cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: true),
+      cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: widget.isOutside ?? false),
       // cameraConfig: CameraConfig(zoom: 0.10, moveOnlyMapArea: true),
       player: player,
       overlayBuilderMap: {

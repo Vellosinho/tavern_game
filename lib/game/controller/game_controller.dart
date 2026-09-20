@@ -123,7 +123,7 @@ class LocalGameController with ChangeNotifier {
   }
 
   void enableVisibility() {
-    Future.delayed(Duration(milliseconds: 250), () {
+    Future.delayed(Duration(milliseconds: 500), () {
       _visibilityScreen = _visibilityScreen.withAlpha(0);
       notifyListeners();
     });
