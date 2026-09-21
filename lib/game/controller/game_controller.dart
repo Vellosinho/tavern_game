@@ -133,14 +133,14 @@ class LocalGameController with ChangeNotifier {
     isResetingColor = true;
     notifyListeners();
     Future.delayed(Duration(milliseconds: 10), () {
-      _visibilityScreen = (isBrightEnvironment ?? false) ? getCurrentShadeColor() : Colors.black.withAlpha(0);
+      _visibilityScreen = Colors.black.withAlpha(255);
       notifyListeners();
     });
-    isResetingColor = false;
-    Future.delayed(Duration(milliseconds: 10), () {
-      _visibilityScreen = (isBrightEnvironment ?? false) ? getCurrentShadeColor() : Colors.black.withAlpha(255);
-      notifyListeners();
-    });
+    // isResetingColor = false;
+    // Future.delayed(Duration(milliseconds: 10), () {
+    //   _visibilityScreen = (isBrightEnvironment ?? false) ? getCurrentShadeColor() : Colors.black.withAlpha(255);
+    //   notifyListeners();
+    // });
   }
 
   int getTime() {

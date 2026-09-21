@@ -203,13 +203,15 @@ class _MainVillageMapState extends State<MainVillageMap> {
           }),
           ExitMat(position: Vector2(tileSize * 46, tileSize * 27), exitFunction: () {
             // Blacksmith:
-            goTo(destination: BlacksmithHouse(
-              gameController: widget.gameController,
-              playerOneController: widget.playerOneController,
-              // initPosition: Vector2(tileSize * 15, tileSize * 28),
-              initPosition: Vector2(tileSize * 5, tileSize * 15.5),
-              initDirection: Direction.up,
-            ));
+            if (widget.gameController.hour >= 8 && widget.gameController.hour < 18) {
+              goTo(destination: BlacksmithHouse(
+                gameController: widget.gameController,
+                playerOneController: widget.playerOneController,
+                // initPosition: Vector2(tileSize * 15, tileSize * 28),
+                initPosition: Vector2(tileSize * 5, tileSize * 15.5),
+                initDirection: Direction.up,
+              ));
+            }
           }),
           ExitMat(position: Vector2(tileSize * 24.5, tileSize * 32.5), exitFunction: () {
             // Taylor:
