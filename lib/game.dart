@@ -32,7 +32,8 @@ class _GameState extends State<Game> {
   @override
   void initState() {
     context.read<LocalGameController>().startDaynightCycle();
-    context.read<PlayerOneController>().changeEquipment(yetiArmor);
+    // context.read<PlayerOneController>().changeEquipment(yetiArmor);
+    context.read<PlayerOneController>().changeEquipment(griffinArmor);
     super.initState();
   }
 

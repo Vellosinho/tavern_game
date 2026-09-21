@@ -54,7 +54,7 @@ class _TavernMapState extends State<TavernMap> {
             ),
           ),
           LocationAction(
-            coords: Vector2(3013, 1900),
+            coords: Vector2(2900, 1900),
             orientation: TransitionOrientation.vertical,
             destination: KitchenMap(gameController: widget.gameController, playerOneController: widget.playerOneController),
           ),

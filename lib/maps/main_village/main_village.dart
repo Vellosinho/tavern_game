@@ -161,7 +161,7 @@ class _MainVillageMapState extends State<MainVillageMap> {
             goTo(destination: SmallYellowHouse(
               gameController: widget.gameController,
               playerOneController: widget.playerOneController,
-              initPosition: Vector2(tileSize * 6, tileSize * 14.5),
+              initPosition: Vector2(tileSize * 7, tileSize * 14.5),
               initDirection: Direction.up,
             ));
           }),
@@ -243,6 +243,14 @@ class _MainVillageMapState extends State<MainVillageMap> {
               initDirection: Direction.up,
             ),
           ),
+          // Print Details:
+          LocationAction(
+            coords: Vector2(tileSize * 33.5, tileSize * 18.5),
+            action: () {
+              print("Teste");
+            },
+            orientation: TransitionOrientation.square,
+          )
           // LocationAction(
           //   coords: Vector2(3013, 1900),
           //   orientation: TransitionOrientation.vertical,

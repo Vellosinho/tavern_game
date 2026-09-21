@@ -34,6 +34,7 @@ class _GriffinBaseState extends State<GriffinBase> {
   void initState() {
     // widget.controller.disableVisibility();
     widget.playerOneController.changeEquipment(yetiArmor);
+    // widget.playerOneController.changeEquipment(griffinArmor);
     playerFaction = context.read<PlayerConsts>().faccao;
     playerOneAnimations = getAnimations(playerOneClass, playerFaction);
     widget.gameController.enableVisibility();

@@ -44,7 +44,7 @@ class _SmallYellowHouseState extends State<SmallYellowHouse> {
         initDirection: widget.initDirection ?? Direction.up,
         locationActions: [
           LocationAction(
-            coords: Vector2(1268, 3200),
+            coords: Vector2(1468, 3200),
             orientation: TransitionOrientation.horizontal,
             isBrightEnvironment: true,
             destination: MainVillageMap(
