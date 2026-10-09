@@ -49,6 +49,30 @@ class _PlayerInterfaceState extends State<PlayerInterface> {
               width: MediaQuery.of(context).size.width,
             ),
             Chat(controller: controller),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(),
+                  Container(
+                    color: Color(0xffE1A056),
+                    child: Padding(
+                      padding: EdgeInsets.all(playerOneController.readingText.isNotEmpty ?8.0 : 0),
+                      child: Text(
+                        playerOneController.readingText,
+                        style: TextStyle(
+                          fontFamily: 'PressStart2P',
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(),
+                  SizedBox(),
+                ],
+              ),
+            ),
             // TextField(),
           ],
         ),

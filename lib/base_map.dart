@@ -181,7 +181,8 @@ class _BaseMapState extends State<BaseMap> {
       ],
       map: widget.map,
       components: widget.components,
-      cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: widget.isOutside ?? false),
+      // cameraConfig: CameraConfig(zoom: 0.75, moveOnlyMapArea: widget.isOutside ?? false),
+      cameraConfig: CameraConfig(zoom: 0.60, moveOnlyMapArea: widget.isOutside ?? false),
       // cameraConfig: CameraConfig(zoom: 0.10, moveOnlyMapArea: true),
       player: player,
       overlayBuilderMap: {

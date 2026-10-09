@@ -60,7 +60,7 @@ class _GameState extends State<Game> {
       // initPosition: Vector2(tileSize * 9, tileSize * 0.5),
       initPosition: Vector2(tileSize * 34, tileSize * 20),
       initDirection: Direction.down,
-    );
+    );  
     // return GriffinBase(
     //   gameController: gameController,
     //   playerOneController: playerOneController,

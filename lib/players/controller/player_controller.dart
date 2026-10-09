@@ -14,6 +14,10 @@ class PlayerOneController with ChangeNotifier {
 
   bool _updateEquipment = false;
   bool get updateEquipment => _updateEquipment;
+  bool _isReading = false;
+  bool get isReading => _isReading;
+  String _readingText = '';
+  String get readingText => _readingText;
   bool gameIsPaused = false;
   bool minigameIsActive = false;
   bool _resetColision = false;
@@ -22,6 +26,7 @@ class PlayerOneController with ChangeNotifier {
   Armor get currentArmor => _currentArmor;
   double _environmentTemperature = 20;
   int get playerWeight => currentArmor.weightModifier;
+  LocationAction? _currentLocationTriggeredEvent;
   double get playerTemperature => currentArmor.temperatureModifier + _environmentTemperature;
   double get temperatureModifier => (playerTemperature > 50) ? 50 : (playerTemperature < -10) ? -10 : playerTemperature;
 
@@ -171,18 +176,34 @@ class PlayerOneController with ChangeNotifier {
   }
 
   void checkImportantCoordsDistance(Vector2 currentPosition) {
+
+    
     if (!isCooldown) {
-      for (int i = 0; i < exitCoords.length; i++) {
-        if (exitCoords[i].hitTransition(currentPosition)) {
-            // print("Teste");
-            exitFunctions[i]();
-            isCooldown = true;
-            Future.delayed(Duration(milliseconds: 500), () {
-              isCooldown = false;
-            });
+      if ((_currentLocationTriggeredEvent != null) && (!(_currentLocationTriggeredEvent?.hitTransition(currentPosition) ?? true))) {
+        _currentLocationTriggeredEvent = null;
+        // print("Exited!");
+        setReadingText('');
+      } else {
+
+        for (int i = 0; i < exitCoords.length; i++) {
+          if (exitCoords[i].hitTransition(currentPosition)) {
+              _currentLocationTriggeredEvent = exitCoords[i];
+              // print("Teste");
+              exitFunctions[i]();
+              isCooldown = true;
+              Future.delayed(Duration(milliseconds: 500), () {
+                isCooldown = false;
+              });
+          }
         }
       }
     }
+  }
+
+  void setReadingText(String text) {
+    _readingText = text;
+    _isReading = _readingText.isNotEmpty;
+    notifyListeners();
   }
 
   void turnOffAnimation() {

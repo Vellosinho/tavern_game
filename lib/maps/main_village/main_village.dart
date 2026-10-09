@@ -211,6 +211,11 @@ class _MainVillageMapState extends State<MainVillageMap> {
                 initPosition: Vector2(tileSize * 5, tileSize * 15.5),
                 initDirection: Direction.up,
               ));
+            } else {
+              widget.playerOneController.setReadingText("Locked...");
+              Future.delayed(Duration(seconds: 3), () {
+                widget.playerOneController.setReadingText("");
+              });
             }
           }),
           ExitMat(position: Vector2(tileSize * 24.5, tileSize * 32.5), exitFunction: () {
@@ -245,9 +250,9 @@ class _MainVillageMapState extends State<MainVillageMap> {
           ),
           // Print Details:
           LocationAction(
-            coords: Vector2(tileSize * 33.5, tileSize * 18.5),
+            coords: Vector2(tileSize * 32.5, tileSize * 18),
             action: () {
-              print("Teste");
+              widget.playerOneController.setReadingText("Church: everyday from 8am to 6pm");
             },
             orientation: TransitionOrientation.square,
           )
