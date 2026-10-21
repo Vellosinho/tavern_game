@@ -203,7 +203,7 @@ class _MainVillageMapState extends State<MainVillageMap> {
           }),
           ExitMat(position: Vector2(tileSize * 46, tileSize * 27), exitFunction: () {
             // Blacksmith:
-            if (widget.gameController.hour >= 8 && widget.gameController.hour < 18) {
+            // if (widget.gameController.hour >= 8 && widget.gameController.hour < 18) {
               goTo(destination: BlacksmithHouse(
                 gameController: widget.gameController,
                 playerOneController: widget.playerOneController,
@@ -211,12 +211,12 @@ class _MainVillageMapState extends State<MainVillageMap> {
                 initPosition: Vector2(tileSize * 5, tileSize * 15.5),
                 initDirection: Direction.up,
               ));
-            } else {
-              widget.playerOneController.setReadingText("Locked...");
-              Future.delayed(Duration(seconds: 3), () {
-                widget.playerOneController.setReadingText("");
-              });
-            }
+            // } else {
+            //   widget.playerOneController.setReadingText("Locked...");
+            //   Future.delayed(Duration(seconds: 3), () {
+            //     widget.playerOneController.setReadingText("");
+            //   });
+            // }
           }),
           ExitMat(position: Vector2(tileSize * 24.5, tileSize * 32.5), exitFunction: () {
             // Taylor:
