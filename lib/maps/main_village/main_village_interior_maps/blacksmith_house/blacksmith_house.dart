@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/base_map.dart';
 import 'package:projeto_gbb_demo/common/common.dart';
 import 'package:projeto_gbb_demo/game.dart';
+import 'package:projeto_gbb_demo/game/npcs/blacksmith_master.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village.dart';
-import 'package:projeto_gbb_demo/maps/tavern/kitchen.dart';
-import 'package:projeto_gbb_demo/maps/tavern/living_room.dart';
-import 'package:projeto_gbb_demo/maps/garden.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class BlacksmithHouse extends StatefulWidget {
@@ -39,7 +37,12 @@ class _BlacksmithHouseState extends State<BlacksmithHouse> {
             'map/main_village_map/interior_maps/blacksmith_house.json'),
           forceTileSize: Vector2(tileSize, tileSize),
         ),
-        components: [],
+        components: [
+          BlackSmithApprentice(
+            position: Vector2(tileSize * 11, tileSize * 14),
+            controller: widget.gameController,
+          )
+        ],
         initPosition: widget.initPosition ?? Vector2(0,0),
         initDirection: widget.initDirection ?? Direction.up,
         locationActions: [

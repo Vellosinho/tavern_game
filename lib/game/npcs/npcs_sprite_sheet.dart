@@ -35,6 +35,56 @@ class NPCSprites {
   );
 }
 
+class BlacksmithSprites {
+  static Future<SpriteAnimation> get blacksmithIdleFront => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_idle_front.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+  static Future<SpriteAnimation> get blacksmithIdleRight => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_idle_right.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+  static Future<SpriteAnimation> get blacksmithIdleLeft => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_idle_left.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+  static Future<SpriteAnimation> get blacksmithIdleBack => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_idle_back.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+  static Future<SpriteAnimation> get blacksmithWalkFront => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_walk_front.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+  static Future<SpriteAnimation> get blacksmithWalkRight => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_walk_right.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+  static Future<SpriteAnimation> get blacksmithWalkLeft => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_walk_left.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+  static Future<SpriteAnimation> get blacksmithWalkBack => SpriteAnimation.load(
+    'npc/blacksmith/blacksmith_walk_back.png',
+    SpriteAnimationData.sequenced(amount: 4, stepTime: 0.2, textureSize: Vector2(32,40)),
+  );
+
+  SimpleDirectionAnimation blacksmithSprites = SimpleDirectionAnimation(
+    idleUp: blacksmithIdleBack,
+    idleRight: blacksmithIdleRight,
+    idleLeft: blacksmithIdleLeft,
+    idleDown: blacksmithIdleFront,
+    runUp: blacksmithWalkBack,
+    runRight: blacksmithWalkRight,
+    runLeft: blacksmithWalkLeft,
+    runDown: blacksmithWalkFront,
+    runUpRight: blacksmithWalkBack,
+    runUpLeft: blacksmithWalkBack,
+    runDownRight: blacksmithWalkFront,
+    runDownLeft: blacksmithWalkFront,
+  );
+}
+
 class NeutralFarmerNPCSprites {
   static Future<SpriteAnimation> get neutralFarmerIdleFront => SpriteAnimation.load(
     'tutorialNPCs/tutorial_farmer/neutral_farmer/tutorial_farmer_idle_front.png',

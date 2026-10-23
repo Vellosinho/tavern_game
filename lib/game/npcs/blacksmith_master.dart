@@ -3,27 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/npcs/npcFunctionalities/npc_dialogue.dart';
 import 'package:projeto_gbb_demo/game/npcs/npcs_sprite_sheet.dart';
+import 'package:projeto_gbb_demo/players/player_consts.dart';
 
-class BlackSmithMaster extends SimpleAlly with Lighting {
-  Vector2 hitboxSize;
-  Vector2 hitboxPosition;
+class BlackSmithApprentice extends SimpleAlly with Lighting {
+  // Vector2 hitboxSize;
+  // Vector2 hitboxPosition;
   LocalGameController controller;
   bool willTalk = true;
   bool tutorialExplained = false;
-  BlackSmithMaster({
+  BlackSmithApprentice({
     required super.position,
-    required super.size,
-    required this.hitboxSize,
-    required this.hitboxPosition,
     required this.controller,
   }) : super(
             speed: 0,
-            animation: SimpleDirectionAnimation(
-              idleDown: NPCSprites.smithMasterStand,
-              idleLeft: NPCSprites.smithMasterStandLeft,
-              idleRight: NPCSprites.smithMasterStand,
-              runRight: NPCSprites.smithMasterStand,
-            ),
+            size: PlayerConsts.characterSize,
+            animation: BlacksmithSprites().blacksmithSprites,
             receivesAttackFrom: AcceptableAttackOriginEnum.ALL) {
     // setupLighting(
     //   LightingConfig(
@@ -38,7 +32,7 @@ class BlackSmithMaster extends SimpleAlly with Lighting {
 
   @override
   Future<void> onLoad() {
-    add(RectangleHitbox(size: hitboxSize, position: hitboxPosition));
+    add(RectangleHitbox(size: PlayerConsts.characterHitbox, position: PlayerConsts.hitboxPosition));
     initializeRoutine();
     return super.onLoad();
   }
