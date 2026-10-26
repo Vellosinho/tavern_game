@@ -6,6 +6,7 @@ import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/npcs/blacksmith_master.dart';
 import 'package:projeto_gbb_demo/game/structs/change_map_transition.dart';
 import 'package:projeto_gbb_demo/maps/main_village/main_village.dart';
+import 'package:projeto_gbb_demo/maps/main_village/main_village_interior_maps/blacksmith_house/objects/anvil.dart';
 import 'package:projeto_gbb_demo/players/controller/player_controller.dart';
 
 class BlacksmithHouse extends StatefulWidget {
@@ -41,7 +42,8 @@ class _BlacksmithHouseState extends State<BlacksmithHouse> {
           BlackSmithApprentice(
             position: Vector2(tileSize * 11, tileSize * 14),
             controller: widget.gameController,
-          )
+          ),
+          Anvil(position: Vector2(tileSize * 7, tileSize * 14)),
         ],
         initPosition: widget.initPosition ?? Vector2(0,0),
         initDirection: widget.initDirection ?? Direction.up,
