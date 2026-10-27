@@ -43,7 +43,7 @@ class _BlacksmithHouseState extends State<BlacksmithHouse> {
             position: Vector2(tileSize * 11, tileSize * 14),
             controller: widget.gameController,
           ),
-          Anvil(position: Vector2(tileSize * 7, tileSize * 14)),
+          Anvil(position: Vector2(tileSize * 6.5, tileSize * 14)),
         ],
         initPosition: widget.initPosition ?? Vector2(0,0),
         initDirection: widget.initDirection ?? Direction.up,
