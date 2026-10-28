@@ -1,11 +1,12 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_gbb_demo/game.dart';
 import 'package:projeto_gbb_demo/game/controller/game_controller.dart';
 import 'package:projeto_gbb_demo/game/npcs/npcFunctionalities/npc_dialogue.dart';
 import 'package:projeto_gbb_demo/game/npcs/npcs_sprite_sheet.dart';
 import 'package:projeto_gbb_demo/players/player_consts.dart';
 
-class BlackSmithApprentice extends SimpleAlly with Lighting {
+class BlackSmithApprentice extends SimpleAlly with PathFinding {
   // Vector2 hitboxSize;
   // Vector2 hitboxPosition;
   LocalGameController controller;
@@ -15,7 +16,8 @@ class BlackSmithApprentice extends SimpleAlly with Lighting {
     required super.position,
     required this.controller,
   }) : super(
-            speed: 0,
+            speed: 200,
+            keepRendered: true,
             size: PlayerConsts.characterSize,
             animation: BlacksmithSprites().blacksmithSprites,
             receivesAttackFrom: AcceptableAttackOriginEnum.ALL) {
@@ -33,6 +35,11 @@ class BlackSmithApprentice extends SimpleAlly with Lighting {
   @override
   Future<void> onLoad() {
     add(RectangleHitbox(size: PlayerConsts.characterHitbox, position: PlayerConsts.hitboxPosition));
+    setupPathFinding(
+      useOnlyVisibleBarriers: false,
+      showBarriersCalculated: false,
+      barriersCalculatedColor: Colors.red,
+    );
     initializeRoutine();
     return super.onLoad();
   }
@@ -46,40 +53,40 @@ class BlackSmithApprentice extends SimpleAlly with Lighting {
     super.onReceiveDamage(attacker, 0, identify, damageType);
   }
 
-  List<List<NpcDialogue>> dialogue = [
-    [
-      NpcDialogue(
-          npcLines: Say(
-            text: [
-              const TextSpan(
-                  text:
-                      'Estou cansada de comer morangos, queria que essa fazenda fosse minha para plantar o que eu quiser')
-            ],
-          ),
-          answers: [
-            'Porque voce nao compra uma?',
-            'Porque esta me dizendo isso?',
-            'Talvez um dia voce possa...'
-          ],
-          correctAnswer: 2),
-    ],
-    [
-      NpcDialogue(
-          npcLines: Say(
-            text: [
-              const TextSpan(
-                  text:
-                      'Eu sou muito grata ao dono dessas terras, ele me da abrigo, comida... O que seria de mim sem ele?')
-            ],
-          ),
-          answers: [
-            'Voce seria desempregada',
-            'Voce seria livre',
-            'Voce passaria fome'
-          ],
-          correctAnswer: 1),
-    ],
-  ];
+  // List<List<NpcDialogue>> dialogue = [
+  //   [
+  //     NpcDialogue(
+  //         npcLines: Say(
+  //           text: [
+  //             const TextSpan(
+  //                 text:
+  //                     'Estou cansada de comer morangos, queria que essa fazenda fosse minha para plantar o que eu quiser')
+  //           ],
+  //         ),
+  //         answers: [
+  //           'Porque voce nao compra uma?',
+  //           'Porque esta me dizendo isso?',
+  //           'Talvez um dia voce possa...'
+  //         ],
+  //         correctAnswer: 2),
+  //   ],
+  //   [
+  //     NpcDialogue(
+  //         npcLines: Say(
+  //           text: [
+  //             const TextSpan(
+  //                 text:
+  //                     'Eu sou muito grata ao dono dessas terras, ele me da abrigo, comida... O que seria de mim sem ele?')
+  //           ],
+  //         ),
+  //         answers: [
+  //           'Voce seria desempregada',
+  //           'Voce seria livre',
+  //           'Voce passaria fome'
+  //         ],
+  //         correctAnswer: 1),
+  //   ],
+  // ];
 
   // List<Say> masterFirstSwordForged = [
   //   Say(text: [const TextSpan(text: 'That`s a really nice sword, very well made. But you still have much to learn')]),
@@ -114,12 +121,27 @@ class BlackSmithApprentice extends SimpleAlly with Lighting {
     int time = controller.getTime();
 
     switch (time) {
-      case 640:
-        animation?.play(SimpleAnimationEnum.idleLeft);
-        break;
       case 700:
-        animation?.play(SimpleAnimationEnum.idleDown);
+        // animation?.play(SimpleAnimationEnum.idleDown);
+        moveToPositionWithPathFinding(Vector2(9 * tileSize, 5.5 * tileSize), onFinish: () {
+          moveToPositionWithPathFinding(Vector2(14 * tileSize, 5.5 * tileSize), onFinish: () {
+            // moveToPositionWithPathFinding(Vector2(13.5 * tileSize, 10 * tileSize), onFinish: () {
+              moveToPositionWithPathFinding(Vector2(13 * tileSize, 5.5 * tileSize), onFinish: () {
+              //   moveToPositionWithPathFinding(Vector2(10 * tileSize, 13 * tileSize), onFinish: () {
+              //     moveToPositionWithPathFinding(Vector2(6.4 * tileSize, 13 * tileSize), onFinish: () {
+              //     });
+              //   });
+              // });
+            });
+          });
+        });
         break;
+      // case 640:
+      //   animation?.play(SimpleAnimationEnum.idleLeft);
+      //   break;
+      // case 700:
+      //   animation?.play(SimpleAnimationEnum.idleDown);
+      //   break;
       default:
       // stopMove();
     }

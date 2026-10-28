@@ -3,6 +3,7 @@ import 'package:bonfire/bonfire.dart';
 class GameObjectsSprites {
   //anvil sprites:
   static Future<Sprite> anvil = Sprite.load('objects/anvil.png');
+  static Future<Sprite> weaponRack = Sprite.load('objects/weapon_rack.png');
   static Future<Sprite> chest = Sprite.load('objects/chest/chest.png');
   static Future<Sprite> bedBackground = Sprite.load('objects/chest/bed_background.png');
   static Future<Sprite> bedForeground = Sprite.load('objects/chest/bed_foreground.png');
